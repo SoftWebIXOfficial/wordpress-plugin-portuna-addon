@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "classmap": [
+            "includes/base.php"
+        ],
+        "psr-4": {
+            "PortunaAddon\\": "includes/"
+        }
+    }
+}
