@@ -7,5 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'PortunaAddon\\Base' => $baseDir . '/includes/base.php',
+    'PortunaAddon\\Helpers\\WidgetsManager' => $baseDir . '/includes/helpers/widgets-manager.php',
     'PortunaAddon\\Traits\\Singleton' => $baseDir . '/includes/traits/singleton.php',
+    'PortunaAddon\\Widgets\\Edit\\BannerSlider' => $baseDir . '/includes/widgets/banner-slider/edit.php',
+    'PortunaAddon\\Widgets\\Portuna_Widget_Base' => $baseDir . '/includes/portuna-widget-base.php',
 );

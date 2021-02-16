@@ -39,14 +39,14 @@ const path = {
     },
     src: {
         html:         '**/*.php',
-        assetsJS:     [ './assets/js/**/*.js', '! ./assets/js/**/**/*.min.js' ],
+        assetsJS:     [ './assets/js/**/*.js', '!./assets/js/**/*.min.js' ],
         assetsStyle:  './assets/css/**/*.scss',
-        widgetsJS:    [ './includes/widgets/**/*.js', '! ./includes/widgets/**/*.min.js' ],
+        widgetsJS:    [ './includes/widgets/**/*.js', '!./includes/widgets/**/*.min.js' ],
         widgetsStyle: './includes/widgets/**/*.scss',
         img:          './assets/img/**/*.{png,jpg,jpeg,gif}'
     },
     helpers: {
-        clean:        [ '**/.sass-cache','**/.DS_Store' ]
+        clean:        [ '**/.sass-cache', '**/.DS_Store' ]
     }
 };
 

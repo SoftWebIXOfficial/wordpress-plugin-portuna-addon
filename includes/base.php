@@ -97,23 +97,35 @@ class Base {
         if ( $this->is_compatible() ) {
             add_action( 'elementor/init', [ $this, 'elementor_init' ] );
 
-            // Custom contact methods.
-            add_filter( 'user_contactmethods', array( $this, 'contact_methods' ), 10, 1 );
-            // register elementor category
-            add_action( 'elementor/elements/categories_registered', [ $this, 'one_elements_add_elementor_widget_categories' ] );
-            // register custom elementor controls
-            add_action( 'elementor/controls/controls_registered', [ $this, 'register_custom_elementor_control' ] );
-            // register our enhanced widget
-            add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_custom_elementor_widget' ] );
+//             // Custom contact methods.
+//             add_filter( 'user_contactmethods', array( $this, 'contact_methods' ), 10, 1 );
+//             // register elementor category
+            add_action( 'elementor/elements/categories_registered', [ $this, 'register_category' ] );
 
-            add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
-            add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_frontend_scripts' ] );
-            add_action( 'elementor/frontend/after_enqueue_scripts', [ $this, 'enqueue_frontend_scripts' ] );
+            Helpers\WidgetsManager::instance();
+//             // register custom elementor controls
+//             add_action( 'elementor/controls/controls_registered', [ $this, 'register_custom_elementor_control' ] );
+//             // register our enhanced widget
+//             add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_custom_elementor_widget' ] );
+//
+//             add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
+//             add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_frontend_scripts' ] );
+//             add_action( 'elementor/frontend/after_enqueue_scripts', [ $this, 'enqueue_frontend_scripts' ] );
         }
     }
 
     public function elementor_init() {
         // Register category.
+    }
+
+    public function register_category( $elements_manager ) {
+        $elements_manager->add_category(
+            'portuna-addons-category',
+            [
+               'title' => __( 'Portuna Addons', 'portuna-addon' ),
+               'icon' => '',
+            ]
+        );
     }
 
     public function __construct() {
