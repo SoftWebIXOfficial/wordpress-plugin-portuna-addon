@@ -391,7 +391,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
                             'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_content_title' ],
                         ]
                     );
-
+//test
                 $this->end_controls_tab();
                 
                 $this->start_controls_tab(
