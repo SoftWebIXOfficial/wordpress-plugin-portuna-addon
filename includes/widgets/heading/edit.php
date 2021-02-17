@@ -386,7 +386,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
                     $this->add_group_control(
                         Group_Control_Text_Shadow::get_type(),
                         [
-                            'label'    => __( 'Title Shadow', 'portuna-addon' ),
+                            'label'    => __( 'Title Text Shadow', 'portuna-addon' ),
                             'name'     => 'portuna_title_shadow',
                             'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_content_title' ],
                         ]
@@ -416,7 +416,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
                     $this->add_group_control(
                         Group_Control_Text_Shadow::get_type(),
                         [
-                            'label'    => __( 'Title Shadow', 'portuna-addon' ),
+                            'label'    => __( 'Title Text Shadow', 'portuna-addon' ),
                             'name'     => 'portuna_title_shadow_hover',
                             'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_content_title_hover' ],
                         ]
@@ -475,6 +475,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
                     'condition' => [
                         'portuna_addon_items_decor_type' => 'shadow_square',
                     ],
+                    'separator' => 'before'
                 ]
             );
             
@@ -484,7 +485,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
                     'label'     => __( 'Border Type', 'simpli' ),
                     'type'      => Controls_Manager::SELECT,
                     'options'   => [
-                        ''       => __( 'None', 'simpli' ),
+                        'none'   => __( 'None', 'simpli' ),
                         'solid'  => __( 'Solid', 'simpli' ),
                         'double' => __( 'Double', 'simpli' ),
                         'dotted' => __( 'Dotted', 'simpli' ),
@@ -517,8 +518,17 @@ class AdvancedHeading extends Portuna_Widget_Base {
                         '{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
                     'responsive' => true,
-                    'condition'  => [
-                        'portuna_subtitle_border_type!' => '',
+                    'condition' => [
+                        'portuna_subtitle_border_type!' => 'none',
+                    ],
+                    'conditions' => [
+                        'terms'    => [
+                            [
+                                'name'     => 'portuna_addon_items_decor_type',
+                                'operator' => '===',
+                                'value'    => 'shadow_square',
+                            ],
+                        ],
                     ],
                 ]
             );
@@ -532,8 +542,17 @@ class AdvancedHeading extends Portuna_Widget_Base {
                     'selectors'  => [
                         '{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
-                    'condition'  => [
-                        'portuna_subtitle_border_type!' => '',
+                    'condition' => [
+                        'portuna_subtitle_border_type!' => 'none',
+                    ],
+                    'conditions' => [
+                        'terms'    => [
+                            [
+                                'name'     => 'portuna_addon_items_decor_type',
+                                'operator' => '===',
+                                'value'    => 'shadow_square',
+                            ],
+                        ],
                     ],
                 ]
             );
@@ -553,9 +572,9 @@ class AdvancedHeading extends Portuna_Widget_Base {
             );
 
             $this->add_control(
-                'portuna_subtitle_square_position',
+                'portuna_subtitle_square_hr_position',
                 [
-                    'label'     => __( 'Square Position', 'portuna-addon' ),
+                    'label'     => __( 'Square Position Horizontal', 'portuna-addon' ),
                     'type'      => Controls_Manager::CHOOSE,
                     'toggle'    => false,
                     'options'   => [
@@ -569,6 +588,29 @@ class AdvancedHeading extends Portuna_Widget_Base {
                         ],
                     ],
                     'default'   => 'right',
+                    'condition' => [
+                        'portuna_addon_items_decor_type' => 'shadow_square',
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'portuna_subtitle_square_vr_position',
+                [
+                    'label'     => __( 'Square Position Vertical', 'portuna-addon' ),
+                    'type'      => Controls_Manager::CHOOSE,
+                    'toggle'    => false,
+                    'options'   => [
+                        'bottom'   => [
+                            'title' => __( 'Bottom', 'portuna-addon' ),
+                            'icon'  => 'eicon-v-align-bottom',
+                        ],
+                        'top'   => [
+                            'title' => __( 'Top', 'portuna-addon' ),
+                            'icon'  => 'eicon-v-align-top',
+                        ],
+                    ],
+                    'default'   => 'bottom',
                     'condition' => [
                         'portuna_addon_items_decor_type' => 'shadow_square',
                     ],
@@ -608,6 +650,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
                         '{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ]        => 'transition-duration: {{SIZE}}s',
                         '{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square_before' ] => 'transition-duration: {{SIZE}}s',
                     ],
+                    'separator' => 'before'
                 ]
             );
 
@@ -635,7 +678,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
                     $this->add_group_control(
                         Group_Control_Text_Shadow::get_type(),
                         [
-                            'label'    => __( 'Subtitle Shadow', 'portuna-addon' ),
+                            'label'    => __( 'Subtitle Text Shadow', 'portuna-addon' ),
                             'name'     => 'portuna_subtitle_shadow',
                             'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle' ],
                         ]
@@ -665,8 +708,17 @@ class AdvancedHeading extends Portuna_Widget_Base {
                             'selectors'  => [
                                 '{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
                             ],
-                            'condition'  => [
-                                'portuna_subtitle_border_type!' => '',
+                            'condition' => [
+                                'portuna_subtitle_border_type!' => 'none',
+                            ],
+                            'conditions' => [
+                                'terms'    => [
+                                    [
+                                        'name'     => 'portuna_addon_items_decor_type',
+                                        'operator' => '===',
+                                        'value'    => 'shadow_square',
+                                    ],
+                                ],
                             ],
                         ]
                     );
@@ -695,7 +747,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
                     $this->add_group_control(
                         Group_Control_Text_Shadow::get_type(),
                         [
-                            'label'    => __( 'Subtitle Shadow', 'portuna-addon' ),
+                            'label'    => __( 'Subtitle Text Shadow', 'portuna-addon' ),
                             'name'     => 'portuna_subtitle_shadow_hover',
                             'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_hover' ],
                         ]
@@ -726,8 +778,17 @@ class AdvancedHeading extends Portuna_Widget_Base {
                             'selectors'  => [
                                 '{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square_hover' ] => 'border-color: {{VALUE}};',
                             ],
-                            'condition'  => [
-                                'portuna_subtitle_border_type!' => '',
+                            'condition' => [
+                                'portuna_subtitle_border_type!' => 'none',
+                            ],
+                            'conditions' => [
+                                'terms'    => [
+                                    [
+                                        'name'     => 'portuna_addon_items_decor_type',
+                                        'operator' => '===',
+                                        'value'    => 'shadow_square',
+                                    ],
+                                ],
                             ],
                         ]
                     );
