@@ -6,8 +6,6 @@ extract( $args );
 
 $this->add_render_attribute( 'wrapper', 'class', 'portuna-addon--advanced-heading--layout1' );
 
-// print_r( $args );
-
 ?>
 
 <div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>

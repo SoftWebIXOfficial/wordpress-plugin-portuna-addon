@@ -7,8 +7,17 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'PortunaAddon\\Base' => $baseDir . '/includes/base.php',
+    'PortunaAddon\\Controls\\Elementor_Area' => $baseDir . '/includes/controls/elementor-area.php',
+    'PortunaAddon\\Core\\Api' => $baseDir . '/includes/core/api.php',
+    'PortunaAddon\\Core\\Cpt_Apissss' => $baseDir . '/includes/core/elementor-cpt/cpt-api.php',
+    'PortunaAddon\\Core\\Elementor\\Init' => $baseDir . '/includes/core/elementor-cpt/init.php',
+    'PortunaAddon\\Core\\Register_Cpt' => $baseDir . '/includes/core/elementor-cpt/cpt-register.php',
+    'PortunaAddon\\Helpers\\ControlsManager' => $baseDir . '/includes/helpers/controls-manager.php',
+    'PortunaAddon\\Helpers\\Utils' => $baseDir . '/includes/helpers/utils.php',
     'PortunaAddon\\Helpers\\WidgetsManager' => $baseDir . '/includes/helpers/widgets-manager.php',
+    'PortunaAddon\\ScriptsManager' => $baseDir . '/includes/scripts-manager.php',
     'PortunaAddon\\Traits\\Singleton' => $baseDir . '/includes/traits/singleton.php',
+    'PortunaAddon\\Widgets\\Edit\\AdvancedHeading' => $baseDir . '/includes/widgets/heading/edit.php',
     'PortunaAddon\\Widgets\\Edit\\BannerSlider' => $baseDir . '/includes/widgets/banner-slider/edit.php',
     'PortunaAddon\\Widgets\\Portuna_Widget_Base' => $baseDir . '/includes/portuna-widget-base.php',
 );

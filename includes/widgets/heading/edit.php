@@ -17,7 +17,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
         parent::__construct( $data, $args );
 
         $this->widgets_enqueue_styles();
-        add_action( 'elementor/frontend/after_enqueue_scripts', [ $this, 'widgets_enqueue_scripts' ] );
+        // add_action( 'elementor/frontend/after_enqueue_scripts', [ $this, 'widgets_enqueue_scripts' ] );
     }
 
     public function widgets_enqueue_styles() {
@@ -57,17 +57,12 @@ class AdvancedHeading extends Portuna_Widget_Base {
     ];
 
     /**
-     *
-     * return a dir
+     * Return a dir path.
      */
     public function side_render_dir() {
         return dirname( __FILE__ );
     }
 
-    /**
-     * Widget Name – The get_name() method is a simple one, you just need to
-     * return a widget name that will be used in the code.
-     */
     public function get_name() {
         return 'portuna_addon_advanced_heading';
     }
@@ -288,7 +283,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
                         'span' => __( 'span', 'portuna-addon' ),
                         'p'    => __( 'p', 'portuna-addon' ),
                     ],
-                    'default'   => 'h6',
+                    'default'   => 'p',
                     'condition' => [
                         'portuna_subtitle_switch' => 'yes',
                     ],
@@ -345,7 +340,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
             $this->add_responsive_control(
                 'portuna_title_distance',
                 [
-                    'label' => __( 'Title Distance', 'simpli' ),
+                    'label' => __( 'Title Distance', 'portuna-addon' ),
                     'type'  => Controls_Manager::SLIDER,
                     'range' => [
                         'px' => [
@@ -391,7 +386,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
                             'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_content_title' ],
                         ]
                     );
-//test
+
                 $this->end_controls_tab();
                 
                 $this->start_controls_tab(
@@ -482,15 +477,15 @@ class AdvancedHeading extends Portuna_Widget_Base {
             $this->add_control(
                 'portuna_subtitle_border_type',
                 [
-                    'label'     => __( 'Border Type', 'simpli' ),
+                    'label'     => __( 'Border Type', 'portuna-addon' ),
                     'type'      => Controls_Manager::SELECT,
                     'options'   => [
-                        'none'   => __( 'None', 'simpli' ),
-                        'solid'  => __( 'Solid', 'simpli' ),
-                        'double' => __( 'Double', 'simpli' ),
-                        'dotted' => __( 'Dotted', 'simpli' ),
-                        'dashed' => __( 'Dashed', 'simpli' ),
-                        'groove' => __( 'Groove', 'simpli' ),
+                        'none'   => __( 'None', 'portuna-addon' ),
+                        'solid'  => __( 'Solid', 'portuna-addon' ),
+                        'double' => __( 'Double', 'portuna-addon' ),
+                        'dotted' => __( 'Dotted', 'portuna-addon' ),
+                        'dashed' => __( 'Dashed', 'portuna-addon' ),
+                        'groove' => __( 'Groove', 'portuna-addon' ),
                     ],
                     'default'   => 'solid',
                     'selectors' => [
@@ -505,7 +500,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
             $this->add_responsive_control(
                 'portuna_subtitle_border_width',
                 [
-                    'label'      => esc_html__( 'Border Width', 'simpli' ),
+                    'label'      => esc_html__( 'Border Width', 'portuna-addon' ),
                     'type'       => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px' ],
                     'default'    => [
@@ -536,7 +531,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
             $this->add_responsive_control(
                 'portuna_subtitle_border_radius',
                 [
-                    'label'      => esc_html__( 'Border Radius', 'simpli' ),
+                    'label'      => esc_html__( 'Border Radius', 'portuna-addon' ),
                     'type'       => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px', '%' ],
                     'selectors'  => [
@@ -702,7 +697,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
                     $this->add_control(
                         'portuna_subtitle_border_color',
                         [
-                            'label'      => esc_html__( 'Border Color', 'simpli' ),
+                            'label'      => esc_html__( 'Border Color', 'portuna-addon' ),
                             'type'       => Controls_Manager::COLOR,
                             'default'    => '#212529',
                             'selectors'  => [
@@ -772,7 +767,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
                     $this->add_control(
                         'portuna_subtitle_border_color_hover',
                         [
-                            'label'      => esc_html__( 'Border Color', 'simpli' ),
+                            'label'      => esc_html__( 'Border Color', 'portuna-addon' ),
                             'type'       => Controls_Manager::COLOR,
                             'default'    => '',
                             'selectors'  => [

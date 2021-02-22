@@ -8,10 +8,22 @@ use \Elementor\Plugin;
 use \Elementor\Controls_Manager;
 
 use \PortunaAddon\Widgets\Portuna_Widget_Base;
+use \PortunaAddon\Helpers\ControlsManager;
 
 class BannerSlider extends Portuna_Widget_Base {
     public function __construct( $data = [], $args = null ) {
         parent::__construct( $data, $args );
+
+        $this->widgets_enqueue_styles();
+    }
+
+    public function widgets_enqueue_styles() {
+        wp_enqueue_style(
+            'banner-slider-style-layout1',
+            plugin_dir_url( dirname( __FILE__ ) ) . 'banner-slider/assets/css/layout1.min.css',
+            [],
+            null
+        );
     }
 
     /**
@@ -69,31 +81,36 @@ class BannerSlider extends Portuna_Widget_Base {
      */
     protected function _register_controls() {
         // Initialize contents tab.
-        $this->settings_content();
+        $this->settings_content1();
 
     }
 
-    public function settings_content() {
+    public function settings_content1() {
         /**
          * Start content section.
          */
         $this->start_controls_section(
-            'portuna_settings',
+            'portuna_banner_settings',
             [
-                'label' => __( 'Accordion Templates', 'portuna-addon' ),
+                'label' => __( 'Slide Items', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
 
             $this->add_control(
-                'portuna_text_color',
+                'portuna_banner_slides',
                 [
-                    'label'     => __( 'Text Color', 'simpli' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'default'   => '',
-                    'selectors' => [
-                        '{{WRAPPER}} .simpli-accordion--item-content > p' => 'color: {{VALUE}};',
-                    ],
+                    'label'     => __( 'Slides', 'portuna-addon' ),
+                    'type'      => Controls_Manager::HEADING,
+                ]
+            );
+
+            $this->add_control(
+                'portuna_banner_slides_elementor',
+                [
+                    'label'       => __( 'Slidess', 'portuna-addon' ),
+                    'type'        => ControlsManager::ELEMENTOR_AREA,
+                    'label_block' => true
                 ]
             );
 

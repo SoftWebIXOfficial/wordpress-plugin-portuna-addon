@@ -3,7 +3,11 @@
         "classmap": [
             "includes/base.php",
             "includes/portuna-widget-base.php",
-            "includes/helpers/widgets-manager.php"
+            "includes/scripts-manager.php",
+            "includes/helpers/widgets-manager.php",
+            "includes/helpers/controls-manager.php",
+            "includes/helpers/utils.php",
+            "includes/core/api.php"
         ],
         "psr-4": {
             "PortunaAddon\\": "includes/"
