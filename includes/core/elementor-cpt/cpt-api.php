@@ -17,8 +17,6 @@ class Cpt_Api extends Api {
         $content_key        = $this->request[ 'key' ];
         $content_type       = $this->request[ 'type' ];
 
-        //print_r( $content_type );
-
         $builder_post_title = 'widgets-content-' . $content_type . '-' . $content_key;
         $builder_post_id    = get_page_by_title( $builder_post_title, OBJECT, 'portuna_content' );
 

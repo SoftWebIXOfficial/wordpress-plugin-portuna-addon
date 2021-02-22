@@ -42,7 +42,7 @@ class ScriptsManager {
     public function register_styles() {
         // Vendors
         wp_enqueue_style(
-            'portuna-swiper',
+            'portuna-vendors-swiper',
             plugins_url( 'portuna-addon/assets/' ) . 'vendors/swiper/css/swiper.min.css',
             [],
             '6.4.15'
@@ -52,10 +52,18 @@ class ScriptsManager {
     public function register_scripts() {
         // Vendors
         wp_enqueue_script(
-            'portuna-swiper',
+            'portuna-vendors-swiper',
             plugins_url( 'portuna-addon/assets/' ) . 'vendors/swiper/js/swiper.min.js',
             [],
             '6.4.15',
+            true
+        );
+
+        wp_enqueue_script(
+            'portuna-vendors-main',
+            plugins_url( 'portuna-addon/assets/' ) . 'vendors/index.js',
+            [ 'jquery', 'imagesloaded' ],
+            null,
             true
         );
     }

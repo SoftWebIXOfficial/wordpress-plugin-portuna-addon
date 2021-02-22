@@ -74,4 +74,55 @@ class Utils {
     public static function render_tab_content( $content, $id ) {
         return str_replace( '.elementor-' . $id . ' ', '#elementor .elementor-' . $id . ' ', $content );
     }
+
+    /**
+     * Get carousel params
+     *
+     * @param array $args all arguments
+     * @param string $prefix prefix
+     * @param string $default if user don't choose option Change slider options
+     * @param array $additional other options (some hardcode)
+     *
+     * @return mixed data-attributes for swiper init
+     */
+    public static function get_carousel_data( $args = [], $prefix = '', $additional = [] ) {
+        $params_arr = [];
+
+        $all_params = [
+            'effect',
+            'loop',
+            'autoplay',
+            'speed',
+            'simulate_touch',
+            'initial_slide',
+            'direction',
+            'overflow',
+            'centeredSlides',
+            'lazy',
+            'slides',
+            'slides_lg',
+            'slides_md',
+            'slides_sm',
+            'slides_xs',
+            'spaces',
+            'spaces_lg',
+            'spaces_md',
+            'spaces_sm',
+            'spaces_xs'
+        ];
+
+        foreach ( $all_params as $param ) {
+            if ( isset( $args[ $prefix . $param ] ) && $args[ $prefix . $param ] ) {
+                $params_arr[ $param ] = $args[ $prefix . $param ];
+            }
+        }
+
+        $params_arr = wp_parse_args( $additional, $params_arr );
+
+        array_walk( $params_arr, function ( $val, $key ) use ( &$result ) {
+            $result .= "data-$key=$val ";
+        } );
+
+        return $result;
+    }
 }

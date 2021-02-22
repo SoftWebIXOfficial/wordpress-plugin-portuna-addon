@@ -6,6 +6,7 @@ defined( 'ABSPATH' ) || exit;
 
 use \Elementor\Plugin;
 use \Elementor\Controls_Manager;
+use \Elementor\Repeater;
 
 use \PortunaAddon\Widgets\Portuna_Widget_Base;
 use \PortunaAddon\Helpers\ControlsManager;
@@ -67,6 +68,10 @@ class BannerSlider extends Portuna_Widget_Base {
         return 'sm sm-accordion';
     }
 
+    public function get_keywords() {
+        return [ 'slides', 'carousel', 'slider', 'image' ];
+    }
+
     /**
      * Widget Categories – The get_categories method, lets you set the category
      * of the widget, return the category name as a string.
@@ -82,7 +87,7 @@ class BannerSlider extends Portuna_Widget_Base {
     protected function _register_controls() {
         // Initialize contents tab.
         $this->settings_content1();
-
+        $this->settings_content2();
     }
 
     public function settings_content1() {
@@ -90,7 +95,7 @@ class BannerSlider extends Portuna_Widget_Base {
          * Start content section.
          */
         $this->start_controls_section(
-            'portuna_banner_settings',
+            'portuna_banner_slide',
             [
                 'label' => __( 'Slide Items', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_CONTENT,
@@ -98,23 +103,89 @@ class BannerSlider extends Portuna_Widget_Base {
         );
 
             $this->add_control(
-                'portuna_banner_slides',
-                [
-                    'label'     => __( 'Slides', 'portuna-addon' ),
-                    'type'      => Controls_Manager::HEADING,
-                ]
-            );
-
-            $this->add_control(
                 'portuna_banner_slides_elementor',
                 [
-                    'label'       => __( 'Slidess', 'portuna-addon' ),
+                    'label'       => __( 'Slide', 'portuna-addon' ),
                     'type'        => ControlsManager::ELEMENTOR_AREA,
                     'label_block' => true
                 ]
             );
 
+            $repeater = new Repeater();
+
+            $repeater->add_control(
+                'slide_heading',
+                [
+                    'label'       => __( 'Title Item Slide', 'portuna-addon' ),
+                    'type'        => Controls_Manager::TEXT,
+                    'description' => __( 'Slide Heading', 'portuna-addon' ),
+                    'label_block' => true,
+                ]
+            );
+            
+            $this->add_control(
+                'slide_item',
+                [
+                    'label'       => __( 'Slide Items', 'portuna-addon' ),
+                    'type'        => Controls_Manager::REPEATER,
+                    'show_label'  => true,
+                    'default'     => [
+                        [
+                            'slide_heading' => __( 'Slide Heading 1', 'portuna-addon' ),
+                        ],
+                        [
+                            'slide_heading' => __( 'Slide Heading 2', 'portuna-addon' ),
+                        ],
+                        [
+                            'slide_heading' => __( 'Slide Heading 3', 'portuna-addon' ),
+                        ],
+                    ],
+                    'fields'      => $repeater->get_controls(),
+                    'title_field' => '{{{ slide_heading }}}',
+                ]
+            );
+
         $this->end_controls_section();
+    }
+
+    public function settings_content2() {
+
+        $this->start_controls_section(
+            'portuna_banner_settings',
+            [
+                'label' => __( 'Slider Settings', 'portuna-addon' ),
+                'tab'   => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+            $this->add_control(
+                'slide_nav',
+                [
+                    'label'              => __( 'Navigation', 'portuna-addon' ),
+                    'type'               => Controls_Manager::SELECT,
+                    'default'            => 'both',
+                    'options'            => [
+                        'both'    => __( 'Arrows & Dots', 'portuna-addon' ),
+                        'arrows'  => __( 'Arrows', 'portuna-addon' ),
+                        'dots'    => __( 'Dots', 'portuna-addon' ),
+                        'none'    => __( 'None', 'portuna-addon' ),
+                    ],
+                    'frontend_available' => true,
+                ]
+            );
+
+            $this->add_control(
+                'slide_loop',
+                [
+                    'label'        => __( 'Loop', 'portuna-addon' ),
+                    'type'         => Controls_Manager::SWITCHER,
+                    'default'      => 'yes',
+                    'return_value' => 'yes',
+                ]
+            );
+
+        $this->end_controls_section();
+
     }
 
     /**
