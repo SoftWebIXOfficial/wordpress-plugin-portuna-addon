@@ -47,6 +47,13 @@ class ScriptsManager {
             [],
             '6.4.15'
         );
+
+        wp_enqueue_style(
+            'portuna-vendors-main',
+            plugins_url( 'portuna-addon/assets/' ) . 'vendors/index.min.css',
+            [],
+            null
+        );
     }
 
     public function register_scripts() {
@@ -61,7 +68,7 @@ class ScriptsManager {
 
         wp_enqueue_script(
             'portuna-vendors-main',
-            plugins_url( 'portuna-addon/assets/' ) . 'vendors/index.js',
+            plugins_url( 'portuna-addon/assets/' ) . 'vendors/index.min.js',
             [ 'jquery', 'imagesloaded' ],
             null,
             true

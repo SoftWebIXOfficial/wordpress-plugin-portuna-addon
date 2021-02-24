@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.scss"],"names":[],"mappings":"AAGA,4BAAA,4BAGQ,WAAA","file":"index.min.css","sourcesContent":["/**\n    SWIPER.\n */\n.swiper {\n    .swiper-button-prev,\n    .swiper-button-next {\n        background: none;\n    }\n}"]}

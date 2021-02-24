@@ -5,9 +5,10 @@
     TABLE OF CONTENTS:
         1. VARS.
         1. SWIPER.
-        1. DEBOUNCE.
     --------------------------------------------------------------
  */
+//import debounce from 'lodash/debounce';
+
 ;
 (function ( $, wind ) {
     'use strict';
@@ -16,30 +17,7 @@
     /* VARS */
     /* ===================== */
     const swiperClass = document.getElementsByClassName( 'swiper-container' );
-    const swipers = [];
-
-    /* ===================== */
-    /* DEBOUNCE */
-    /* ===================== */
-    function debounce( func, wait, immediate ) {
-        let timeout;
-
-        return function () {
-            const context = this;
-            const args = arguments;
-
-            let later = function () {
-                timeout = null;
-                if ( ! immediate ) func.apply( context, args );
-            };
-
-            let callNow = immediate && !timeout;
-            clearTimeout( timeout );
-            timeout = setTimeout( later, wait );
-
-            if ( callNow ) func.apply( context, args );
-        };
-    };
+    const swipers     = [];
 
     /* ===================== */
     /* SWIPER */
@@ -57,36 +35,45 @@
         that.setAttribute( 'id', index );
 
         // ARROWS
-        const elArrows = $( that ).parent(),
+        const elArrows  = $(that).parent(),
               arrowPrev = findClosestDescendant( elArrows, '.swiper-button-prev', '.swiper' ),
               arrowNext = findClosestDescendant( elArrows, '.swiper-button-next', '.swiper' );
 
         // PAGINATION
-        const elPagination = that.parentNode.querySelector( ':not(.swiper-slide)  .swiper-pagination' );
+        const elPagination = that.parentNode.querySelector( ':not(.swiper-slide) .swiper-pagination' );
 
         if ( elPagination ) {
             elPagination.classList.add( 'swiper-pagination-' + index );
         }
 
         // GET PARAMS
-        const dataLoop           = that.getAttribute( 'data-loop' ),
-              dataSpeed          = that.getAttribute( 'data-speed' ),
+        const dataLoop           = !!that.getAttribute( 'data-loop' ),
+              dataInteraction    = !!that.getAttribute( 'data-interaction' ),
+              dataSpeed          = +that.getAttribute( 'data-speed' ),
               dataEffect         = that.getAttribute( 'data-effect' ),
               dataProgressMove   = that.getAttribute( 'data-progress-move' ),
-              dataCenterSlide    = that.getAttribute( 'data-center-slide' ),
-              dataInitialSlide   = that.getAttribute( 'data-initial-slide' ),
-              dataAutoplay       = that.getAttribute( 'data-autoplay' ),
-              dataAutoplayDelay  = that.getAttribute( 'data-autoplay-delay' ),
-              dataSimulateTouch  = that.getAttribute( 'data-simulate-touch' ),
+              dataCenterSlide    = !!that.getAttribute( 'data-center-slide' ),
+              dataInitialSlide   = +that.getAttribute( 'data-initial-slide' ),
+              dataAutoplayDelay  = +that.getAttribute( 'data-autoplay-delay' ),
+              dataSimulateTouch  = !!that.getAttribute( 'data-simulate-touch' ),
               dataDirection      = that.getAttribute( 'data-direction' ),
-              dataSlidePreview   = that.getAttribute( 'data-slides-preview' ),
+              dataSlidePreview   = +that.getAttribute( 'data-slides-preview' ),
               dataPaginationType = that.getAttribute( 'data-pagination-type' ),
-              dataSlideToClicked = that.getAttribute( 'data-slide-clicked' ),
-              dataSpaceBetween   = that.getAttribute( 'data-space' ),
-              dataAutoHeight     = that.getAttribute( 'data-auto-height' );
+              dataSlideToClicked = !!that.getAttribute( 'data-slide-clicked' ),
+              dataSpaceBetween   = +that.getAttribute( 'data-slides-space' ),
+              dataAutoHeight     = !!that.getAttribute( 'data-auto-height' );
 
-        let   dataLazy           = that.getAttribute( 'data-lazy' ),
-              dataMousewheel     = that.getAttribute( 'data-mousewheel' );
+        let   dataLazy           = +that.getAttribute( 'data-lazy' ),
+              dataMousewheel     = +that.getAttribute( 'data-mousewheel' );
+
+        let   dataAutoplay       = !!that.getAttribute( 'data-autoplay' );
+
+        if ( dataAutoplay ) {
+            dataAutoplay = {
+                delay: dataAutoplayDelay,
+                disableOnInteraction: dataInteraction
+            }
+        }
 
         if ( dataMousewheel ) {
             dataMousewheel = {
@@ -96,12 +83,11 @@
 
         if ( dataLazy ) {
             dataLazy = {
-                loadPrevNext: true,
-                loadPrevNextAmount: dataLazy,
+                loadPrevNext:          true,
+                loadPrevNextAmount:    dataLazy,
                 loadOnTransitionStart: true,
             }
         }
-
         // Responsive.
         const dataSlidePreview_xs = that.getAttribute( 'data-slides-preview-xs' ),
               dataSpaceBetween_xs = that.getAttribute( 'data-space-xs' );
@@ -109,68 +95,88 @@
         const breakpoints = {
             [ 0 ] : {
                 slidesPerView: dataSlidePreview_xs,
-                spaceBetween: dataSpaceBetween_xs,
+                spaceBetween:  dataSpaceBetween_xs,
             },
         };
 
+        // slidesPerColumn:       dataSlideColumn,
+        // loopAdditionalSlides:  4,
+        // roundLengths:          true,
+        // noSwiping:             true,
+        // noSwipingClass:        'swiper-no-swiping',
+        // watchSlidesVisibility: true,
+        // slideVisibleClass:     'swiper-slide-visible',
+        // breakpoints,
+        // coverflowEffect:       {
+        // rotate: 30,
+        //     slideShadows: false,
+        // },
+        // pagination:            {
+        //     el:           `.swiper-pagination-${ index }`,
+        //         type:         dataPaginationType,
+        //         clickable:    true,
+        //         renderBullet: ( index, className ) => {
+        //         if ( that.querySelector( '.swiper-pagination--numeric' ) ) {
+        //             return '<span class="' + className + '">' + ( ( index < 9 ) ? '0' : '' ) + ( index + 1 ) + '</span>';
+        //         }
+        //
+        //         return '<span class="' + className + '"></span>';
+        //     }
+        // },
+        // on:                   {
+        //     init: function() {
+        //
+        //     },
+        //     slideChangeTransitionStart: function() {
+        //
+        //     },
+        //     slideChange: function() {
+        //
+        //     },
+        //     lazyImageReady: function() {
+        //
+        //     },
+        // }
+
         // INIT
         swipers[ index ] = new Swiper( '.' + index, {
-            simulateTouch:       dataSimulateTouch,
-            loop:                dataLoop,
-            lazy:                dataLazy,
-            direction:           dataDirection,
-            speed:               dataSpeed,
-            autoplay:            dataEffect,
-            effect:              dataAutoplay,
-            centeredSlides:      dataCenterSlide,
-            initialSlide:        dataInitialSlide,
-            slidesPerView:       dataSlidePreview,
-            spaceBetween:        dataSpaceBetween,
-            slideToClickedSlide: dataSlideToClicked,
-            autoHeight:          dataAutoHeight,
-            mousewheel:          dataMousewheel,
-            loopAdditionalSlides: 4,
-            roundLengths:       true,
-            noSwiping:          true,
-            noSwipingClass: 'swiper-no-swiping',
+            autoplay:              dataAutoplay,
+            loop:                  dataLoop,
+            simulateTouch:         dataSimulateTouch,
+            effect:                dataEffect,
+            speed:                 dataSpeed,
+            direction:             dataDirection,
+            centeredSlides:        dataCenterSlide,
+            slidesPerView:         dataSlidePreview,
+            spaceBetween:          dataSpaceBetween,
+            loopAdditionalSlides:  4,
+            roundLengths:          true,
+            noSwiping:             true,
+            noSwipingClass:        'swiper-no-swiping',
             watchSlidesVisibility: true,
-            slideVisibleClass:   'swiper-slide-visible',
-            coverflowEffect:     {
-                rotate: 30,
-                slideShadows: false,
+            slideVisibleClass:     'swiper-slide-visible',
+            pagination:            {
+                el:                `.swiper-pagination-${ index }`,
+                type:              dataPaginationType,
+                clickable:         true,
             },
-            navigation: {
-                nextEl: arrowNext,
-                prevEl: arrowPrev,
+            navigation:            {
+                nextEl:            arrowNext,
+                prevEl:            arrowPrev,
             },
-            pagination: {
-                el:           `.swiper-pagination-${ index }`,
-                type:         dataPaginationType,
-                clickable:    true,
-                renderBullet: ( index, className ) => {
-                    if ( that.querySelector( '.swiper-pagination--numeric' ) ) {
-                        return '<span class="' + className + '">' + ( ( index < 9 ) ? '0' : '' ) + ( index + 1 ) + '</span>';
-                    }
-
-                    return '<span class="' + className + '"></span>';
-                }
-            },
-            breakpoints,
             on: {
-                init: function() {
-
-                },
-                slideChangeTransitionStart: function() {
-
-                },
-                slideChange: function() {
-
-                },
-                lazyImageReady: function() {
+                init: function () {
 
                 },
             }
         } );
+
+        $(that).hover(function() {
+            //console.log( 'hover' );
+            //$(this).swiper.autoplay.stop();
+        }, function() {
+            //$(this).swiper.autoplay.start();
+        });
     };
 
     window.initSwiper = target => {

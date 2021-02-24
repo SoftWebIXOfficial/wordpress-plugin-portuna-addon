@@ -35,6 +35,8 @@ const path = {
         assetsStyle:  './assets/css/',
         widgetsJS:    './includes/widgets/',
         widgetsStyle: './includes/widgets/',
+        vendorsJS:    './assets/vendors/',
+        vendorsStyle: './assets/vendors/',
         img:          './assets/img/'
     },
     src: {
@@ -43,6 +45,8 @@ const path = {
         assetsStyle:  './assets/css/**/*.scss',
         widgetsJS:    [ './includes/widgets/**/*.js', '!./includes/widgets/**/*.min.js' ],
         widgetsStyle: './includes/widgets/**/*.scss',
+        vendorsJS:    [ './assets/vendors/*.js', '!./assets/vendors/*.min.js' ],
+        vendorsStyle: './assets/vendors/*.scss',
         img:          './assets/img/**/*.{png,jpg,jpeg,gif}'
     },
     helpers: {
@@ -89,6 +93,26 @@ const compressedAssetsCSS = () => {
         .pipe( gulp.dest( path.output.assetsStyle ) );
 }
 
+// Vendors compiled.
+const compressedVendorsJS = () => {
+    return gulp.src( path.src.vendorsJS )
+        .pipe( gulpif( ! util.env.production, sourcemaps.init() ) )
+        .pipe( babel( {
+            presets: [ '@babel/env' ]
+        } ) )
+        .pipe( gulpif( util.env.production,
+            uglify({
+                compress: {
+                    drop_debugger: false
+                }
+            } )
+        ) )
+        .pipe( rename( { suffix: '.min' } ) )
+        .pipe( gulpif( ! util.env.production, sourcemaps.write('.') ) )
+        .pipe( strip() )
+        .pipe( gulp.dest( path.output.vendorsJS ) );
+}
+
 // Minify plugin/admin JS.
 const compressedAssetsJS = () => {
     return gulp.src( path.src.assetsJS )
@@ -107,6 +131,30 @@ const compressedAssetsJS = () => {
         .pipe( gulpif( ! util.env.production, sourcemaps.write('.') ) )
         .pipe( strip() )
         .pipe( gulp.dest( path.output.assetsJS ) );
+}
+
+// Vendors compiled.
+const compressedVendorsCSS = () => {
+    return gulp.src( path.src.vendorsStyle )
+        .pipe( gulpif( ! util.env.production, sourcemaps.init() ) )
+        .pipe( plumber( err => {
+            return notify().write(err);
+        } ) )
+        .pipe( sass( {
+            outputStyle: 'compressed',
+            includePaths: [ 'node_modules' ],
+        } ).on( 'error', err => {
+            this.emit( 'end' );
+            return notify().write( err );
+        } ) )
+        .pipe( autoprefixer( {
+            browsers: [ 'last 2 version', '> 1%', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4' ],
+            cascade: true,
+        } ) )
+        .pipe( cleanCSS( { compatibility: 'ie8' } ) )
+        .pipe( rename( { suffix: '.min' } ) )
+        .pipe( gulpif( ! util.env.production, sourcemaps.write('.') ) )
+        .pipe( gulp.dest( path.output.vendorsStyle ) );
 }
 
 // Minify widgets CSS.
@@ -210,7 +258,7 @@ gulp.task( 'build', series(
     cleanUpFinal,
     generatePotFile,
     [ 'cleanCache' ]
-));
+) );
 
 // Developing Task.
 gulp.task( 'dev', () => {
@@ -218,6 +266,8 @@ gulp.task( 'dev', () => {
     watch( path.src.assetsStyle, series( compressedAssetsCSS ) );
     watch( path.src.widgetsJS, series( compressedWidgetsJS ) );
     watch( path.src.widgetsStyle, series( compressedWidgetsCSS ) );
+    watch( path.src.vendorsJS, series( compressedVendorsJS ) );
+    watch( path.src.vendorsStyle, series( compressedVendorsCSS ) );
     watch( path.src.img, series( buildImages ) );
-});
+} );
 
