@@ -32,10 +32,16 @@ class BannerSlider extends Portuna_Widget_Base {
      * Used to allow the user to customize items.
      */
     private static $css_map = [
-        'swiper_arrows'       => ' .swiper-button-prev::after, .swiper-button-next::after',
-        'swiper_arrows_hover' => ' .swiper-button-prev:hover::after, .swiper-button-next:hover::after',
-        'swiper_arrow_left'   => ' .swiper-button-prev',
-        'swiper_arrow_right'  => ' .swiper-button-next',
+        'swiper_arrows_together'    => ' .swiper-arrows-together',
+        'swiper_separator'          => ' .swiper-arrow-separator',
+        'swiper_separator_icon'     => ' .swiper-arrows-together > i',
+        'swiper_separator_svg'      => ' .swiper-arrows-together > svg, .swiper-arrows-together > svg > path, .swiper-arrows-together > svg > g',
+        'swiper_arrows'             => ' .swiper-button-prev::after, .swiper-button-next::after',
+        'swiper_arrows_hover'       => ' .swiper-button-prev:hover::after, .swiper-button-next:hover::after',
+        'swiper_arrow_left'         => ' .swiper-button-prev',
+        'swiper_arrow_right'        => ' .swiper-button-next',
+        'swiper_custom_arrows_icon' => ' .swiper-button-custom-prev > i, .swiper-button-custom-next > i',
+        'swiper_custom_arrows_svg'  => ' .swiper-button-custom-prev > svg, .swiper-button-custom-next > svg',
     ];
 
     /**
@@ -213,7 +219,7 @@ class BannerSlider extends Portuna_Widget_Base {
                     'type'             => Controls_Manager::ICONS,
                     'fa4compatibility' => 'slide_arrow_prev_icon_pro',
                     'default'	  	   => [
-                        'value'	  => '',
+                        'value'	  => 'fas fa-long-arrow-alt-left',
                     ],
                     'condition'        => [
                         'slide_nav'         => [ 'both', 'arrows' ],
@@ -229,7 +235,7 @@ class BannerSlider extends Portuna_Widget_Base {
                     'type'             => Controls_Manager::ICONS,
                     'fa4compatibility' => 'slide_arrow_next_icon_pro',
                     'default'	  	   => [
-                        'value'	  => '',
+                        'value'	  => 'fas fa-long-arrow-alt-right',
                     ],
                     'condition'        => [
                         'slide_nav'         => [ 'both', 'arrows' ],
@@ -267,7 +273,9 @@ class BannerSlider extends Portuna_Widget_Base {
                         'size'  => 15,
                     ],
                     'selectors' => [
-                        '{{WRAPPER}}' . self::$css_map[ 'swiper_arrows' ] => 'font-size: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_arrows' ]             => 'font-size: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_custom_arrows_icon' ] => 'font-size: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_custom_arrows_svg' ]  => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
                     ],
                     'condition' => [
                         'slide_nav'      => [ 'both', 'arrows' ],
@@ -295,9 +303,9 @@ class BannerSlider extends Portuna_Widget_Base {
             $this->add_control(
                 'slide_arrows_space_pro',
                 [
-                    'label'     => __( 'Arrows Space', 'portuna-addon' ),
+                    'label'     => __( 'Arrows Between Space', 'portuna-addon' ),
                     'type'       => Controls_Manager::SLIDER,
-                    'size_units' => [ 'px', '%', 'em', 'rem' ],
+                    'size_units' => [ 'px', '%' ],
                     'range'  => [
                         'px' => [
                             'min' => 0,
@@ -313,12 +321,13 @@ class BannerSlider extends Portuna_Widget_Base {
                         'size'  => 15,
                     ],
                     'selectors' => [
-                        '{{WRAPPER}}' . self::$css_map[ 'swiper_arrow_left' ] => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: {{SIZE}}{{UNIT}};',
-                        '{{WRAPPER}}' . self::$css_map[ 'swiper_arrow_right' ] => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_arrow_left' ]  => 'margin-right: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_arrow_right' ] => 'margin-left: {{SIZE}}{{UNIT}};',
                     ],
                     'condition' => [
-                        'slide_nav'         => [ 'both', 'arrows' ],
-                        'slide_arrows_type' => 'custom-pro',
+                        'slide_nav'                 => [ 'both', 'arrows' ],
+                        'slide_arrows_type'         => 'custom-pro',
+                        'slide_arrows_distance_pro' => 'together',
                     ],
                 ]
             );
@@ -344,13 +353,151 @@ class BannerSlider extends Portuna_Widget_Base {
                         'size'  => 10,
                     ],
                     'selectors' => [
-                        '{{WRAPPER}}' . self::$css_map[ 'swiper_arrow_left' ] => 'left: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_arrow_left' ]  => 'left: {{SIZE}}{{UNIT}};',
                         '{{WRAPPER}}' . self::$css_map[ 'swiper_arrow_right' ] => 'right: {{SIZE}}{{UNIT}};',
                     ],
                     'condition' => [
                         'slide_nav'         => [ 'both', 'arrows' ],
-                        'slide_arrows_type' => 'arrows'
+                        'slide_arrows_type' => [ 'arrows', 'custom-pro' ],
+                        'slide_arrows_distance_pro!' => 'together',
                     ]
+                ]
+            );
+
+            $this->add_control(
+                'slide_arrows_separator_type_pro',
+                [
+                    'label'     => __( 'Separator Type', 'portuna-addon' ),
+                    'type'      => Controls_Manager::CHOOSE,
+                    'default'   => 'text',
+                    'toggle'    => false,
+                    'options'   => [
+                        'text'      => [
+                            'title' => __( 'Text', 'portuna-addon' ),
+                            'icon'  => 'eicon-text',
+                        ],
+                        'icon'     => [
+                            'title' => __( 'Icon', 'portuna-addon' ),
+                            'icon'  => 'eicon-star-o',
+                        ]
+                    ],
+                    'condition' => [
+                        'slide_nav'                 => [ 'both', 'arrows' ],
+                        'slide_arrows_type'         => 'custom-pro',
+                        'slide_arrows_distance_pro' => 'together',
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'slide_arrows_separator_text_pro',
+                [
+                    'label'           => __( 'Separator Text', 'portuna-addon' ),
+                    'type'            => Controls_Manager::TEXT,
+                    'default'         => __( '|', 'portuna-addon' ),
+                    'label_block'     => true,
+                    'condition'       => [
+                        'slide_nav'                       => [ 'both', 'arrows' ],
+                        'slide_arrows_type'               => 'custom-pro',
+                        'slide_arrows_distance_pro'       => 'together',
+                        'slide_arrows_separator_type_pro' => 'text',
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'slide_arrows_separator_color_pro',
+                [
+                    'label'           => __( 'Separator Color', 'portuna-addon' ),
+                    'type'            => Controls_Manager::COLOR,
+                    'default'         => '',
+                    'selectors'       => [
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_separator' ] => 'color: {{VALUE}};',
+                    ],
+                    'condition'       => [
+                        'slide_nav'                       => [ 'both', 'arrows' ],
+                        'slide_arrows_type'               => 'custom-pro',
+                        'slide_arrows_distance_pro'       => 'together',
+                        'slide_arrows_separator_type_pro' => 'text',
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'slide_arrows_separator_icons_pro',
+                [
+                    'label'            => __( 'Separator Icon', 'portuna-addon' ),
+                    'type'             => Controls_Manager::ICONS,
+                    'fa4compatibility' => 'slide_arrows_separator_icon_pro',
+                    'default'	  	   => [
+                        'value'	       => 'fas fa-slash',
+                    ],
+                    'condition'        => [
+                        'slide_nav'                       => [ 'both', 'arrows' ],
+                        'slide_arrows_type'               => 'custom-pro',
+                        'slide_arrows_distance_pro'       => 'together',
+                        'slide_arrows_separator_type_pro' => 'icon',
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'slide_arrows_separator_icon_color_pro',
+                [
+                    'label'           => __( 'Separator Icon Color', 'portuna-addon' ),
+                    'type'            => Controls_Manager::COLOR,
+                    'default'         => '',
+                    'selectors'       => [
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_separator_icon' ] => 'color: {{VALUE}};',
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_separator_svg' ]  => 'fill: {{VALUE}};',
+                    ],
+                    'condition'       => [
+                        'slide_nav'                       => [ 'both', 'arrows' ],
+                        'slide_arrows_type'               => 'custom-pro',
+                        'slide_arrows_distance_pro'       => 'together',
+                        'slide_arrows_separator_type_pro' => 'icon',
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'slide_arrows_separator_icon_size_pro',
+                [
+                    'label'      => __( 'Separator Icon Size', 'portuna-addon' ),
+                    'type'       => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%', 'em', 'rem' ],
+                    'range'      => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                        '%' => [
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                        'em' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                        'rem' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default'   => [
+                        'unit'  => 'px',
+                        'size'  => 16,
+                    ],
+                    'selectors'       => [
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_separator_icon' ] => 'font-size: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_separator_svg' ]  => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                    ],
+                    'condition'       => [
+                        'slide_nav'                       => [ 'both', 'arrows' ],
+                        'slide_arrows_type'               => 'custom-pro',
+                        'slide_arrows_distance_pro'       => 'together',
+                        'slide_arrows_separator_type_pro' => 'icon',
+                    ],
                 ]
             );
 
@@ -372,15 +519,16 @@ class BannerSlider extends Portuna_Widget_Base {
                         ]
                     ],
                     'condition' => [
-                        'slide_nav'         => [ 'both', 'arrows' ],
-                        'slide_arrows_type' => 'custom-pro'
+                        'slide_nav'                 => [ 'both', 'arrows' ],
+                        'slide_arrows_type'         => 'custom-pro',
+                        'slide_arrows_distance_pro' => 'together',
                     ],
                     'separator' => 'before'
                 ]
             );
             
             $this->add_responsive_control(
-                'slide_arrows_position_hr_offset',
+                'slide_arrows_position_hr_offset_left',
                 [
                     'label'  => __( 'Offset (Horizontal)', 'portuna-addon' ),
                     'type'   => Controls_Manager::SLIDER,
@@ -408,12 +556,55 @@ class BannerSlider extends Portuna_Widget_Base {
                     ],
                     'size_units' => [ 'px', '%', 'vw', 'vh' ],
                     'selectors'  => [
-                        'body:not(.rtl) {{WRAPPER}}' => 'left: {{SIZE}}{{UNIT}}',
-                        'body.rtl {{WRAPPER}}' => 'right: {{SIZE}}{{UNIT}}',
+                        'body:not(.rtl) {{WRAPPER}}' . self::$css_map[ 'swiper_arrows_together' ]  => 'left: {{SIZE}}{{UNIT}}',
+                        'body.rtl {{WRAPPER}}' . self::$css_map[ 'swiper_arrows_together' ]        => 'right: {{SIZE}}{{UNIT}}',
                     ],
                     'condition' => [
-                        'slide_nav'         => [ 'both', 'arrows' ],
-                        'slide_arrows_type' => 'custom-pro'
+                        'slide_nav'                            => [ 'both', 'arrows' ],
+                        'slide_arrows_type'                    => 'custom-pro',
+                        'slide_arrows_distance_pro'            => 'together',
+                        'slide_arrows_position_hr_orientation' => 'left',
+                    ]
+                ]
+            );
+
+            $this->add_responsive_control(
+                'slide_arrows_position_hr_offset_right',
+                [
+                    'label'  => __( 'Offset (Horizontal)', 'portuna-addon' ),
+                    'type'   => Controls_Manager::SLIDER,
+                    'range'  => [
+                        'px' => [
+                            'min'  => -1000,
+                            'max'  => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                        'vw' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                        'vh' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                    ],
+                    'default'    => [
+                        'size' => '0',
+                    ],
+                    'size_units' => [ 'px', '%', 'vw', 'vh' ],
+                    'selectors'  => [
+                        'body:not(.rtl) {{WRAPPER}}' . self::$css_map[ 'swiper_arrows_together' ]  => 'right: {{SIZE}}{{UNIT}}',
+                        'body.rtl {{WRAPPER}}' . self::$css_map[ 'swiper_arrows_together' ]        => 'left: {{SIZE}}{{UNIT}}',
+                    ],
+                    'condition' => [
+                        'slide_nav'                            => [ 'both', 'arrows' ],
+                        'slide_arrows_type'                    => 'custom-pro',
+                        'slide_arrows_distance_pro'            => 'together',
+                        'slide_arrows_position_hr_orientation' => 'right',
                     ]
                 ]
             );
@@ -428,22 +619,23 @@ class BannerSlider extends Portuna_Widget_Base {
                     'options' => [
                         'top'    => [
                             'title' => __( 'Top', 'portuna-addon' ),
-                            'icon' => 'eicon-v-align-top',
+                            'icon'  => 'eicon-v-align-top',
                         ],
                         'bottom' => [
                             'title' => __( 'Bottom', 'portuna-addon' ),
-                            'icon' => 'eicon-v-align-bottom',
+                            'icon'  => 'eicon-v-align-bottom',
                         ]
                     ],
                     'condition' => [
-                        'slide_nav'         => [ 'both', 'arrows' ],
-                        'slide_arrows_type' => 'custom-pro'
+                        'slide_nav'                 => [ 'both', 'arrows' ],
+                        'slide_arrows_type'         => 'custom-pro',
+                        'slide_arrows_distance_pro' => 'together',
                     ]
                 ]
             );
 
             $this->add_responsive_control(
-                'slide_arrows_position_vr_offset',
+                'slide_arrows_position_vr_offset_top',
                 [
                     'label'  => __( 'Offset (Vertical)', 'portuna-addon' ),
                     'type'   => Controls_Manager::SLIDER,
@@ -471,12 +663,53 @@ class BannerSlider extends Portuna_Widget_Base {
                     ],
                     'size_units' => [ 'px', '%', 'vw', 'vh' ],
                     'selectors'  => [
-                        'body:not(.rtl) {{WRAPPER}}' => 'left: {{SIZE}}{{UNIT}}',
-                        'body.rtl {{WRAPPER}}' => 'right: {{SIZE}}{{UNIT}}',
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_arrows_together' ] => 'top: {{SIZE}}{{UNIT}}',
                     ],
                     'condition' => [
-                        'slide_nav'         => [ 'both', 'arrows' ],
-                        'slide_arrows_type' => 'custom-pro'
+                        'slide_nav'                            => [ 'both', 'arrows' ],
+                        'slide_arrows_type'                    => 'custom-pro',
+                        'slide_arrows_distance_pro'            => 'together',
+                        'slide_arrows_position_vr_orientation' => 'top',
+                    ]
+                ]
+            );
+
+            $this->add_responsive_control(
+                'slide_arrows_position_vr_offset_bottom',
+                [
+                    'label'  => __( 'Offset (Vertical)', 'portuna-addon' ),
+                    'type'   => Controls_Manager::SLIDER,
+                    'range'  => [
+                        'px' => [
+                            'min' => -1000,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                        'vw' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                        'vh' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                    ],
+                    'default'    => [
+                        'size' => '0',
+                    ],
+                    'size_units' => [ 'px', '%', 'vw', 'vh' ],
+                    'selectors'  => [
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_arrows_together' ] => 'bottom: {{SIZE}}{{UNIT}}',
+                    ],
+                    'condition' => [
+                        'slide_nav'                            => [ 'both', 'arrows' ],
+                        'slide_arrows_type'                    => 'custom-pro',
+                        'slide_arrows_distance_pro'            => 'together',
+                        'slide_arrows_position_vr_orientation' => 'bottom',
                     ]
                 ]
             );
@@ -500,7 +733,9 @@ class BannerSlider extends Portuna_Widget_Base {
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'swiper_arrows' ] => 'color: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_arrows' ]             => 'color: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_custom_arrows_icon' ] => 'color: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_custom_arrows_svg' ]  => 'fill: {{VALUE}};',
                             ],
                             'condition' => [
                                 'slide_nav'  => [ 'both', 'arrows' ],

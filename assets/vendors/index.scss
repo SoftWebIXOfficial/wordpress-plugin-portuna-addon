@@ -5,5 +5,31 @@
     .swiper-button-prev,
     .swiper-button-next {
         background: none;
+
+        &.swiper-button-custom-prev,
+        &.swiper-button-custom-next {
+            &::after {
+                display: none;
+            }
+        }
+    }
+
+    .swiper-arrows-together {
+        position: absolute;
+        display: flex;
+
+        .swiper-button-custom-prev,
+        .swiper-button-custom-next {
+            position: relative;
+            display: flex;
+            width: auto;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+        }
     }
 }
