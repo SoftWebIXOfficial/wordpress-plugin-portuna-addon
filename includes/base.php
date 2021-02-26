@@ -122,6 +122,7 @@ class Base {
     public function elementor_init() {
         include_once PORTUNA_PLUGIN_PATH . 'includes/core/elementor-cpt/init.php';
         new \PortunaAddon\Core\Cpt\Init();
+        new \PortunaAddon\Modules\Mega_Menu();
     }
 
     public function register_category( $elements_manager ) {

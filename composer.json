@@ -7,6 +7,9 @@
             "includes/helpers/widgets-manager.php",
             "includes/helpers/controls-manager.php",
             "includes/helpers/utils.php",
+            "includes/modules/mega-menu/mega-menu.php",
+            "includes/modules/mega-menu/mega-menu-edit-walker.php",
+            "includes/modules/mega-menu/mega-menu-nav-walker.php",
             "includes/core/api.php"
         ],
         "psr-4": {
