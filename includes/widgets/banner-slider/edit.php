@@ -45,7 +45,6 @@ class BannerSlider extends Portuna_Widget_Base {
     ];
 
     /**
-     *
      * return a dir
      */
     public function side_render_dir() {

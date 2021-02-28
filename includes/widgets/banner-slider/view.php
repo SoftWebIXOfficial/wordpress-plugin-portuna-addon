@@ -40,7 +40,7 @@ $items = $slide_item;
             <div class="swiper-wrapper">
                 <?php foreach ( $items as $key => $item ) : ?>
                     <div class="swiper-slide">
-                        <h1 style="text-align: center;"><?php echo $key; ?></h1>
+                        <?php echo \PortunaAddon\Helpers\Utils::parse_widget_content( $portuna_banner_slides_elementor, $this->get_id(), $key ); ?>
                     </div>
                 <?php endforeach; ?>
             </div>
