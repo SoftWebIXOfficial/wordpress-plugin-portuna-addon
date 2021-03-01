@@ -15,16 +15,16 @@ class BannerSlider extends Portuna_Widget_Base {
     public function __construct( $data = [], $args = null ) {
         parent::__construct( $data, $args );
 
-        $this->widgets_enqueue_styles();
-    }
-
-    public function widgets_enqueue_styles() {
-        wp_enqueue_style(
+        wp_register_style(
             'banner-slider-style-layout1',
             plugin_dir_url( dirname( __FILE__ ) ) . 'banner-slider/assets/css/layout1.min.css',
             [],
             null
         );
+    }
+
+    public function get_style_depends() {
+        return [ 'banner-slider-style-layout1' ];
     }
 
     /**

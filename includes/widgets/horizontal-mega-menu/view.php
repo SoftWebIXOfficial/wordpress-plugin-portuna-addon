@@ -8,8 +8,8 @@ $this->add_render_attribute( 'wrapper', 'class', 'portuna-addon--horizontal-mega
 $nav_settings = [
     'menu'              => $menu_list,
     'menu_class'        => '',
-    'container_class'   => 'portuna-addon-menu-container',
-    'items_wrap'        => '<div class="portuna-addon-menu__wrapper">%3$s</div>',
+    'container_class'   => 'portuna-addon--horizontal-mega-menu--content',
+    'items_wrap'        => '<ul class="portuna-addon-menu-items">%3$s</ul>',
     'before'            => '',
     'after'             => '',
     'walker'            => new PortunaAddon\Modules\Mega_Menu_Nav_Walker( $args, true ),

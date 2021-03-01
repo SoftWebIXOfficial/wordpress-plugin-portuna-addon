@@ -14,10 +14,10 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
     private $item_settings = null;
     private $mega_menu_is  = false;
 
-//     public function __construct( $settings, $mega_menu_is = false ) {
-//         $this->settings     = $settings;
-//         $this->mega_menu_is = $mega_menu_is;
-//     }
+    public function __construct( $settings, $mega_menu_is = false ) {
+        $this->settings     = $settings;
+        $this->mega_menu_is = $mega_menu_is;
+    }
 
     /**
      * Starts the list before the elements are added.
@@ -31,7 +31,6 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
      * @param stdClass $args   Not used.
      */
     public function start_lvl( &$output, $depth = 0, $args = array() ) {
-        var_dump( 'test' );
         if ( 'mega' === $this->get_item_type() ) {
             return;
         }
@@ -46,7 +45,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
 
         $indent = str_repeat( $t, $depth );
 
-        $classes     = [ 'portuna-addon-sub-menu' ];
+        $classes     = [ 'portuna-addon-menu-items', 'portuna-addon-sub-menu' ];
         $class_names = join( ' ', apply_filters( 'nav_menu_submenu_css_class', $classes, $args, $depth ) );
         $class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
 
@@ -99,6 +98,13 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
     public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
         $this->item_settings = null;
         $this->set_item_type( $item->ID, $depth );
+
+//         $builder_post_title = 'widgets-content-widget-' . 529 . '-' . 3;
+//         $builder_post_id    = get_page_by_title( $builder_post_title, OBJECT, 'portuna_content' );
+
+//         var_dump( $builder_post_id );
+
+        $item_settings = $this->get_settings( $item->ID );
 
         if ( 'mega' === $this->get_item_type() && 0 < $depth ) {
             return;
@@ -241,7 +247,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
          * @param stdClass $args  An object of wp_nav_menu() arguments.
          * @param int      $depth Depth of menu item. Used for padding.
          */
-        $nav_title   = apply_filters( 'nav_menu_item_title', $title, $item, $args, $depth );
+        $nav_title    = apply_filters( 'nav_menu_item_title', $title, $item, $args, $depth );
 
         $render_icon  = $this->renderIcon( $settings );
         $render_badge = $this->renderBadge( $settings );
@@ -262,21 +268,24 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
 
         $is_elementor = ( isset( $_GET[ 'elementor-preview' ] ) ) ? true : false;
 
-        $mega_item = get_post_meta( $item->ID, 'portuna-addon-menu-item', true );
+        $mega_item    = get_post_meta( $item->ID, 'portuna-addon-menu-item', true );
+        $mega_item    = isset( $mega_item[ 'mega_menu_id' ] ) ? $mega_item[ 'mega_menu_id' ] : '';
+        $mega_item_id = isset( $mega_item->ID ) ? $mega_item->ID : '';
 
-        $mega_item = isset( $mega_item[ 'mega_menu_id' ] ) ? $mega_item[ 'mega_menu_id' ] : '';
-
-        if ( $this->mega_menu_is && $this->is_mega_enabled( $item->ID ) && ! $is_elementor ) {
+        if ( $this->mega_menu_is && $this->is_mega_enabled( $item->ID ) && ! $is_elementor && $mega_item_id != '' ) {
             $content = '';
 
             if ( class_exists( 'Elementor\Plugin' ) ) {
-                $elementor = Elementor\Plugin::instance();
-                $content   = $elementor->frontend->get_builder_content_for_display( $mega_item );
+                $elementor = \Elementor\Plugin::instance();
+                $content   = $elementor->frontend->get_builder_content_for_display( $mega_item_id ); //490
             }
 
-            $content = do_shortcode( $content );
+            $content      = do_shortcode( $content );
 
-            $item_output .= sprintf( '<div class="portuna-addon-sub-mega-menu" data-template-id="%s">%s</div>', $mega_item, $content );
+            $item_output .= sprintf( '<div class="portuna-addon-sub-mega-menu" data-template-id="%s">%s</div>', $mega_item_id, $content );
+
+            // Fixed displaying mega and sub menu together.
+            $this->set_item_type( $item->ID, $depth );
         }
 
         /**
@@ -309,7 +318,6 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
      * @param stdClass $args   An object of wp_nav_menu() arguments.
      */
     public function end_el( &$output, $item, $depth = 0, $args = [] ) {
-
         if ( 'mega' === $this->get_item_type() && 0 < $depth ) {
             return;
         }
@@ -318,7 +326,6 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
         $item_output = apply_filters( 'jet-menu/main-walker/end-el', $item_output, $item, $this, $depth, $args );
 
         $output .= $item_output;
-
     }
 
     /**
@@ -328,7 +335,6 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
      * @return void
      */
     public function modify_menu_item_classes( &$item, $index ) {
-
         if ( 0 === $index && 'menu-item' !== $item ) {
             return;
         }
@@ -343,7 +349,6 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
      * @param integer $depth   Current menu Item depth
      */
     public function set_item_type( $item_id = 0, $depth = 0 ) {
-
         if ( 0 < $depth ) {
             return;
         }
@@ -355,7 +360,6 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
         }
 
         wp_cache_set( 'item-type', $item_type, 'portuna-addon' );
-
     }
 
     /**
@@ -373,7 +377,6 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
      * @return boolean
      */
     public function is_mega_enabled( $item_id = 0 ) {
-
         $item_settings = $this->get_settings( $item_id );
 
         return ( $this->mega_menu_is && isset( $item_settings[ 'mega_menu_checkbox' ] ) && true == $item_settings[ 'mega_menu_checkbox' ] );

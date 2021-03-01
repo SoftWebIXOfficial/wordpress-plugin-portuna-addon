@@ -15,7 +15,16 @@ class HorizontalMegaMenu extends Portuna_Widget_Base {
     public function __construct( $data = [], $args = null ) {
         parent::__construct( $data, $args );
 
-        //$this->widgets_enqueue_styles();
+        wp_register_style(
+            'horizontal-mega-menu-style-layout1',
+            plugin_dir_url( dirname( __FILE__ ) ) . 'horizontal-mega-menu/assets/css/layout1.min.css',
+            [],
+            null
+        );
+    }
+
+    public function get_style_depends() {
+        return [ 'horizontal-mega-menu-style-layout1' ];
     }
 
     /**

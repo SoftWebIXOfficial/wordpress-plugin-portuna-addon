@@ -163,8 +163,11 @@ class Mega_Menu {
      */
     public function update_custom_nav_fields( $menu_id, $menu_item_db_id, $args ) {
         extract( shortcode_atts( [
-            'mega_menu_id'  =>  false,
-        ], get_post_meta( $menu_item_db_id, 'portuna-addon-menu', true ) ) );
+            'mega_menu_id'  =>  null,
+        ], get_post_meta( $menu_item_db_id, 'portuna-addon-menu-item', true ) ) );
+
+        $builder_post_title = 'widgets-content-editor-' . $menu_item_db_id;
+        $builder_post_id    = get_page_by_title( $builder_post_title, OBJECT, 'portuna_content' );
 
         $custom_field_args = [
             'menu_type_icon'        =>  isset( $_REQUEST[ 'menu-item-icon-type' ][ $menu_item_db_id ] ) ? $_REQUEST[ 'menu-item-icon-type' ][ $menu_item_db_id ] : 'icon_none',
@@ -176,9 +179,10 @@ class Mega_Menu {
             'menu_badge_color'      =>  isset( $_REQUEST[ 'menu-item-badge-color' ][ $menu_item_db_id ] ) ? $_REQUEST[ 'menu-item-badge-color' ][ $menu_item_db_id ] : '',
             'menu_badge_bgcolor'    =>  isset( $_REQUEST[ 'menu-item-badge-bgcolor' ][ $menu_item_db_id ] ) ? $_REQUEST[ 'menu-item-badge-bgcolor' ][ $menu_item_db_id ] : '',
             'mega_menu_checkbox'    =>  isset( $_REQUEST[ 'menu-item-mega-menu' ][ $menu_item_db_id ] ) ? boolval( $_REQUEST[ 'menu-item-mega-menu' ][ $menu_item_db_id ] ) : false,
+            'mega_menu_id'          => $builder_post_id
         ];
 
-        update_post_meta( $menu_item_db_id, 'portuna-addon-menu', $custom_field_args );
+        update_post_meta( $menu_item_db_id, 'portuna-addon-menu-item', $custom_field_args );
     }
 
     public function __construct() {

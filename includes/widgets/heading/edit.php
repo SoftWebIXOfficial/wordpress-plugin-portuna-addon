@@ -16,13 +16,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
     public function __construct( $data = [], $args = null ) {
         parent::__construct( $data, $args );
 
-        $this->widgets_enqueue_styles();
-        // add_action( 'elementor/frontend/after_enqueue_scripts', [ $this, 'widgets_enqueue_scripts' ] );
-    }
-
-    public function widgets_enqueue_styles() {
-        // Styles enqueue.
-        wp_enqueue_style(
+        wp_register_style(
             'advanced-heading-style-layout1',
             plugin_dir_url( dirname( __FILE__ ) ) . 'heading/assets/css/layout1.min.css',
             [],
@@ -30,15 +24,19 @@ class AdvancedHeading extends Portuna_Widget_Base {
         );
     }
 
-    public function widgets_enqueue_scripts() {
-        // Scripts enqueue.
-        wp_enqueue_script(
-            'advanced-heading-script-layout1',
-            plugin_dir_url( dirname( __FILE__ ) ) . 'heading/assets/js/layout1.min.js',
-            [ 'jquery' ],
-            null
-        );
+    public function get_style_depends() {
+        return [ 'advanced-heading-style-layout1' ];
     }
+
+//     public function widgets_enqueue_scripts() {
+//         // Scripts enqueue.
+//         wp_enqueue_script(
+//             'advanced-heading-script-layout1',
+//             plugin_dir_url( dirname( __FILE__ ) ) . 'heading/assets/js/layout1.min.js',
+//             [ 'jquery' ],
+//             null
+//         );
+//     }
 
     /**
      * Map the widget controls.

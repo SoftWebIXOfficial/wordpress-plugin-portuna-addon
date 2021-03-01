@@ -48,7 +48,7 @@ class Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit {
             'menu_badge_color'      =>  '',
             'menu_badge_bgcolor'    =>  '',
             'mega_menu_checkbox'    =>  false,
-        ], get_post_meta( $item_id, 'portuna-addon-menu', true ) ) );
+        ], get_post_meta( $item_id, 'portuna-addon-menu-item', true ) ) );
 
         ob_start();
 
