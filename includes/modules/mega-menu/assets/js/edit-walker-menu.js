@@ -128,7 +128,7 @@
 
             // Disable-Enable edit button when checkbox is unchecked or checked.
             $( elCheckbox ).on( 'change', function() {
-                $(this).closest( 'li.portuna-addon-mega-menu' ).find('.portuna-addon-mega-menu-edit-btn').prop( 'disabled', ! this.checked );
+                $(this).closest( 'li.portuna-addon-mega-menu' ).find( '.portuna-addon-mega-menu-edit-btn' ).prop( 'disabled', ! this.checked );
             } ).trigger( 'change' );
         },
         uploadCustomImage: function () {

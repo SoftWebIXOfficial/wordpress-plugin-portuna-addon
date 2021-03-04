@@ -27,7 +27,11 @@ const gulp       = require( 'gulp' ),
     rename       = require( 'gulp-rename' ),
     cleanCSS     = require( 'gulp-clean-css' ),
     wpPot        = require( 'gulp-wp-pot' ),
-    plumber      = require( 'gulp-plumber' );
+    plumber      = require( 'gulp-plumber' ),
+    rollup       = require( 'gulp-better-rollup' ),
+    rollupBabel  = require( 'rollup-plugin-babel' ),
+    resolve      = require( 'rollup-plugin-node-resolve' ),
+    commonjs     = require( 'rollup-plugin-commonjs' );
 
 const path = {
     output: {
@@ -57,6 +61,25 @@ const path = {
         clean:        [ '**/.sass-cache', '**/.DS_Store' ]
     }
 };
+
+const config = {
+    plugins: [
+        resolve(),
+        commonjs(),
+        rollupBabel( {
+            babelrc: false,
+            runtimeHelpers: true,
+            presets: [ '@babel/preset-env' ],
+            plugins: [ [
+                'module-resolver', {
+                    alias: {
+                        Widgets: path.output.widgetsJS
+                    }
+                }
+            ] ]
+        } )
+    ]
+}
 
 // gulp.task( 'browser-sync', function() {
 //     const files = [
@@ -116,6 +139,7 @@ const compressedVendorsJS = () => {
         .pipe( strip() )
         .pipe( gulp.dest( path.output.vendorsJS ) );
 }
+
 const compressedModulesJS = () => {
     return gulp.src( path.src.modulesJS )
         .pipe( gulpif( ! util.env.production, sourcemaps.init() ) )
@@ -230,6 +254,7 @@ const compressedWidgetsCSS = () => {
 const compressedWidgetsJS = () => {
     return gulp.src( path.src.widgetsJS )
         .pipe( gulpif( ! util.env.production, sourcemaps.init() ) )
+        .pipe( rollup( config, 'iife' ) )
         .pipe( babel( {
             presets: [ '@babel/env' ]
         } ) )

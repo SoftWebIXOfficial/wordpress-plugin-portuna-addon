@@ -282,7 +282,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
 
             $content      = do_shortcode( $content );
 
-            $item_output .= sprintf( '<div class="portuna-addon-sub-mega-menu" data-template-id="%s">%s</div>', $mega_item_id, $content );
+            $item_output .= sprintf( '<ul class="portuna-addon-sub-mega-menu" data-template-id="%s">%s</ul>', $mega_item_id, $content );
 
             // Fixed displaying mega and sub menu together.
             $this->set_item_type( $item->ID, $depth );

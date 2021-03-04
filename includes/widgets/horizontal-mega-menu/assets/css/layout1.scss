@@ -4,14 +4,43 @@ $wrap_nav:   '.portuna-addon-menu';
 #{ $wrap_class }--layout1 {
     #{ $wrap_class }--content {
         #{ $wrap_nav }-items {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: stretch;
+            width: 100%;
+            position: relative;
             margin: 0;
             padding: 0;
-            display: flex;
+            list-style: none;
 
             #{ $wrap_nav }-item {
-                margin: 0;
-                padding: 0;
-                display: block;
+                //position: relative;
+                position: static;
+                display: flex;
+
+                & > .portuna-addon-sub-mega-menu {
+                    visibility: hidden;
+                    position: absolute;
+                    background-color: red;
+                    opacity: 0;
+                    margin: 0;
+                    padding: 0;
+                    top: 100%;
+                    left: 15px;
+                    z-index: 9999;
+                    transition: all 0.2s ease-out, width 0s, height 0s;
+
+                    > .elementor {
+                        width: 100%;
+                    }
+                }
+
+                &:hover > .portuna-addon-sub-mega-menu {
+                    visibility: visible;
+                    opacity: 1;
+                    pointer-events: auto;
+                }
 
                 #{ $wrap_nav }__wrapper-content {
                     display: flex;
@@ -25,10 +54,6 @@ $wrap_nav:   '.portuna-addon-menu';
                         margin: 0;
                     }
                 }
-            }
-
-            .portuna-addon-sub-menu {
-
             }
         }
     }

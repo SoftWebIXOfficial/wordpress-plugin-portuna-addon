@@ -21,10 +21,20 @@ class HorizontalMegaMenu extends Portuna_Widget_Base {
             [],
             null
         );
+        wp_register_script(
+            'horizontal-mega-menu-script-layout1',
+            plugin_dir_url( dirname( __FILE__ ) ) . 'horizontal-mega-menu/assets/js/layout1.min.js',
+            [],
+            null
+        );
     }
 
     public function get_style_depends() {
         return [ 'horizontal-mega-menu-style-layout1' ];
+    }
+
+    public function get_script_depends() {
+    	return [ 'jquery', 'horizontal-mega-menu-script-layout1' ];
     }
 
     /**
@@ -39,7 +49,7 @@ class HorizontalMegaMenu extends Portuna_Widget_Base {
      * return a widget name that will be used in the code.
      */
     public function get_name() {
-        return 'portuna_addon_horizontal_mega_menu';
+        return 'portuna-addon-mega-menu-horizontal';
     }
 
     /**
