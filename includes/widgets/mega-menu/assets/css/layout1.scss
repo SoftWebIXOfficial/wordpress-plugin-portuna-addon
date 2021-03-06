@@ -1,4 +1,4 @@
-$wrap_class: '.portuna-addon--horizontal-mega-menu';
+$wrap_class: '.portuna-addon--mega-menu';
 $wrap_nav:   '.portuna-addon-menu';
 
 #{ $wrap_class }--layout1 {
@@ -19,10 +19,11 @@ $wrap_nav:   '.portuna-addon-menu';
                 position: static;
                 display: flex;
 
+                & > .portuna-addon-sub-menu,
                 & > .portuna-addon-sub-mega-menu {
                     visibility: hidden;
                     position: absolute;
-                    background-color: red;
+                    background-color: #FFFFFF;
                     opacity: 0;
                     margin: 0;
                     padding: 0;
@@ -36,6 +37,7 @@ $wrap_nav:   '.portuna-addon-menu';
                     }
                 }
 
+                &:hover > .portuna-addon-sub-menu,
                 &:hover > .portuna-addon-sub-mega-menu {
                     visibility: visible;
                     opacity: 1;

@@ -99,11 +99,6 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
         $this->item_settings = null;
         $this->set_item_type( $item->ID, $depth );
 
-//         $builder_post_title = 'widgets-content-widget-' . 529 . '-' . 3;
-//         $builder_post_id    = get_page_by_title( $builder_post_title, OBJECT, 'portuna_content' );
-
-//         var_dump( $builder_post_id );
-
         $item_settings = $this->get_settings( $item->ID );
 
         if ( 'mega' === $this->get_item_type() && 0 < $depth ) {
@@ -197,7 +192,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
         $atts[ 'rel' ]    = ! empty( $item->xfn )        ? $item->xfn        : '';
         $atts[ 'href' ]   = ! empty( $item->url )        ? $item->url        : '';
 
-        $link_classes[]   = ( 0 === $depth ) ? 'top-level-link'  : 'sub-level-link';
+        $link_classes[]   = ( 0 === $depth ) ? 'first-level-link'  : 'nested-level-link';
 
         if ( $this->mega_menu_is && isset( $settings[ 'mega_menu_checkbox' ] ) && $settings[ 'mega_menu_checkbox' ] == true ) {
             $link_classes[] = 'mega-menu-is-enabled';
@@ -251,7 +246,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
 
         $render_icon  = $this->renderIcon( $settings );
         $render_badge = $this->renderBadge( $settings );
-        $render_arrow = $this->renderArrow( $settings );
+        $render_arrow = $this->renderArrow( $item, $settings );
 
         $item_output = $args->before;
             $item_output .= '<div class="portuna-addon-menu__wrapper-content">';
@@ -272,17 +267,21 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
         $mega_item    = isset( $mega_item[ 'mega_menu_id' ] ) ? $mega_item[ 'mega_menu_id' ] : '';
         $mega_item_id = isset( $mega_item->ID ) ? $mega_item->ID : '';
 
-        if ( $this->mega_menu_is && $this->is_mega_enabled( $item->ID ) && ! $is_elementor && $mega_item_id != '' ) {
-            $content = '';
+        if ( $this->mega_menu_is && $this->is_mega_enabled( $item->ID ) && ! $is_elementor ) {
+            $content       = '';
 
             if ( class_exists( 'Elementor\Plugin' ) ) {
                 $elementor = \Elementor\Plugin::instance();
-                $content   = $elementor->frontend->get_builder_content_for_display( $mega_item_id ); //490
+                $content   = $elementor->frontend->get_builder_content_for_display( $mega_item_id );
             }
 
             $content      = do_shortcode( $content );
 
-            $item_output .= sprintf( '<ul class="portuna-addon-sub-mega-menu" data-template-id="%s">%s</ul>', $mega_item_id, $content );
+            if ( $mega_item_id != '' ) {
+                $item_output .= sprintf( '<ul class="portuna-addon-sub-mega-menu" data-template-id="%s">%s</ul>', $mega_item_id, $content );
+            } else {
+                $item_output .= sprintf( '<div class="portuna-addon-sub-mega-menu portuna-addon-sub-mega-menu-content">%s</div>', esc_html__( 'Not Content Find', 'portuna-addon' ) );
+            }
 
             // Fixed displaying mega and sub menu together.
             $this->set_item_type( $item->ID, $depth );
@@ -415,7 +414,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
    	        if ( ! empty( $settings[ 'menu_icon_custom' ] ) ) {
                 $style   = $settings[ 'menu_icon_color' ] != 'style="color: ' . esc_attr( $settings[ 'menu_icon_color' ] ) . ';"' ? : null;
 
-   	            $content = '<span class="" ' . $style . '></span>'; //$this->svg_to_html( $settings[ 'menu_icon_custom' ], false );
+   	            $content = '<span class="" ' . $style . '>' . $this->customSvgToHtml( $settings[ 'menu_icon_custom' ] ) . '</span>';
    	        }
    	    }
 
@@ -423,17 +422,102 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
    	}
 
    	public function renderBadge( $settings ) {
-   	    $content = '';
+   	    $content    = '';
+   	    $text_color = '';
+   	    $bg_color   = '';
+
+   	    if ( isset( $settings[ 'menu_badge_color' ] ) && $settings[ 'menu_badge_color' ] != '' ) {
+            $text_color = 'color: ' . esc_attr( $settings[ 'menu_badge_color' ] ) . ';';
+   	    }
+
+   	    if ( isset( $settings[ 'menu_badge_bgcolor' ] ) && $settings[ 'menu_badge_bgcolor' ] != '' ) {
+            $bg_color = 'background-color: ' . esc_attr( $settings[ 'menu_badge_bgcolor' ] ) . ';';
+        }
+
+        if ( ! empty( $settings[ 'menu_badge_text' ] ) ) {
+            $style   = sprintf( 'style="%1$s %2$s"', $text_color, $bg_color );
+            $content = '<span class="portuna-addon-menu-badge" ' . $style . '>' . esc_html( $settings[ 'menu_badge_text' ] ) . '</span>';
+        }
 
         return $content;
    	}
 
-   	public function renderArrow( $settings ) {
-   	    $content = '';
+   	public function renderArrow( $item, $settings ) {
+   	    if ( ! $this->mega_menu_is ) {
+   	        return;
+   	    }
 
-   	    $content = '<button class="portuna-addon-menu-dropdown"><i class="fa fa-angle-down"></i></button>';
+   	    $content      = '';
+   	    $has_children = in_array( 'menu-item-has-children', $item->classes );
+        $mega_menu    = $this->mega_menu_is && $this->is_mega_enabled( $item->ID );
+
+        if ( $has_children || $mega_menu ) {
+   	        $content = '<button class="portuna-addon-menu-dropdown"><i class="fa fa-angle-down"></i></button>';
+        }
 
         return $content;
    	}
+
+    // Custom SVG converter.
+    public function customSvgToHtml( $id = '' ) {
+        if ( empty( $id ) ) {
+            return;
+        }
+
+        $thumbnail_id = get_post_thumbnail_id( $id );
+        $get_url      = wp_get_attachment_url( $thumbnail_id );
+
+        if ( ! $get_url ) {
+            return;
+        }
+
+        return $this->getImgUrl( $get_url, [ 'class' => 'portuna-addon-custom-icon' ] );
+    }
+
+    private function getImgUrl( $url = null, $attr = [] ) {
+        $url = esc_url( $url );
+
+        if ( empty( $url ) ) {
+            return;
+        }
+
+        $extends = pathinfo( $url, PATHINFO_EXTENSION );
+        $attr    = array_merge( [ 'alt' => '' ], $attr );
+
+        if ( 'svg' !== $extends ) {
+            return sprintf( '<img src="%1$s"%2$s>', $url, $this->getAttr( $attr ) );
+        }
+
+        $base_url = site_url( '/' );
+        $svg_path = str_replace( $base_url, ABSPATH, $url );
+        $key_numb = md5( $svg_path );
+        $svg      = get_transient( $key_numb );
+
+        if ( ! $svg ) {
+            $svg = file_get_contents( $svg_path );
+
+            return sprintf( '<img src="%1$s"%2$s>', $url, $this->getAttr( $attr ) );
+        }
+
+        set_transient( $key_numb, $svg, DAY_IN_SECONDS );
+
+        unset( $attr[ 'alt' ] );
+
+        return sprintf( '<div%2$s>%1$s</div>', $svg, $this->getAttr( $attr ) );
+    }
+
+    private function getAttr( $attr = [] ) {
+        if ( empty( $attr ) || ! is_array( $attr ) ) {
+            return;
+        }
+
+        $content      = '';
+
+        foreach ( $attr as $key => $value ) {
+            $content .= sprintf( ' %s="%s"', esc_attr( $key ), esc_attr( $value ) );
+        }
+
+        return $content;
+    }
 
 }

@@ -4,17 +4,17 @@ import debounce from 'lodash/debounce';
 (function ( $, window ) {
     'use strict';
 
-    const megaMenuHorizontal = {
+    const megaMenu = {
         onInit: function () {
             const widgetName = {
-                'portuna-addon-mega-menu-horizontal.default' : megaMenuHorizontal.megaMenuHorizontalOptions,
+                'portuna-addon-mega-menu.default' : megaMenu.megaMenuOptions,
             }
 
             $.each( widgetName, ( widget, callback ) => {
                 window.elementorFrontend.hooks.addAction( 'frontend/element_ready/' + widget, callback );
             } );
         },
-        megaMenuHorizontalOptions: function ( $scope ) {
+        megaMenuOptions: function ( $scope ) {
             const wrap      = $( $scope[0] ),
                   megaMenu  = wrap.find( '.portuna-addon-sub-mega-menu' );
 
@@ -25,7 +25,6 @@ import debounce from 'lodash/debounce';
                     return;
                 }
 
-
             }
 
             controlMegaMenuWidth();
@@ -33,5 +32,5 @@ import debounce from 'lodash/debounce';
         }
     }
 
-    $( window ).on( 'elementor/frontend/init', megaMenuHorizontal.onInit );
+    $( window ).on( 'elementor/frontend/init', megaMenu.onInit );
 } )( jQuery, window );
