@@ -4,6 +4,8 @@
             "includes/base.php",
             "includes/portuna-widget-base.php",
             "includes/scripts-manager.php",
+            "includes/controls/elementor-area.php",
+            "includes/controls/select-image.php",
             "includes/helpers/widgets-manager.php",
             "includes/helpers/controls-manager.php",
             "includes/helpers/utils.php",

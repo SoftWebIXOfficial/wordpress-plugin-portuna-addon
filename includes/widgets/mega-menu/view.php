@@ -5,6 +5,10 @@ extract( $args );
 
 $this->add_render_attribute( 'wrapper', 'class', 'portuna-addon--mega-menu--layout1' );
 
+if ( isset( $menu_type_side_position ) ) {
+    $this->add_render_attribute( 'wrapper', 'class', sprintf( 'portuna-addon--mega-menu--layout1-%s', $menu_type_side_position ) );
+}
+
 $nav_settings = [
     'menu'              => $menu_list,
     'menu_class'        => '',

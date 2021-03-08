@@ -280,7 +280,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
             if ( $mega_item_id != '' ) {
                 $item_output .= sprintf( '<ul class="portuna-addon-sub-mega-menu" data-template-id="%s">%s</ul>', $mega_item_id, $content );
             } else {
-                $item_output .= sprintf( '<div class="portuna-addon-sub-mega-menu portuna-addon-sub-mega-menu-content">%s</div>', esc_html__( 'Not Content Find', 'portuna-addon' ) );
+                $item_output .= sprintf( '<div class="portuna-addon-sub-mega-menu portuna-addon-sub-menu-content">%s</div>', esc_html__( 'Not Content Find', 'portuna-addon' ) );
             }
 
             // Fixed displaying mega and sub menu together.

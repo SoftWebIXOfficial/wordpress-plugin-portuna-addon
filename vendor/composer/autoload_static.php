@@ -23,6 +23,7 @@ class ComposerStaticInit16862581ea4482efdc7f8079dbd54cfc
     public static $classMap = array (
         'PortunaAddon\\Base' => __DIR__ . '/../..' . '/includes/base.php',
         'PortunaAddon\\Controls\\Elementor_Area' => __DIR__ . '/../..' . '/includes/controls/elementor-area.php',
+        'PortunaAddon\\Controls\\Select_Image' => __DIR__ . '/../..' . '/includes/controls/select-image.php',
         'PortunaAddon\\Core\\Api' => __DIR__ . '/../..' . '/includes/core/api.php',
         'PortunaAddon\\Core\\Cpt\\Init' => __DIR__ . '/../..' . '/includes/core/elementor-cpt/init.php',
         'PortunaAddon\\Core\\Cpt_Api' => __DIR__ . '/../..' . '/includes/core/elementor-cpt/cpt-api.php',
@@ -37,6 +38,8 @@ class ComposerStaticInit16862581ea4482efdc7f8079dbd54cfc
         'PortunaAddon\\Traits\\Singleton' => __DIR__ . '/../..' . '/includes/traits/singleton.php',
         'PortunaAddon\\Widgets\\Edit\\AdvancedHeading' => __DIR__ . '/../..' . '/includes/widgets/heading/edit.php',
         'PortunaAddon\\Widgets\\Edit\\BannerSlider' => __DIR__ . '/../..' . '/includes/widgets/banner-slider/edit.php',
+        'PortunaAddon\\Widgets\\Edit\\CreativeButton' => __DIR__ . '/../..' . '/includes/widgets/creative-button/edit.php',
+        'PortunaAddon\\Widgets\\Edit\\MegaMenu' => __DIR__ . '/../..' . '/includes/widgets/mega-menu/edit.php',
         'PortunaAddon\\Widgets\\Portuna_Widget_Base' => __DIR__ . '/../..' . '/includes/portuna-widget-base.php',
     );
 

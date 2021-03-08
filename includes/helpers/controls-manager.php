@@ -11,9 +11,11 @@ class ControlsManager {
     use \PortunaAddon\Traits\Singleton;
 
     const ELEMENTOR_AREA = 'elementor_area';
+    const SELECT_IMAGE   = 'select_image';
 
     public function controls_register( $controls_manager ) {
         $controls_manager->register_control( self::ELEMENTOR_AREA, new \PortunaAddon\Controls\Elementor_Area() );
+        $controls_manager->register_control( self::SELECT_IMAGE, new \PortunaAddon\Controls\Select_Image() );
     }
 
     public function controls_styles_manager() {

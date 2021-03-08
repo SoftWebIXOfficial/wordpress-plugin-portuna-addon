@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'PortunaAddon\\Base' => $baseDir . '/includes/base.php',
     'PortunaAddon\\Controls\\Elementor_Area' => $baseDir . '/includes/controls/elementor-area.php',
+    'PortunaAddon\\Controls\\Select_Image' => $baseDir . '/includes/controls/select-image.php',
     'PortunaAddon\\Core\\Api' => $baseDir . '/includes/core/api.php',
     'PortunaAddon\\Core\\Cpt\\Init' => $baseDir . '/includes/core/elementor-cpt/init.php',
     'PortunaAddon\\Core\\Cpt_Api' => $baseDir . '/includes/core/elementor-cpt/cpt-api.php',
@@ -22,5 +23,7 @@ return array(
     'PortunaAddon\\Traits\\Singleton' => $baseDir . '/includes/traits/singleton.php',
     'PortunaAddon\\Widgets\\Edit\\AdvancedHeading' => $baseDir . '/includes/widgets/heading/edit.php',
     'PortunaAddon\\Widgets\\Edit\\BannerSlider' => $baseDir . '/includes/widgets/banner-slider/edit.php',
+    'PortunaAddon\\Widgets\\Edit\\CreativeButton' => $baseDir . '/includes/widgets/creative-button/edit.php',
+    'PortunaAddon\\Widgets\\Edit\\MegaMenu' => $baseDir . '/includes/widgets/mega-menu/edit.php',
     'PortunaAddon\\Widgets\\Portuna_Widget_Base' => $baseDir . '/includes/portuna-widget-base.php',
 );
