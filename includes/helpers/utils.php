@@ -39,21 +39,17 @@ class Utils {
                     <i class="eicon-custom" aria-hidden="true"></i>
                     <span class="elementor-screen-only"><?php esc_html_e( 'Edit', 'portuna-addon' ); ?></span>
                 </div>
-                <div class="widgetarea_warper_close" data-portuna-key="<?php echo esc_attr( $base_key ); ?>" data-portuna-id="<?php echo esc_attr( $i ); ?>">
-                    <i class="eicon-editor-close" aria-hidden="true"></i>
-                    <span class="elementor-screen-only"><?php esc_html_e( 'Close', 'portuna-addon' ); ?></span>
-                </div>
 
                 <div class="elementor_widget_container">
                     <?php
-                        $post_title = 'widgets-content-widget-' . $base_key . '-' . $i;
+                        $post_title = 'widgets-content-editor-' . $base_key . '-' . $i;
                         $post       = get_page_by_title( $post_title, OBJECT, 'portuna_content' );
                         $elementor  = \Elementor\Plugin::instance();
 
                         if ( isset( $post->ID ) ) {
                             echo str_replace( '#elementor', '', self::render_tab_content( $elementor->frontend->get_builder_content_for_display( $post->ID ), $post->ID ) );
                         } else {
-                            echo esc_html__( 'Click Here to Add Content', 'portuna-addon' );
+                            echo esc_html__( 'Click the button in the right corner to add content.', 'portuna-addon' );
                         }
                     ?>
 

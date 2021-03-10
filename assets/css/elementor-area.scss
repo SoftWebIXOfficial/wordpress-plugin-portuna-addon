@@ -1,20 +1,16 @@
 .elementor-editor-active {
     .elementor-element {
-        &:hover {
-            .widgetarea_warper_editable {
+        .widgetarea_warper_editable {
+            &:hover {
                 outline: 1px dashed #6d7882;
+            }
+
+            .widgetarea_warper_close,
+            .widgetarea_warper_edit {
+                display: block;
 
                 &:hover {
-                    outline: 1px solid #71d7f7;
-                }
-
-                .widgetarea_warper_close,
-                .widgetarea_warper_edit {
-                    display: block;
-
-                    &:hover {
-                        background: #71d7f7;
-                    }
+                    background: #10bcf2;
                 }
             }
         }
@@ -25,16 +21,20 @@
     position: relative;
     min-height: 35px;
     min-width: 110px;
+    //max-width: calc( 100% - 10% );
+    //margin: 0 auto;
+    //padding: 25px;
+    transition: all .3s ease-in-out;
 
     .widgetarea_warper_edit {
         top: 0;
-        right: 31px;
+        right: 50px;
         border-bottom-left-radius: 4px;
     }
 
     .widgetarea_warper_close {
         top: 0;
-        right: 0;
+        right: 50px;
         border-bottom-right-radius: 4px;
     }
 
@@ -42,13 +42,63 @@
     .widgetarea_warper_close {
         display: none;
         position: absolute;
-        padding: 3px 6px;
+        padding: 4px;
         font-size: 18px;
         color: #fff;
-        background: #6d7882;
+        background: linear-gradient(0deg, #41c9f4, #71d7f7);
         line-height: 1;
         cursor: pointer;
         z-index: 99999;
+    }
+
+    .elementor_widget_container {
+        font-family: sans-serif;
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: bold;
+        color: #dcdcdc;
+    }
+}
+
+body:not( .elementor-editor-active ) {
+    //.elementor_widget_container {
+    //    display: none;
+    //}
+
+    .elementor-section {
+        left: 0!important;
+        width: 100%!important;
+    }
+}
+
+body.elementor-editor-active {
+    .widgetarea_warper_editable {
+        position: relative;
+        min-height: 35px;
+        min-width: 110px;
+        //max-width: calc( 100% - 10% );
+        //margin: 0 auto;
+        transition: all .3s ease-in-out;
+    }
+
+    .swiper-slide {
+        height: auto;
+
+        .widgetarea_warper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+    }
+
+    .elementor-section {
+        left: 0!important;
+        width: 100%!important;
+    }
+
+    .elementor_widget_container {
+        width: 100%;
     }
 }
 

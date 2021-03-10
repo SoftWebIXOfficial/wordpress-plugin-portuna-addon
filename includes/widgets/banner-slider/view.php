@@ -60,8 +60,8 @@ $items = $slide_item;
                 $arrow_prev_migrated = isset( $slide_arrow_prev_icons_pro[ '__fa4_migrated' ] );
                 $arrow_prev_is_new   = empty( $slide_arrow_prev_icon_pro );
 
-                $arrow_next_migrated = isset( $slide_arrow_next_icons_pro[ '__fa4_migrated' ] );
-                $arrow_next_is_new   = empty( $slide_arrow_next_icon_pro );
+                $arrow_next_migrated = isset( $args[ '__fa4_migrated' ][ 'slide_arrow_next_icons_pro' ] );
+                $arrow_next_is_new   = empty( $args[ 'slide_arrow_next_icon_pro' ] );
 
                 if ( $arrow_prev_migrated || $arrow_prev_is_new ) :
                     ob_start();
@@ -73,7 +73,7 @@ $items = $slide_item;
 
                 if ( $arrow_next_migrated || $arrow_next_is_new ) :
                     ob_start();
-                        Icons_Manager::render_icon( $slide_arrow_next_icons_pro, [ 'aria-hidden' => 'true' ] );
+                        Icons_Manager::render_icon( $args[ 'slide_arrow_next_icons_pro' ], [ 'aria-hidden' => 'true' ] );
                     $arrow_icon_next = ob_get_clean();
                 else :
                     $arrow_icon_next = "<i class='" . esc_attr( $slide_arrow_next_icon_pro ) . "'</i>";

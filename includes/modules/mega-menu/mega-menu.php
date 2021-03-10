@@ -41,14 +41,14 @@ class Mega_Menu {
             'portuna-addon-selectize',
             plugin_dir_url( dirname( __FILE__ ) ) . 'mega-menu/assets/css/select.min.css',
             [],
-            '0.13.3',
+            '0.13.3'
         );
 
         wp_enqueue_style(
             'portuna-addon-mega-menu',
             plugin_dir_url( dirname( __FILE__ ) ) . 'mega-menu/assets/css/edit-walker-menu.min.css',
             [],
-            null,
+            null
         );
 
         // JS.

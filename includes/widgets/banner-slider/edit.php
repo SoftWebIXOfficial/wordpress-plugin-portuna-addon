@@ -37,7 +37,8 @@ class BannerSlider extends Portuna_Widget_Base {
         'swiper_separator_icon'     => ' .swiper-arrows-together > i',
         'swiper_separator_svg'      => ' .swiper-arrows-together > svg, .swiper-arrows-together > svg > path, .swiper-arrows-together > svg > g',
         'swiper_arrows'             => ' .swiper-button-prev::after, .swiper-button-next::after',
-        'swiper_arrows_hover'       => ' .swiper-button-prev:hover::after, .swiper-button-next:hover::after',
+        'swiper_arrows_hover'       => ' .swiper-button-prev:hover::before, .swiper-button-next:hover::before',
+        'swiper_arrows_i_hover'     => ' .swiper-button-prev:hover > i, .swiper-button-next:hover > i',
         'swiper_arrow_left'         => ' .swiper-button-prev',
         'swiper_arrow_right'        => ' .swiper-button-next',
         'swiper_custom_arrows_icon' => ' .swiper-button-custom-prev > i, .swiper-button-custom-next > i',
@@ -218,7 +219,8 @@ class BannerSlider extends Portuna_Widget_Base {
                     'type'             => Controls_Manager::ICONS,
                     'fa4compatibility' => 'slide_arrow_prev_icon_pro',
                     'default'	  	   => [
-                        'value'	  => 'fas fa-long-arrow-alt-left',
+                        'value'	       => 'fas fa-long-arrow-alt-left',
+                        'library'      => 'fa-solid',
                     ],
                     'condition'        => [
                         'slide_nav'         => [ 'both', 'arrows' ],
@@ -234,7 +236,8 @@ class BannerSlider extends Portuna_Widget_Base {
                     'type'             => Controls_Manager::ICONS,
                     'fa4compatibility' => 'slide_arrow_next_icon_pro',
                     'default'	  	   => [
-                        'value'	  => 'fas fa-long-arrow-alt-right',
+                        'value'	       => 'fas fa-long-arrow-alt-right',
+                        'library'      => 'fa-solid',
                     ],
                     'condition'        => [
                         'slide_nav'         => [ 'both', 'arrows' ],
@@ -430,6 +433,7 @@ class BannerSlider extends Portuna_Widget_Base {
                     'fa4compatibility' => 'slide_arrows_separator_icon_pro',
                     'default'	  	   => [
                         'value'	       => 'fas fa-slash',
+                        'library'      => 'fa-solid',
                     ],
                     'condition'        => [
                         'slide_nav'                       => [ 'both', 'arrows' ],
@@ -761,7 +765,8 @@ class BannerSlider extends Portuna_Widget_Base {
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'swiper_arrows_hover' ] => 'color: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_arrows_hover' ]   => 'color: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_arrows_i_hover' ] => 'color: {{VALUE}};',
                             ],
                             'condition' => [
                                 'slide_nav'  => [ 'both', 'arrows' ],
@@ -803,6 +808,187 @@ class BannerSlider extends Portuna_Widget_Base {
                     ]
                 ]
             );
+
+            $this->add_control(
+                'slide_pagination_border_type',
+                [
+                    'label'     => __( 'Border Type', 'portuna-addon' ),
+                    'type'      => Controls_Manager::SELECT,
+                    'options'   => [
+                        'none'   => __( 'None', 'portuna-addon' ),
+                        'solid'  => __( 'Solid', 'portuna-addon' ),
+                        'double' => __( 'Double', 'portuna-addon' ),
+                        'dotted' => __( 'Dotted', 'portuna-addon' ),
+                        'dashed' => __( 'Dashed', 'portuna-addon' ),
+                        'groove' => __( 'Groove', 'portuna-addon' ),
+                    ],
+                    'default'   => 'none',
+                    //'selectors' => [
+                        //'{{SELECTOR}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-style: {{VALUE}};',
+                    //],
+                    'condition' => [
+                        'slide_pagination_type' => 'bullets',
+                    ],
+                ]
+            );
+
+            $this->add_responsive_control(
+                'slide_pagination_border_width',
+                [
+                    'label'      => esc_html__( 'Border Width', 'portuna-addon' ),
+                    'type'       => Controls_Manager::DIMENSIONS,
+                    'size_units' => [ 'px' ],
+                    'default'    => [
+                        'top'    => '1',
+                        'right'  => '1',
+                        'bottom' => '1',
+                        'left'   => '1'
+                    ],
+                    //'selectors'  => [
+                        //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    //],
+                    'condition' => [
+                        'slide_pagination_border_type!' => 'none',
+                        'slide_pagination_type'         => [ 'bullets' ],
+                    ],
+                ]
+            );
+
+            $this->add_responsive_control(
+                'slide_pagination_border_radius',
+                [
+                    'label'      => esc_html__( 'Border Radius', 'portuna-addon' ),
+                    'type'       => Controls_Manager::DIMENSIONS,
+                    'size_units' => [ 'px', '%' ],
+                    //'selectors'  => [
+                        //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    //],
+                    'condition' => [
+                        'slide_pagination_type'         => [ 'bullets' ],
+                    ],
+                ]
+            );
+
+            $this->start_controls_tabs( 'pagination_effect' );
+
+                $this->start_controls_tab(
+                    'slide_pagination_normal',
+                    [
+                        'label'     => __( 'Normal', 'portuna-addon' ),
+                        'condition' => [
+                            'slide_nav'  => [ 'both', 'dots' ],
+                        ]
+                    ]
+                );
+
+                    $this->add_control(
+                        'slide_pagination_bg_color',
+                        [
+                            'label'      => esc_html__( 'Background Color', 'portuna-addon' ),
+                            'type'       => Controls_Manager::COLOR,
+                            //'selectors'  => [
+                                //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
+                            //],
+                        ]
+                    );
+
+                    $this->add_control(
+                        'slide_pagination_border_color',
+                        [
+                            'label'      => esc_html__( 'Border Color', 'portuna-addon' ),
+                            'type'       => Controls_Manager::COLOR,
+                            'default'    => '#212529',
+                            //'selectors'  => [
+                                //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
+                            //],
+                            'condition' => [
+                                'slide_pagination_border_type!' => 'none',
+                                'slide_pagination_type'         => [ 'bullets' ],
+                            ],
+                        ]
+                    );
+
+                $this->end_controls_tab();
+
+                $this->start_controls_tab(
+                    'slide_arrows_hover',
+                    [
+                        'label'     => __( 'Hover', 'portuna-addon' ),
+                        'condition' => [
+                            'slide_nav'  => [ 'both', 'dots' ],
+                        ]
+                    ]
+                );
+
+                    $this->add_control(
+                        'slide_pagination_bg_color_hover',
+                        [
+                            'label'      => esc_html__( 'Background Color', 'portuna-addon' ),
+                            'type'       => Controls_Manager::COLOR,
+                            //'selectors'  => [
+                                //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
+                            //],
+                        ]
+                    );
+
+                    $this->add_control(
+                        'slide_pagination_border_color_hover',
+                        [
+                            'label'      => esc_html__( 'Border Color', 'portuna-addon' ),
+                            'type'       => Controls_Manager::COLOR,
+                            'default'    => '#212529',
+                            //'selectors'  => [
+                                //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
+                            //],
+                            'condition' => [
+                                'slide_pagination_border_type!' => 'none',
+                                'slide_pagination_type'         => [ 'bullets' ],
+                            ],
+                        ]
+                    );
+
+                $this->end_controls_tab();
+
+                $this->start_controls_tab(
+                    'slide_arrows_hover',
+                    [
+                        'label'     => __( 'Active', 'portuna-addon' ),
+                        'condition' => [
+                            'slide_nav'  => [ 'both', 'dots' ],
+                        ]
+                    ]
+                );
+
+                    $this->add_control(
+                        'slide_pagination_bg_color_active',
+                        [
+                            'label'      => esc_html__( 'Background Color', 'portuna-addon' ),
+                            'type'       => Controls_Manager::COLOR,
+                            //'selectors'  => [
+                                //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
+                            //],
+                        ]
+                    );
+
+                    $this->add_control(
+                        'slide_pagination_border_color_active',
+                        [
+                            'label'      => esc_html__( 'Border Color', 'portuna-addon' ),
+                            'type'       => Controls_Manager::COLOR,
+                            'default'    => '#212529',
+                            //'selectors'  => [
+                                //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
+                            //],
+                            'condition' => [
+                                'slide_pagination_border_type!' => 'none',
+                                'slide_pagination_type'         => [ 'bullets' ],
+                            ],
+                        ]
+                    );
+
+                $this->end_controls_tab();
+
+            $this->end_controls_tabs();
 
             $this->add_control(
                 'slide_center',

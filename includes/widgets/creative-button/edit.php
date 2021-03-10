@@ -280,10 +280,8 @@ class CreativeButton extends Portuna_Widget_Base {
                         'groove' => __( 'Groove', 'portuna-addon' ),
                         'unique' => __( 'Unique Portuna', 'portuna-addon' ),
                     ],
-                    'default'   => 'none',
-                    'selectors' => [
-                        '{{SELECTOR}}' . self::$css_map[ 'wrap_button_content' ] => 'border-style: {{VALUE}};',
-                    ],
+                    'frontend_available' => true,
+                    'default'            => 'none',
                 ]
             );
 

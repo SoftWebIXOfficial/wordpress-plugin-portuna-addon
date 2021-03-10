@@ -63,7 +63,6 @@
                                     date = new Date().getTime(),
                                     key  = dataKey.split( '***' );
 
-
                                 val = ( key = key[0] ) + '***' + date;
                                 $( 'body' ).attr( 'data-portuna-widget-load', 'false' );
 

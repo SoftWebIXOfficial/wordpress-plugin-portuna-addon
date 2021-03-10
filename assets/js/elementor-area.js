@@ -28,7 +28,7 @@
                               lightBox        = modalFrame.find( '.dialog-type-lightbox' ),
                               key             = $(this).parent().attr( 'data-portuna-key' ),
                               id              = $(this).parent().attr( 'data-portuna-id' ),
-                              getElementorSrc = adminUrl + 'widgets-content/content_editor/editor/' + key;// + '-' + id;
+                              getElementorSrc = adminUrl + 'widgets-content/content_editor/editor/' + key + '-' + id;
 
                         windowParent
                             .jQuery( 'body' ).attr( 'data-portuna-key', key ),

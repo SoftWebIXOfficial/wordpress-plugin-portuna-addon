@@ -7,7 +7,7 @@
         1. SWIPER.
     --------------------------------------------------------------
  */
-//import debounce from 'lodash/debounce';
+import debounce from 'lodash/debounce';
 
 ;
 (function ( $, wind ) {
@@ -186,14 +186,24 @@
     }
 
     $( window ).on( 'load', () => {
+        setTimeout( function () {
+            $( window ).trigger( 'resize' );
+        }, 200 );
+
         if ( swiperClass.length ) {
             initSwiper( swiperClass );
         }
     } );
 
+    // $( window ).on( 'resize orientationchange', debounce( () => {
+    //     if ( swiperClass.length ) {
+    //         initSwiper( swiperClass );
+    //     }
+    // }, 100 ) );
+
     $( window ).on( 'elementor/frontend/init', ( ) => {
         if ( ( window.location.href.indexOf( 'elementor-preview' ) > -1 )  ) {
-            elementorFrontend.hooks.addAction('frontend/element_ready/widget', $scope => {
+            elementorFrontend.hooks.addAction( 'frontend/element_ready/widget', $scope => {
                 if ( swiperClass.length ) {
                     initSwiper( swiperClass );
                 }

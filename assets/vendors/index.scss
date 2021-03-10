@@ -17,6 +17,7 @@
     .swiper-arrows-together {
         position: absolute;
         display: flex;
+        z-index: 3;
 
         .swiper-button-custom-prev,
         .swiper-button-custom-next {

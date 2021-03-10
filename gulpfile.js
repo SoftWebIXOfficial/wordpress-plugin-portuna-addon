@@ -62,7 +62,7 @@ const path = {
     }
 };
 
-const config = {
+const configWidgets = {
     plugins: [
         resolve(),
         commonjs(),
@@ -73,7 +73,26 @@ const config = {
             plugins: [ [
                 'module-resolver', {
                     alias: {
-                        Widgets: path.output.widgetsJS
+                        Widgets: path.output.widgetsJS,
+                    }
+                }
+            ] ]
+        } )
+    ]
+}
+
+const configVendors = {
+    plugins: [
+        resolve(),
+        commonjs(),
+        rollupBabel( {
+            babelrc: false,
+            runtimeHelpers: true,
+            presets: [ '@babel/preset-env' ],
+            plugins: [ [
+                'module-resolver', {
+                    alias: {
+                        Vendors: path.output.vendorsJS,
                     }
                 }
             ] ]
@@ -124,6 +143,7 @@ const compressedAssetsCSS = () => {
 const compressedVendorsJS = () => {
     return gulp.src( path.src.vendorsJS )
         .pipe( gulpif( ! util.env.production, sourcemaps.init() ) )
+        .pipe( rollup( configVendors, 'iife' ) )
         .pipe( babel( {
             presets: [ '@babel/env' ]
         } ) )
@@ -254,7 +274,7 @@ const compressedWidgetsCSS = () => {
 const compressedWidgetsJS = () => {
     return gulp.src( path.src.widgetsJS )
         .pipe( gulpif( ! util.env.production, sourcemaps.init() ) )
-        .pipe( rollup( config, 'iife' ) )
+        .pipe( rollup( configWidgets, 'iife' ) )
         .pipe( babel( {
             presets: [ '@babel/env' ]
         } ) )
