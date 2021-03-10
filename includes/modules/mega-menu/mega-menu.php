@@ -58,7 +58,7 @@ class Mega_Menu {
             'portuna-addon-selectize',
             plugin_dir_url( dirname( __FILE__ ) ) . 'mega-menu/assets/js/select.js',
             [],
-            '0.13.3',
+            '0.13.3'
         );
 
         wp_enqueue_script(
