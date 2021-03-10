@@ -101,7 +101,7 @@ class Mega_Menu {
             $item_id,
             esc_html__( 'Custom Icon', 'portuna-addon' ),
             $thumbnail_id ? wp_get_attachment_image( $thumbnail_id ) : esc_html__( '+', 'portuna-addon' ),
-            $thumbnail_id ? '<a class="portuna-addon-reset-custom-icon" href="#"></a>' : '',
+            $thumbnail_id ? '<a class="portuna-addon-reset-custom-icon" href="#"></a>' : ''
         );
 
         return $content;
@@ -141,20 +141,6 @@ class Mega_Menu {
     }
 
     /**
-     * Add custom fields to $item nav object in order to be used in custom Walker.
-     *
-     * @param object $menu_item The menu item object.
-     *
-     * @return object The menu item.
-     */
-    public function setup_nav_menu_item( $menu_item ) {
-        $menu_item->icon        = get_post_meta( $menu_item->ID, '_menu_item_icon', true );
-        $menu_item->is_megamenu = boolval( get_post_meta( $menu_item->ID, '_menu_item_is_megamenu', true ) );
-
-        return $menu_item;
-    }
-
-    /**
      * Add the custom megamenu fields menu item data to fields in database.
      *
      * @param string|int $menu_id         The menu ID.
@@ -190,7 +176,6 @@ class Mega_Menu {
         add_action( 'admin_footer', [ $this, 'mega_menu_wrap' ] );
         add_action( 'wp_ajax_portuna-addon-menu-set-thumbnail', [ $this, 'menu_set_thumbnail' ] );
 
-        //add_filter( 'wp_setup_nav_menu_item', [ $this, 'setup_nav_menu_item' ], 110 );
         add_filter( 'wp_edit_nav_menu_walker', [ $this, 'add_custom_fields' ], 110 );
 
         if ( ! is_customize_preview() ) {
