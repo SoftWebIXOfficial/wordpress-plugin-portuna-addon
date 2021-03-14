@@ -32,17 +32,21 @@ class BannerSlider extends Portuna_Widget_Base {
      * Used to allow the user to customize items.
      */
     private static $css_map = [
-        'swiper_arrows_together'    => ' .swiper-arrows-together',
-        'swiper_separator'          => ' .swiper-arrow-separator',
-        'swiper_separator_icon'     => ' .swiper-arrows-together > i',
-        'swiper_separator_svg'      => ' .swiper-arrows-together > svg, .swiper-arrows-together > svg > path, .swiper-arrows-together > svg > g',
-        'swiper_arrows'             => ' .swiper-button-prev::after, .swiper-button-next::after',
-        'swiper_arrows_hover'       => ' .swiper-button-prev:hover::before, .swiper-button-next:hover::before',
-        'swiper_arrows_i_hover'     => ' .swiper-button-prev:hover > i, .swiper-button-next:hover > i',
-        'swiper_arrow_left'         => ' .swiper-button-prev',
-        'swiper_arrow_right'        => ' .swiper-button-next',
-        'swiper_custom_arrows_icon' => ' .swiper-button-custom-prev > i, .swiper-button-custom-next > i',
-        'swiper_custom_arrows_svg'  => ' .swiper-button-custom-prev > svg, .swiper-button-custom-next > svg',
+        'swiper_arrows_together'           => ' .swiper-arrows-together',
+        'swiper_separator'                 => ' .swiper-arrow-separator',
+        'swiper_separator_icon'            => ' .swiper-arrows-together > i',
+        'swiper_separator_svg'             => ' .swiper-arrows-together > svg, .swiper-arrows-together > svg > path, .swiper-arrows-together > svg > g',
+        'swiper_arrows'                    => ' .swiper-button-prev::after, .swiper-button-next::after',
+        'swiper_arrows_hover'              => ' .swiper-button-prev:hover::before, .swiper-button-next:hover::before',
+        'swiper_arrows_i_hover'            => ' .swiper-button-prev:hover > i, .swiper-button-next:hover > i',
+        'swiper_arrow_left'                => ' .swiper-button-prev',
+        'swiper_arrow_right'               => ' .swiper-button-next',
+        'swiper_custom_arrows_icon'        => ' .swiper-button-custom-prev > i, .swiper-button-custom-next > i',
+        'swiper_custom_arrows_svg'         => ' .swiper-button-custom-prev > svg, .swiper-button-custom-next > svg',
+        'swiper_pagination_bullet'         => ' .swiper-pagination-bullet',
+        'swiper_pagination_bullet_active'  => ' .swiper-pagination-bullet.swiper-pagination-bullet-active',
+        'swiper_pagination_bullet_hover'   => ' .swiper-pagination-bullet:hover',
+        'swiper_pagination_position'       => ' .swiper-container-horizontal > .swiper-pagination-bullets',
     ];
 
     /**
@@ -823,12 +827,39 @@ class BannerSlider extends Portuna_Widget_Base {
                         'groove' => __( 'Groove', 'portuna-addon' ),
                     ],
                     'default'   => 'none',
-                    //'selectors' => [
-                        //'{{SELECTOR}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-style: {{VALUE}};',
-                    //],
+                    'selectors' => [
+                        '{{SELECTOR}}' . self::$css_map[ 'swiper_pagination_bullet' ] => 'border-style: {{VALUE}};',
+                    ],
                     'condition' => [
+                        'slide_nav'             => [ 'both', 'dots' ],
                         'slide_pagination_type' => 'bullets',
                     ],
+                ]
+            );
+
+            $this->add_responsive_control(
+                'slide_pagination_size',
+                [
+                    'label'      => __( 'Pagination Bullets Size', 'portuna-addon' ),
+                    'type'       => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px' ],
+                    'range'  => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1100,
+                        ],
+                    ],
+                    'default'   => [
+                        'unit'  => 'px',
+                        'size'  => 15,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_bullet' ]  => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                    ],
+                    'condition' => [
+                        'slide_nav'                     => [ 'both', 'dots' ],
+                        'slide_pagination_type'         => [ 'bullets' ],
+                    ]
                 ]
             );
 
@@ -844,10 +875,11 @@ class BannerSlider extends Portuna_Widget_Base {
                         'bottom' => '1',
                         'left'   => '1'
                     ],
-                    //'selectors'  => [
-                        //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    //],
+                    'selectors'  => [
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_bullet' ] => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
                     'condition' => [
+                        'slide_nav'                     => [ 'both', 'dots' ],
                         'slide_pagination_border_type!' => 'none',
                         'slide_pagination_type'         => [ 'bullets' ],
                     ],
@@ -860,12 +892,221 @@ class BannerSlider extends Portuna_Widget_Base {
                     'label'      => esc_html__( 'Border Radius', 'portuna-addon' ),
                     'type'       => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px', '%' ],
-                    //'selectors'  => [
-                        //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    //],
+                    'selectors'  => [
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_bullet' ] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
                     'condition' => [
+                        'slide_nav'                     => [ 'both', 'dots' ],
                         'slide_pagination_type'         => [ 'bullets' ],
                     ],
+                ]
+            );
+
+            $this->add_responsive_control(
+                'slide_pagination_hr_orientation',
+                [
+                    'label'   => __( 'Pagination Horizontal Orientation', 'portuna-addon' ),
+                    'type'    => Controls_Manager::CHOOSE,
+                    'toggle'  => false,
+                    'default' => 'left',
+                    'options' => [
+                        'left'    => [
+                            'title' => __( 'Left', 'portuna-addon' ),
+                            'icon' => 'eicon-h-align-left',
+                        ],
+                        'right' => [
+                            'title' => __( 'Right', 'portuna-addon' ),
+                            'icon' => 'eicon-h-align-right',
+                        ]
+                    ],
+                    'condition' => [
+                        'slide_nav'                 => [ 'both', 'dots' ],
+                        'slide_pagination_type'     => [ 'bullets' ],
+                    ],
+                    'separator' => 'before'
+                ]
+            );
+
+            $this->add_responsive_control(
+                'slide_pagination_hr_offset_left',
+                [
+                    'label'  => __( 'Offset (Horizontal)', 'portuna-addon' ),
+                    'type'   => Controls_Manager::SLIDER,
+                    'range'  => [
+                        'px' => [
+                            'min' => -1000,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                        'vw' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                        'vh' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                    ],
+                    'default'    => [
+                        'size' => '0',
+                    ],
+                    'size_units' => [ 'px', '%', 'vw', 'vh' ],
+                    'selectors'  => [
+                        'body:not(.rtl) {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]  => 'left: {{SIZE}}{{UNIT}}',
+                        'body.rtl {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]        => 'right: {{SIZE}}{{UNIT}}',
+                    ],
+                    'condition' => [
+                        'slide_nav'                       => [ 'both', 'dots' ],
+                        'slide_pagination_type'           => [ 'bullets' ],
+                        'slide_pagination_hr_orientation' => 'left',
+                    ]
+                ]
+            );
+
+            $this->add_responsive_control(
+                'slide_pagination_hr_offset_right',
+                [
+                    'label'  => __( 'Offset (Horizontal)', 'portuna-addon' ),
+                    'type'   => Controls_Manager::SLIDER,
+                    'range'  => [
+                        'px' => [
+                            'min'  => -1000,
+                            'max'  => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                        'vw' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                        'vh' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                    ],
+                    'default'    => [
+                        'size' => '0',
+                    ],
+                    'size_units' => [ 'px', '%', 'vw', 'vh' ],
+                    'selectors'  => [
+                        'body:not(.rtl) {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]  => 'right: {{SIZE}}{{UNIT}}',
+                        'body.rtl {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]        => 'left: {{SIZE}}{{UNIT}}',
+                    ],
+                    'condition' => [
+                        'slide_nav'                       => [ 'both', 'dots' ],
+                        'slide_pagination_type'           => [ 'bullets' ],
+                        'slide_pagination_hr_orientation' => 'right',
+                    ]
+                ]
+            );
+
+            $this->add_responsive_control(
+                'slide_pagination_vr_orientation',
+                [
+                    'label'   => __( 'Pagination Vertical Orientation', 'portuna-addon' ),
+                    'type'    => Controls_Manager::CHOOSE,
+                    'toggle'  => false,
+                    'default' => 'bottom',
+                    'options' => [
+                        'top'    => [
+                            'title' => __( 'Top', 'portuna-addon' ),
+                            'icon'  => 'eicon-v-align-top',
+                        ],
+                        'bottom' => [
+                            'title' => __( 'Bottom', 'portuna-addon' ),
+                            'icon'  => 'eicon-v-align-bottom',
+                        ]
+                    ],
+                    'condition' => [
+                        'slide_nav'                 => [ 'both', 'dots' ],
+                        'slide_pagination_type'     => [ 'bullets' ],
+                    ]
+                ]
+            );
+
+            $this->add_responsive_control(
+                'slide_pagination_vr_offset_top',
+                [
+                    'label'  => __( 'Offset (Vertical)', 'portuna-addon' ),
+                    'type'   => Controls_Manager::SLIDER,
+                    'range'  => [
+                        'px' => [
+                            'min' => -1000,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                        'vw' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                        'vh' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                    ],
+                    'default'    => [
+                        'size' => '0',
+                    ],
+                    'size_units' => [ 'px', '%', 'vw', 'vh' ],
+                    'selectors'  => [
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ] => 'top: {{SIZE}}{{UNIT}}',
+                    ],
+                    'condition' => [
+                        'slide_nav'                       => [ 'both', 'dots' ],
+                        'slide_pagination_type'           => [ 'bullets' ],
+                        'slide_pagination_vr_orientation' => 'top',
+                    ]
+                ]
+            );
+
+            $this->add_responsive_control(
+                'slide_pagination_vr_offset_bottom',
+                [
+                    'label'  => __( 'Offset (Vertical)', 'portuna-addon' ),
+                    'type'   => Controls_Manager::SLIDER,
+                    'range'  => [
+                        'px' => [
+                            'min' => -1000,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                        'vw' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                        'vh' => [
+                            'min' => -200,
+                            'max' => 200,
+                        ],
+                    ],
+                    'default'    => [
+                        'size'  => 40,
+                        'unit'  => 'px'
+                    ],
+                    'size_units' => [ 'px', '%', 'vw', 'vh' ],
+                    'selectors'  => [
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ] => 'bottom: {{SIZE}}{{UNIT}}',
+                    ],
+                    'condition' => [
+                        'slide_nav'                       => [ 'both', 'dots' ],
+                        'slide_pagination_type'           => [ 'bullets' ],
+                        'slide_pagination_vr_orientation' => 'bottom',
+                    ]
                 ]
             );
 
@@ -886,9 +1127,13 @@ class BannerSlider extends Portuna_Widget_Base {
                         [
                             'label'      => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'       => Controls_Manager::COLOR,
-                            //'selectors'  => [
-                                //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
-                            //],
+                            'selectors'  => [
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_bullet' ] => 'background: {{VALUE}};',
+                            ],
+                            'condition'  => [
+                                'slide_nav'                     => [ 'both', 'dots' ],
+                                'slide_pagination_type'         => [ 'bullets' ],
+                            ]
                         ]
                     );
 
@@ -897,10 +1142,9 @@ class BannerSlider extends Portuna_Widget_Base {
                         [
                             'label'      => esc_html__( 'Border Color', 'portuna-addon' ),
                             'type'       => Controls_Manager::COLOR,
-                            'default'    => '#212529',
-                            //'selectors'  => [
-                                //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
-                            //],
+                            'selectors'  => [
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_bullet' ] => 'border-color: {{VALUE}};',
+                            ],
                             'condition' => [
                                 'slide_pagination_border_type!' => 'none',
                                 'slide_pagination_type'         => [ 'bullets' ],
@@ -911,7 +1155,7 @@ class BannerSlider extends Portuna_Widget_Base {
                 $this->end_controls_tab();
 
                 $this->start_controls_tab(
-                    'slide_arrows_hover',
+                    'slide_pagination_hover',
                     [
                         'label'     => __( 'Hover', 'portuna-addon' ),
                         'condition' => [
@@ -925,9 +1169,13 @@ class BannerSlider extends Portuna_Widget_Base {
                         [
                             'label'      => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'       => Controls_Manager::COLOR,
-                            //'selectors'  => [
-                                //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
-                            //],
+                            'selectors'  => [
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_bullet_hover' ] => 'background: {{VALUE}};',
+                            ],
+                            'condition'  => [
+                                'slide_nav'                     => [ 'both', 'dots' ],
+                                'slide_pagination_type'         => [ 'bullets' ],
+                            ]
                         ]
                     );
 
@@ -936,10 +1184,9 @@ class BannerSlider extends Portuna_Widget_Base {
                         [
                             'label'      => esc_html__( 'Border Color', 'portuna-addon' ),
                             'type'       => Controls_Manager::COLOR,
-                            'default'    => '#212529',
-                            //'selectors'  => [
-                                //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
-                            //],
+                            'selectors'  => [
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_bullet_hover' ] => 'border-color: {{VALUE}};',
+                            ],
                             'condition' => [
                                 'slide_pagination_border_type!' => 'none',
                                 'slide_pagination_type'         => [ 'bullets' ],
@@ -950,7 +1197,7 @@ class BannerSlider extends Portuna_Widget_Base {
                 $this->end_controls_tab();
 
                 $this->start_controls_tab(
-                    'slide_arrows_hover',
+                    'slide_pagination_active',
                     [
                         'label'     => __( 'Active', 'portuna-addon' ),
                         'condition' => [
@@ -964,9 +1211,13 @@ class BannerSlider extends Portuna_Widget_Base {
                         [
                             'label'      => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'       => Controls_Manager::COLOR,
-                            //'selectors'  => [
-                                //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
-                            //],
+                            'selectors'  => [
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_bullet_active' ] => 'background: {{VALUE}};',
+                            ],
+                            'condition'  => [
+                                'slide_nav'                     => [ 'both', 'dots' ],
+                                'slide_pagination_type'         => [ 'bullets' ],
+                            ]
                         ]
                     );
 
@@ -975,10 +1226,9 @@ class BannerSlider extends Portuna_Widget_Base {
                         [
                             'label'      => esc_html__( 'Border Color', 'portuna-addon' ),
                             'type'       => Controls_Manager::COLOR,
-                            'default'    => '#212529',
-                            //'selectors'  => [
-                                //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
-                            //],
+                            'selectors'  => [
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_bullet_active' ] => 'border-color: {{VALUE}};',
+                            ],
                             'condition' => [
                                 'slide_pagination_border_type!' => 'none',
                                 'slide_pagination_type'         => [ 'bullets' ],

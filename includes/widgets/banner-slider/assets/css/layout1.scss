@@ -1,5 +1,10 @@
-$wrap_class: '.portuna-addon--advanced-heading';
+$wrap_class: '.portuna-addon--banner-slider';
 
 #{ $wrap_class }--layout1 {
-    background: red;
+    //background: red;
+
+    .swiper-pagination-bullet {
+        opacity: 1;
+        transition: all .33s ease-in-out;
+    }
 }
