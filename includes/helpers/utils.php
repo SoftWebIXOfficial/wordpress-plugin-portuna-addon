@@ -36,13 +36,10 @@ class Utils {
         ?>
             <div class="widgetarea_warper widgetarea_warper_editable" data-portuna-key="<?php echo esc_attr( $base_key ); ?>" data-portuna-id="<?php echo esc_attr( $i ); ?>">
 
-                <div class="elementor_widget_edit_container">
-                    <div class="widgetarea_warper_edit" data-portuna-key="<?php echo esc_attr( $base_key ); ?>" data-portuna-id="<?php echo esc_attr( $i ); ?>">
-                        <i class="eicon-custom" aria-hidden="true"></i>
-                        <span class="elementor-screen-only"><?php esc_html_e( 'Edit', 'portuna-addon' ); ?></span>
-                    </div>
+                <div class="widgetarea_warper_edit" data-portuna-key="<?php echo esc_attr( $base_key ); ?>" data-portuna-id="<?php echo esc_attr( $i ); ?>">
+                    <i class="eicon-custom" aria-hidden="true"></i>
+                    <span class="elementor-screen-only"><?php esc_html_e( 'Edit', 'portuna-addon' ); ?></span>
                 </div>
-
 
                 <div class="elementor_widget_container">
                     <div class="elementor_widget_edit_border"></div>
