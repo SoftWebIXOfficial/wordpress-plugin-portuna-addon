@@ -65,7 +65,7 @@ body:not( .elementor-editor-active ) {
     //    display: none;
     //}
 
-    .elementor-section {
+    .elementor-section.elementor-section-stretched {
         left: 0!important;
         width: 100%!important;
     }
@@ -92,7 +92,7 @@ body.elementor-editor-active {
         }
     }
 
-    .elementor-section {
+    .elementor-section.elementor-section-stretched {
         left: 0!important;
         width: 100%!important;
     }
