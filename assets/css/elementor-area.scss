@@ -50,14 +50,6 @@
         cursor: pointer;
         z-index: 99999;
     }
-
-    .elementor_widget_container {
-        font-family: sans-serif;
-        text-transform: uppercase;
-        text-align: center;
-        font-weight: bold;
-        color: #dcdcdc;
-    }
 }
 
 body:not( .elementor-editor-active ) {
@@ -72,6 +64,14 @@ body:not( .elementor-editor-active ) {
 }
 
 body.elementor-editor-active {
+    .elementor_widget_container {
+        font-family: sans-serif;
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: bold;
+        color: #dcdcdc;
+    }
+
     .widgetarea_warper_editable {
         position: relative;
         min-height: 35px;

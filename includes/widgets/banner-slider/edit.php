@@ -1245,7 +1245,7 @@ class BannerSlider extends Portuna_Widget_Base {
                 [
                     'label'              => __( 'Slide Center', 'portuna-addon' ),
                     'type'               => Controls_Manager::SWITCHER,
-                    'default'            => 'no',
+                    'default'            => '',
                     'return_value'       => 'yes',
                     'frontend_available' => true,
                     'separator'          => 'before',
@@ -1310,7 +1310,7 @@ class BannerSlider extends Portuna_Widget_Base {
                 [
                     'label'              => __( 'Pause on Interaction', 'portuna-addon' ),
                     'type'               => Controls_Manager::SWITCHER,
-                    'default'            => 'no',
+                    'default'            => '',
                     'return_value'       => 'yes',
                     'condition'          => [
                         'slide_autoplay' => 'yes',
@@ -1324,7 +1324,7 @@ class BannerSlider extends Portuna_Widget_Base {
                 [
                     'label'              => __( 'Pause on Mouse Hover', 'portuna-addon' ),
                     'type'               => Controls_Manager::SWITCHER,
-                    'default'            => 'no',
+                    'default'            => '',
                     'return_value'       => 'yes',
                     'condition'          => [
                         'slide_autoplay' => 'yes',
@@ -1338,7 +1338,7 @@ class BannerSlider extends Portuna_Widget_Base {
                 [
                     'label'              => __( 'Loop', 'portuna-addon' ),
                     'type'               => Controls_Manager::SWITCHER,
-                    'default'            => 'no',
+                    'default'            => '',
                     'return_value'       => 'yes',
                     'frontend_available' => true,
                 ]
@@ -1349,7 +1349,7 @@ class BannerSlider extends Portuna_Widget_Base {
                 [
                     'label'              => __( 'Simulate Touch', 'portuna-addon' ),
                     'type'               => Controls_Manager::SWITCHER,
-                    'default'            => 'no',
+                    'default'            => '',
                     'return_value'       => 'yes',
                     'frontend_available' => true,
                 ]

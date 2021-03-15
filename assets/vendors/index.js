@@ -165,9 +165,50 @@ import debounce from 'lodash/debounce';
                 prevEl:            arrowPrev,
             },
             on: {
-                init: function () {
+                init: function (e) {
+                    const wrapper = $( '.swiper-slide' ).not( '.swiper-slide-active' );
+
+                    setTimeout( function() {
+                        wrapper.find( '.animated' ).each( function ( index, elem ) {
+                            let settings = $( elem ).data( 'settings' );
+
+                            if ( ! settings ) {
+                                return;
+                            }
+
+                            if ( ! settings._animation && ! settings.animation ) {
+                                return;
+                            }
+
+                            let anim = settings._animation || settings.animation;
+
+                            $(elem).removeClass('animated ' + anim).addClass('elementor-invisible');
+                        } );
+                    }, 1000 );
 
                 },
+                slideChange: function () {
+                },
+                slideChangeTransitionStart: function() {
+                    $( '.swiper-wrapper' ).find( '.swiper-slide-active .elementor-invisible' ).each( function( index, elem ) {
+                        let settings = $( elem ).data( 'settings' );
+
+                        if ( ! settings ) {
+                            return;
+                        }
+
+                        if ( ! settings._animation && ! settings.animation ) {
+                            return;
+                        }
+
+                        let delay = settings._animation_delay ? settings._animation_delay : 0,
+                            anim  = settings._animation || settings.animation;
+
+                        setTimeout( () => {
+                            $( elem ).removeClass( 'elementor-invisible' ).addClass( anim + ' animated');
+                        }, delay);
+                    } );
+                }
             }
         } );
 
