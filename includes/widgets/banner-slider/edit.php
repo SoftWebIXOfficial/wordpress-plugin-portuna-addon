@@ -7,6 +7,7 @@ defined( 'ABSPATH' ) || exit;
 use \Elementor\Plugin;
 use \Elementor\Controls_Manager;
 use \Elementor\Repeater;
+use \Elementor\Group_Control_Typography;
 
 use \PortunaAddon\Widgets\Portuna_Widget_Base;
 use \PortunaAddon\Helpers\ControlsManager;
@@ -47,6 +48,12 @@ class BannerSlider extends Portuna_Widget_Base {
         'swiper_pagination_bullet_active'  => ' .swiper-pagination-bullet.swiper-pagination-bullet-active',
         'swiper_pagination_bullet_hover'   => ' .swiper-pagination-bullet:hover',
         'swiper_pagination_position'       => ' .swiper-container-horizontal > .swiper-pagination-bullets',
+        'swiper_pagination_fraction'       => ' .swiper-pagination-fraction, .swiper-pagination-fraction .swiper-pagination-current, .swiper-pagination-fraction .swiper-pagination-total',
+        'swiper_pagination_fraction_pos'         => ' .swiper-pagination-fraction',
+        'swiper_pagination_fraction_color'       => ' .swiper-pagination-fraction, .swiper-pagination-fraction .swiper-pagination-current, .swiper-pagination-fraction .swiper-pagination-total',
+        'swiper_pagination_fraction_color_hover' => ' .swiper-pagination-fraction .swiper-pagination-current:hover, .swiper-pagination-fraction .swiper-pagination-total:hover',
+        'swiper_pagination_progressbar_bgcolor'  => ' .swiper-pagination-progressbar',
+        'swiper_pagination_progressbar_bgcolor_fill' => ' .swiper-pagination-progressbar > .swiper-pagination-progressbar-fill',
     ];
 
     /**
@@ -804,7 +811,6 @@ class BannerSlider extends Portuna_Widget_Base {
                         'bullets'        => __( 'Bullets', 'portuna-addon' ),
                         'fraction'       => __( 'Fraction', 'portuna-addon' ),
                         'progressbar'    => __( 'Progress Bar', 'portuna-addon' ),
-                        'custom-pro'     => __( 'Custom (Pro)', 'portuna-addon' ),
                     ],
                     'frontend_available' => true,
                     'condition'          => [
@@ -905,7 +911,7 @@ class BannerSlider extends Portuna_Widget_Base {
             $this->add_responsive_control(
                 'slide_pagination_hr_orientation',
                 [
-                    'label'   => __( 'Pagination Horizontal Orientation', 'portuna-addon' ),
+                    'label'   => __( 'Horizontal Orientation', 'portuna-addon' ),
                     'type'    => Controls_Manager::CHOOSE,
                     'toggle'  => false,
                     'default' => 'left',
@@ -921,7 +927,7 @@ class BannerSlider extends Portuna_Widget_Base {
                     ],
                     'condition' => [
                         'slide_nav'                 => [ 'both', 'dots' ],
-                        'slide_pagination_type'     => [ 'bullets' ],
+                        'slide_pagination_type'     => [ 'bullets', 'fraction' ],
                     ],
                     'separator' => 'before'
                 ]
@@ -956,12 +962,14 @@ class BannerSlider extends Portuna_Widget_Base {
                     ],
                     'size_units' => [ 'px', '%', 'vw', 'vh' ],
                     'selectors'  => [
-                        'body:not(.rtl) {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]  => 'left: {{SIZE}}{{UNIT}}',
-                        'body.rtl {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]        => 'right: {{SIZE}}{{UNIT}}',
+                        'body:not(.rtl) {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]      => 'left: {{SIZE}}{{UNIT}}',
+                        'body:not(.rtl) {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_fraction_pos' ]  => 'left: {{SIZE}}{{UNIT}}',
+                        'body.rtl {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]            => 'right: {{SIZE}}{{UNIT}}',
+                        'body.rtl {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_fraction_pos' ]        => 'right: {{SIZE}}{{UNIT}}',
                     ],
                     'condition' => [
                         'slide_nav'                       => [ 'both', 'dots' ],
-                        'slide_pagination_type'           => [ 'bullets' ],
+                        'slide_pagination_type'           => [ 'bullets', 'fraction' ],
                         'slide_pagination_hr_orientation' => 'left',
                     ]
                 ]
@@ -996,12 +1004,14 @@ class BannerSlider extends Portuna_Widget_Base {
                     ],
                     'size_units' => [ 'px', '%', 'vw', 'vh' ],
                     'selectors'  => [
-                        'body:not(.rtl) {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]  => 'right: {{SIZE}}{{UNIT}}',
-                        'body.rtl {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]        => 'left: {{SIZE}}{{UNIT}}',
+                        'body:not(.rtl) {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]      => 'right: {{SIZE}}{{UNIT}}',
+                        'body:not(.rtl) {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_fraction_pos' ]  => 'right: {{SIZE}}{{UNIT}}',
+                        'body.rtl {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]            => 'left: {{SIZE}}{{UNIT}}',
+                        'body.rtl {{WRAPPER}}' . self::$css_map[ 'swiper_pagination_fraction_pos' ]        => 'left: {{SIZE}}{{UNIT}}',
                     ],
                     'condition' => [
                         'slide_nav'                       => [ 'both', 'dots' ],
-                        'slide_pagination_type'           => [ 'bullets' ],
+                        'slide_pagination_type'           => [ 'bullets', 'fraction' ],
                         'slide_pagination_hr_orientation' => 'right',
                     ]
                 ]
@@ -1010,7 +1020,7 @@ class BannerSlider extends Portuna_Widget_Base {
             $this->add_responsive_control(
                 'slide_pagination_vr_orientation',
                 [
-                    'label'   => __( 'Pagination Vertical Orientation', 'portuna-addon' ),
+                    'label'   => __( 'Vertical Orientation', 'portuna-addon' ),
                     'type'    => Controls_Manager::CHOOSE,
                     'toggle'  => false,
                     'default' => 'bottom',
@@ -1026,7 +1036,7 @@ class BannerSlider extends Portuna_Widget_Base {
                     ],
                     'condition' => [
                         'slide_nav'                 => [ 'both', 'dots' ],
-                        'slide_pagination_type'     => [ 'bullets' ],
+                        'slide_pagination_type'     => [ 'bullets', 'fraction' ],
                     ]
                 ]
             );
@@ -1060,11 +1070,12 @@ class BannerSlider extends Portuna_Widget_Base {
                     ],
                     'size_units' => [ 'px', '%', 'vw', 'vh' ],
                     'selectors'  => [
-                        '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ] => 'top: {{SIZE}}{{UNIT}}',
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]     => 'top: {{SIZE}}{{UNIT}}',
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_fraction_pos' ] => 'top: {{SIZE}}{{UNIT}}',
                     ],
                     'condition' => [
                         'slide_nav'                       => [ 'both', 'dots' ],
-                        'slide_pagination_type'           => [ 'bullets' ],
+                        'slide_pagination_type'           => [ 'bullets', 'fraction' ],
                         'slide_pagination_vr_orientation' => 'top',
                     ]
                 ]
@@ -1100,13 +1111,33 @@ class BannerSlider extends Portuna_Widget_Base {
                     ],
                     'size_units' => [ 'px', '%', 'vw', 'vh' ],
                     'selectors'  => [
-                        '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ] => 'bottom: {{SIZE}}{{UNIT}}',
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_position' ]     => 'bottom: {{SIZE}}{{UNIT}}',
+                        '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_fraction_pos' ] => 'bottom: {{SIZE}}{{UNIT}}',
                     ],
                     'condition' => [
                         'slide_nav'                       => [ 'both', 'dots' ],
-                        'slide_pagination_type'           => [ 'bullets' ],
+                        'slide_pagination_type'           => [ 'bullets', 'fraction' ],
                         'slide_pagination_vr_orientation' => 'bottom',
-                    ]
+                    ],
+                    'separator'       => 'after',
+                ]
+            );
+
+            $this->add_group_control(
+                Group_Control_Typography::get_type(),
+                [
+                    'label'           => __( 'Pagination Typography', 'portuna-addon' ),
+                    'name'            => 'pagination_typography',
+                    'selector'        => '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_fraction' ],
+                    'fields_options'  => [
+                        'font_weight' => [
+                            'default' => '400'
+                        ]
+                    ],
+                    'condition'       => [
+                        'slide_nav'             => [ 'both', 'dots' ],
+                        'slide_pagination_type' => 'fraction',
+                    ],
                 ]
             );
 
@@ -1128,11 +1159,27 @@ class BannerSlider extends Portuna_Widget_Base {
                             'label'      => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'       => Controls_Manager::COLOR,
                             'selectors'  => [
-                                '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_bullet' ] => 'background: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_bullet' ]      => 'background: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_progressbar_bgcolor' ] => 'background: {{VALUE}};',
                             ],
                             'condition'  => [
                                 'slide_nav'                     => [ 'both', 'dots' ],
-                                'slide_pagination_type'         => [ 'bullets' ],
+                                'slide_pagination_type'         => [ 'bullets', 'progressbar' ],
+                            ]
+                        ]
+                    );
+
+                    $this->add_control(
+                        'slide_pagination_progress_bg_color',
+                        [
+                            'label'      => esc_html__( 'Progress Background Color', 'portuna-addon' ),
+                            'type'       => Controls_Manager::COLOR,
+                            'selectors'  => [
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_progressbar_bgcolor_fill' ] => 'background: {{VALUE}};',
+                            ],
+                            'condition'  => [
+                                'slide_nav'                     => [ 'both', 'dots' ],
+                                'slide_pagination_type'         => [ 'progressbar' ],
                             ]
                         ]
                     );
@@ -1152,6 +1199,20 @@ class BannerSlider extends Portuna_Widget_Base {
                         ]
                     );
 
+                    $this->add_control(
+                        'slide_pagination_fraction_color',
+                        [
+                            'label'      => esc_html__( 'Text Color', 'portuna-addon' ),
+                            'type'       => Controls_Manager::COLOR,
+                            'selectors'  => [
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_fraction_color' ] => 'color: {{VALUE}};',
+                            ],
+                            'condition' => [
+                                'slide_pagination_type'         => [ 'fraction' ],
+                            ],
+                        ]
+                    );
+
                 $this->end_controls_tab();
 
                 $this->start_controls_tab(
@@ -1159,7 +1220,8 @@ class BannerSlider extends Portuna_Widget_Base {
                     [
                         'label'     => __( 'Hover', 'portuna-addon' ),
                         'condition' => [
-                            'slide_nav'  => [ 'both', 'dots' ],
+                            'slide_nav'             => [ 'both', 'dots' ],
+                            'slide_pagination_type' => [ 'bullets', 'fraction' ],
                         ]
                     ]
                 );
@@ -1194,6 +1256,20 @@ class BannerSlider extends Portuna_Widget_Base {
                         ]
                     );
 
+                    $this->add_control(
+                        'slide_pagination_fraction_color_hover',
+                        [
+                            'label'      => esc_html__( 'Text Color', 'portuna-addon' ),
+                            'type'       => Controls_Manager::COLOR,
+                            'selectors'  => [
+                                '{{WRAPPER}}' . self::$css_map[ 'swiper_pagination_fraction_color_hover' ] => 'color: {{VALUE}};',
+                            ],
+                            'condition' => [
+                                'slide_pagination_type'         => [ 'fraction' ],
+                            ],
+                        ]
+                    );
+
                 $this->end_controls_tab();
 
                 $this->start_controls_tab(
@@ -1201,7 +1277,8 @@ class BannerSlider extends Portuna_Widget_Base {
                     [
                         'label'     => __( 'Active', 'portuna-addon' ),
                         'condition' => [
-                            'slide_nav'  => [ 'both', 'dots' ],
+                            'slide_nav'             => [ 'both', 'dots' ],
+                            'slide_pagination_type' => [ 'bullets' ],
                         ]
                     ]
                 );

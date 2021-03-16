@@ -165,29 +165,44 @@ import debounce from 'lodash/debounce';
                 prevEl:            arrowPrev,
             },
             on: {
-                init: function (e) {
+                beforeInit: function () {
                     const wrapper = $( '.swiper-slide' ).not( '.swiper-slide-active' );
 
-                    setTimeout( function() {
-                        wrapper.find( '.animated' ).each( function ( index, elem ) {
-                            let settings = $( elem ).data( 'settings' );
+                    wrapper.find( '.animated' ).each( function ( index, elem ) {
+                        let settings = $( elem ).data( 'settings' );
 
-                            if ( ! settings ) {
-                                return;
-                            }
+                        if ( ! settings ) {
+                            return;
+                        }
 
-                            if ( ! settings._animation && ! settings.animation ) {
-                                return;
-                            }
+                        if ( ! settings._animation && ! settings.animation ) {
+                            return;
+                        }
 
-                            let anim = settings._animation || settings.animation;
+                        let anim = settings._animation || settings.animation;
 
-                            $(elem).removeClass('animated ' + anim).addClass('elementor-invisible');
-                        } );
-                    }, 1000 );
+                        $( elem ).removeClass( 'animated ' + anim ).addClass( 'elementor-invisible' );
+                    } );
 
                 },
-                slideChange: function () {
+                slideChangeTransitionEnd: function () {
+                    const wrapper = $( '.swiper-slide' ).not( '.swiper-slide-active' );
+
+                    wrapper.find( '.animated' ).each( function ( index, elem ) {
+                        let settings = $( elem ).data( 'settings' );
+
+                        if ( ! settings ) {
+                            return;
+                        }
+
+                        if ( ! settings._animation && ! settings.animation ) {
+                            return;
+                        }
+
+                        let anim = settings._animation || settings.animation;
+
+                        $( elem ).removeClass( 'animated ' + anim ).addClass( 'elementor-invisible' );
+                    } );
                 },
                 slideChangeTransitionStart: function() {
                     $( '.swiper-wrapper' ).find( '.swiper-slide-active .elementor-invisible' ).each( function( index, elem ) {
