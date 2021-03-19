@@ -22,6 +22,7 @@
 
                 elm.hooks.addAction( 'frontend/element_ready/global', $scope => {
                     $scope.find( '.widgetarea_warper_edit' ).on( 'click', function () {
+                        console.log( 'Click edit.' );
                         const modalFrame      = windowParent.jQuery( '.portuna-addon-modal' ),
                               iFrame          = modalFrame.find( '#widgetarea-control-iframe' ),
                               lightBoxLoad    = modalFrame.find( '.dialog-lightbox-loading' ),

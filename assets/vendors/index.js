@@ -165,46 +165,38 @@ import debounce from 'lodash/debounce';
                 prevEl:            arrowPrev,
             },
             on: {
-                beforeInit: function () {
+                init: function () {
                     const wrapper = $( '.swiper-slide' ).not( '.swiper-slide-active' );
 
-                    wrapper.find( '.animated' ).each( function ( index, elem ) {
-                        let settings = $( elem ).data( 'settings' );
+                    setTimeout( () => {
+                        wrapper.find( '.animated' ).each( function ( index, elem ) {
+                            let settings = $( elem ).data( 'settings' );
 
-                        if ( ! settings ) {
-                            return;
-                        }
+                            if ( ! settings ) {
+                                return;
+                            }
 
-                        if ( ! settings._animation && ! settings.animation ) {
-                            return;
-                        }
+                            if ( ! settings._animation && ! settings.animation ) {
+                                return;
+                            }
 
-                        let anim = settings._animation || settings.animation;
+                            let anim = settings._animation || settings.animation;
 
-                        $( elem ).removeClass( 'animated ' + anim ).addClass( 'elementor-invisible' );
-                    } );
-
+                            $( elem ).removeClass( 'animated ' + anim ).addClass( 'elementor-invisible' );
+                        } );
+                    }, 1000 );
                 },
-                slideChangeTransitionEnd: function () {
-                    const wrapper = $( '.swiper-slide' ).not( '.swiper-slide-active' );
+                transitionStart: function() {
+                    if ( dataLoop ) {
+                        let $wrapperEl = that.swiper.$wrapperEl;
+                        let params     = that.swiper.params;
+                        $wrapperEl.children(('.' + (params.slideClass) + '.' + (params.slideDuplicateClass)))
+                            .each (function () {
+                                let idx = this.getAttribute('data-swiper-slide-index');
+                                this.innerHTML = $wrapperEl.children('.' + params.slideClass + '[data-swiper-slide-index="' + idx + '"]:not(.' + params.slideDuplicateClass + ')').html();
+                            } );
+                    }
 
-                    wrapper.find( '.animated' ).each( function ( index, elem ) {
-                        let settings = $( elem ).data( 'settings' );
-
-                        if ( ! settings ) {
-                            return;
-                        }
-
-                        if ( ! settings._animation && ! settings.animation ) {
-                            return;
-                        }
-
-                        let anim = settings._animation || settings.animation;
-
-                        $( elem ).removeClass( 'animated ' + anim ).addClass( 'elementor-invisible' );
-                    } );
-                },
-                slideChangeTransitionStart: function() {
                     $( '.swiper-wrapper' ).find( '.swiper-slide-active .elementor-invisible' ).each( function( index, elem ) {
                         let settings = $( elem ).data( 'settings' );
 
@@ -221,9 +213,32 @@ import debounce from 'lodash/debounce';
 
                         setTimeout( () => {
                             $( elem ).removeClass( 'elementor-invisible' ).addClass( anim + ' animated');
-                        }, delay);
+                        }, delay );
                     } );
-                }
+                },
+                transitionEnd: function () {
+                    if ( dataLoop ) {
+                        that.swiper.slideToLoop(that.swiper.realIndex, 0, false);
+                    }
+
+                    const wrapper = $( '.swiper-slide' ).not( '.swiper-slide-active' );
+
+                    wrapper.find( '.animated' ).each( function ( index, elem ) {
+                        let settings = $( elem ).data( 'settings' );
+
+                        if ( ! settings ) {
+                            return;
+                        }
+
+                        if ( ! settings._animation && ! settings.animation ) {
+                            return;
+                        }
+
+                        let anim = settings._animation || settings.animation;
+
+                        $( elem ).removeClass( 'animated ' + anim ).addClass( 'elementor-invisible' );
+                    } );
+                },
             }
         } );
 
