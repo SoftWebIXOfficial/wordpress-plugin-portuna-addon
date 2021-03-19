@@ -218,7 +218,7 @@ import debounce from 'lodash/debounce';
                 },
                 transitionEnd: function () {
                     // if ( dataLoop ) {
-                        that.swiper.slideToLoop(that.swiper.realIndex, 500, false);
+                        that.swiper.slideToLoop(that.swiper.realIndex, 0, false);
                     // }
 
                     const wrapper = $( '.swiper-slide' ).not( '.swiper-slide-active' );
