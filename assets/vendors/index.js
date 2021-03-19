@@ -187,7 +187,7 @@ import debounce from 'lodash/debounce';
                     }, 1000 );
                 },
                 transitionStart: function() {
-                    if ( dataLoop ) {
+                    // if ( dataLoop ) {
                         let $wrapperEl = that.swiper.$wrapperEl;
                         let params     = that.swiper.params;
                         $wrapperEl.children(('.' + (params.slideClass) + '.' + (params.slideDuplicateClass)))
@@ -195,7 +195,7 @@ import debounce from 'lodash/debounce';
                                 let idx = this.getAttribute('data-swiper-slide-index');
                                 this.innerHTML = $wrapperEl.children('.' + params.slideClass + '[data-swiper-slide-index="' + idx + '"]:not(.' + params.slideDuplicateClass + ')').html();
                             } );
-                    }
+                    // }
 
                     $( '.swiper-wrapper' ).find( '.swiper-slide-active .elementor-invisible' ).each( function( index, elem ) {
                         let settings = $( elem ).data( 'settings' );
@@ -217,9 +217,9 @@ import debounce from 'lodash/debounce';
                     } );
                 },
                 transitionEnd: function () {
-                    if ( dataLoop ) {
+                    // if ( dataLoop ) {
                         that.swiper.slideToLoop(that.swiper.realIndex, 0, false);
-                    }
+                    // }
 
                     const wrapper = $( '.swiper-slide' ).not( '.swiper-slide-active' );
 
