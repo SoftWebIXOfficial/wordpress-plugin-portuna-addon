@@ -168,7 +168,7 @@ import debounce from 'lodash/debounce';
                 init: function () {
                     const wrapper = $( '.swiper-slide' ).not( '.swiper-slide-active' );
 
-                    // setTimeout( () => {
+                    setTimeout( () => {
                         wrapper.find( '.animated' ).each( function ( index, elem ) {
                             let settings = $( elem ).data( 'settings' );
 
@@ -184,18 +184,18 @@ import debounce from 'lodash/debounce';
 
                             $( elem ).removeClass( 'animated ' + anim ).addClass( 'elementor-invisible' );
                         } );
-                    // }, 100 );
+                    }, 1000 );
                 },
                 transitionStart: function() {
-                    if ( dataLoop ) {
-                        let $wrapperEl = that.swiper.$wrapperEl;
-                        let params     = that.swiper.params;
-                        $wrapperEl.children(('.' + (params.slideClass) + '.' + (params.slideDuplicateClass)))
-                            .each (function () {
-                                let idx = this.getAttribute('data-swiper-slide-index');
-                                this.innerHTML = $wrapperEl.children('.' + params.slideClass + '[data-swiper-slide-index="' + idx + '"]:not(.' + params.slideDuplicateClass + ')').html();
-                            } );
-                    }
+                    // if ( dataLoop ) {
+                    //     let $wrapperEl = that.swiper.$wrapperEl;
+                    //     let params     = that.swiper.params;
+                    //     $wrapperEl.children(('.' + (params.slideClass) + '.' + (params.slideDuplicateClass)))
+                    //         .each (function () {
+                    //             let idx = this.getAttribute('data-swiper-slide-index');
+                    //             this.innerHTML = $wrapperEl.children('.' + params.slideClass + '[data-swiper-slide-index="' + idx + '"]:not(.' + params.slideDuplicateClass + ')').html();
+                    //         } );
+                    // }
 
                     $( '.swiper-wrapper' ).find( '.swiper-slide-active .elementor-invisible' ).each( function( index, elem ) {
                         let settings = $( elem ).data( 'settings' );
@@ -217,9 +217,9 @@ import debounce from 'lodash/debounce';
                     } );
                 },
                 transitionEnd: function () {
-                    if ( dataLoop ) {
-                        that.swiper.slideToLoop(that.swiper.realIndex, 0, false);
-                    }
+                    // if ( dataLoop ) {
+                    //     that.swiper.slideToLoop(that.swiper.realIndex, 0, false);
+                    // }
 
                     const wrapper = $( '.swiper-slide' ).not( '.swiper-slide-active' );
 
