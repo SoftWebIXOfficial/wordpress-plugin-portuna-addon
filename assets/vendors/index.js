@@ -168,7 +168,7 @@ import debounce from 'lodash/debounce';
                 init: function () {
                     const wrapper = $( '.swiper-slide' ).not( '.swiper-slide-active' );
 
-                    setTimeout( () => {
+                    // setTimeout( () => {
                         wrapper.find( '.animated' ).each( function ( index, elem ) {
                             let settings = $( elem ).data( 'settings' );
 
@@ -184,7 +184,7 @@ import debounce from 'lodash/debounce';
 
                             $( elem ).removeClass( 'animated ' + anim ).addClass( 'elementor-invisible' );
                         } );
-                    }, 100 );
+                    // }, 100 );
                 },
                 transitionStart: function() {
                     if ( dataLoop ) {
