@@ -187,16 +187,6 @@ import debounce from 'lodash/debounce';
                     }, 1000 );
                 },
                 transitionStart: function() {
-                    // if ( dataLoop ) {
-                        let $wrapperEl = that.swiper.$wrapperEl;
-                        let params     = that.swiper.params;
-                        $wrapperEl.children(('.' + (params.slideClass) + '.' + (params.slideDuplicateClass)))
-                            .each (function () {
-                                let idx = this.getAttribute('data-swiper-slide-index');
-                                this.innerHTML = $wrapperEl.children('.' + params.slideClass + '[data-swiper-slide-index="' + idx + '"]:not(.' + params.slideDuplicateClass + ')').html();
-                            } );
-                    // }
-
                     $( '.swiper-wrapper' ).find( '.swiper-slide-active .elementor-invisible' ).each( function( index, elem ) {
                         let settings = $( elem ).data( 'settings' );
 
@@ -215,12 +205,16 @@ import debounce from 'lodash/debounce';
                             $( elem ).removeClass( 'elementor-invisible' ).addClass( anim + ' animated');
                         }, delay );
                     } );
+
+                    let $wrapperEl = that.swiper.$wrapperEl;
+                    let params     = that.swiper.params;
+                    $wrapperEl.children(('.' + (params.slideClass) + '.' + (params.slideDuplicateClass)))
+                        .each (function () {
+                            let idx = this.getAttribute('data-swiper-slide-index');
+                            this.innerHTML = $wrapperEl.children('.' + params.slideClass + '[data-swiper-slide-index="' + idx + '"]:not(.' + params.slideDuplicateClass + ')').html();
+                        } );
                 },
                 transitionEnd: function () {
-                    // if ( dataLoop ) {
-                        that.swiper.slideToLoop(that.swiper.realIndex, 0, false);
-                    // }
-
                     const wrapper = $( '.swiper-slide' ).not( '.swiper-slide-active' );
 
                     wrapper.find( '.animated' ).each( function ( index, elem ) {
@@ -238,6 +232,8 @@ import debounce from 'lodash/debounce';
 
                         $( elem ).removeClass( 'animated ' + anim ).addClass( 'elementor-invisible' );
                     } );
+
+                    that.swiper.slideToLoop(that.swiper.realIndex, 0, false);
                 },
             }
         } );
