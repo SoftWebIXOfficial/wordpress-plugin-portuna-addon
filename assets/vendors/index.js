@@ -187,15 +187,15 @@ import debounce from 'lodash/debounce';
                     }, 1000 );
                 },
                 transitionStart: function() {
-                    // if ( dataLoop ) {
-                    //     let $wrapperEl = that.swiper.$wrapperEl;
-                    //     let params     = that.swiper.params;
-                    //     $wrapperEl.children(('.' + (params.slideClass) + '.' + (params.slideDuplicateClass)))
-                    //         .each (function () {
-                    //             let idx = this.getAttribute('data-swiper-slide-index');
-                    //             this.innerHTML = $wrapperEl.children('.' + params.slideClass + '[data-swiper-slide-index="' + idx + '"]:not(.' + params.slideDuplicateClass + ')').html();
-                    //         } );
-                    // }
+                    if ( dataLoop ) {
+                        let $wrapperEl = that.swiper.$wrapperEl;
+                        let params     = that.swiper.params;
+                        $wrapperEl.children(('.' + (params.slideClass) + '.' + (params.slideDuplicateClass)))
+                            .each (function () {
+                                let idx = this.getAttribute('data-swiper-slide-index');
+                                this.innerHTML = $wrapperEl.children('.' + params.slideClass + '[data-swiper-slide-index="' + idx + '"]:not(.' + params.slideDuplicateClass + ')').html();
+                            } );
+                    }
 
                     $( '.swiper-wrapper' ).find( '.swiper-slide-active .elementor-invisible' ).each( function( index, elem ) {
                         let settings = $( elem ).data( 'settings' );
