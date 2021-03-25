@@ -126,4 +126,43 @@ class Utils {
 
         return $result;
     }
+
+    /**
+     * Get carousel params
+     *
+     * @param array $args all arguments
+     * @param string $prefix prefix
+     * @param string $default if user don't choose option Change slider options
+     * @param array $additional other options (some hardcode)
+     *
+     * @return mixed data-attributes for swiper init
+     */
+    public static function get_map_data( $args = [], $prefix = '', $additional = [] ) {
+        $params_arr = [];
+
+        $all_params = [
+            'type',
+            'zoom-level',
+            'address-type',
+            'address',
+            'centerlat',
+            'centerlon',
+        ];
+
+        foreach ( $all_params as $param ) {
+            if ( isset( $args[ $prefix . $param ] ) && $args[ $prefix . $param ] ) {
+                $params_arr[ $param ] = $args[ $prefix . $param ];
+            }
+        }
+
+        $params_arr = wp_parse_args( $additional, $params_arr );
+
+        array_walk( $params_arr, function ( $val, $key ) use ( &$result ) {
+            if ( isset( $key ) && ! empty( $val ) ) {
+                $result[ $key ] = $val;
+            }
+        } );
+
+        return json_encode( $result );
+    }
 }

@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'PortunaAddon\\AdminPage' => $baseDir . '/includes/admin-page.php',
     'PortunaAddon\\Base' => $baseDir . '/includes/base.php',
     'PortunaAddon\\Controls\\Elementor_Area' => $baseDir . '/includes/controls/elementor-area.php',
     'PortunaAddon\\Controls\\Select_Image' => $baseDir . '/includes/controls/select-image.php',
@@ -13,7 +14,9 @@ return array(
     'PortunaAddon\\Core\\Cpt\\Init' => $baseDir . '/includes/core/elementor-cpt/init.php',
     'PortunaAddon\\Core\\Cpt_Api' => $baseDir . '/includes/core/elementor-cpt/cpt-api.php',
     'PortunaAddon\\Core\\Register_Cpt' => $baseDir . '/includes/core/elementor-cpt/cpt-register.php',
+    'PortunaAddon\\Helpers\\Ajax' => $baseDir . '/includes/helpers/ajax.php',
     'PortunaAddon\\Helpers\\ControlsManager' => $baseDir . '/includes/helpers/controls-manager.php',
+    'PortunaAddon\\Helpers\\Options' => $baseDir . '/includes/helpers/options.php',
     'PortunaAddon\\Helpers\\Utils' => $baseDir . '/includes/helpers/utils.php',
     'PortunaAddon\\Helpers\\WidgetsManager' => $baseDir . '/includes/helpers/widgets-manager.php',
     'PortunaAddon\\Modules\\Mega_Menu' => $baseDir . '/includes/modules/mega-menu/mega-menu.php',
@@ -24,6 +27,7 @@ return array(
     'PortunaAddon\\Widgets\\Edit\\AdvancedHeading' => $baseDir . '/includes/widgets/heading/edit.php',
     'PortunaAddon\\Widgets\\Edit\\BannerSlider' => $baseDir . '/includes/widgets/banner-slider/edit.php',
     'PortunaAddon\\Widgets\\Edit\\CreativeButton' => $baseDir . '/includes/widgets/creative-button/edit.php',
+    'PortunaAddon\\Widgets\\Edit\\GoogleMap' => $baseDir . '/includes/widgets/google-map/edit.php',
     'PortunaAddon\\Widgets\\Edit\\MegaMenu' => $baseDir . '/includes/widgets/mega-menu/edit.php',
     'PortunaAddon\\Widgets\\Portuna_Widget_Base' => $baseDir . '/includes/portuna-widget-base.php',
 );

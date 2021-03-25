@@ -57,6 +57,10 @@ class ScriptsManager {
     }
 
     public function register_scripts() {
+        $options        = \PortunaAddon\Helpers\Options::instance();
+        $userData       = $options->get_option( 'user_data' );
+        $google_api_key = isset( $userData[ 'user_data' ][ 'google_api_key' ] ) && ! empty( $userData[ 'user_data' ][ 'google_api_key' ] ) ? $userData[ 'user_data' ][ 'google_api_key' ] : '';
+
         // Vendors
         wp_enqueue_script(
             'portuna-vendors-swiper',
@@ -70,6 +74,22 @@ class ScriptsManager {
             'portuna-vendors-main',
             plugins_url( 'portuna-addon/assets/' ) . 'vendors/index.min.js',
             [ 'jquery', 'imagesloaded' ],
+            null,
+            true
+        );
+
+        wp_register_script(
+            'google-map-style',
+            plugins_url( 'portuna-addon/assets/' ) . 'vendors/google-maps.min.js',
+            [],
+            null,
+            true
+        );
+
+        wp_register_script(
+            'google-map-api',
+            ( is_ssl() ? 'https' : 'http' ) . '://maps.googleapis.com/maps/api/js?key=' . $google_api_key,
+            null,
             null,
             true
         );

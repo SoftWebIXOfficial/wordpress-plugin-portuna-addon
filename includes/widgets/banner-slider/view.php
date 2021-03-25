@@ -6,6 +6,8 @@ use \Elementor\Icons_Manager;
 // Server side render.
 extract( $args );
 
+$this->add_render_attribute( 'wrapper', 'class', 'portuna-addon--banner-slider--layout1' );
+
 $carousel_params = [
     'autoplay'             => $slide_autoplay,
     'autoplay-delay'       => ! empty( $slide_autoplay ) ? $slide_pause_delay : null,
@@ -23,11 +25,7 @@ $carousel_params = [
 
 $carousel_data = Utils::get_carousel_data( $carousel_params, '' );
 
-$this->add_render_attribute( 'wrapper', 'class', 'portuna-addon--banner-slider--layout1' );
-
 $arrow_custom_pro = $slide_arrows_type === 'custom-pro' ? true : false;
-
-//\PortunaAddon\Helpers\Utils::parse_widget_content( $portuna_banner_slides_elementor, $this->get_id(), $key );
 
 // Slide Items.
 $items = $slide_item;

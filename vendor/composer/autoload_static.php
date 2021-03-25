@@ -21,6 +21,7 @@ class ComposerStaticInit16862581ea4482efdc7f8079dbd54cfc
     );
 
     public static $classMap = array (
+        'PortunaAddon\\AdminPage' => __DIR__ . '/../..' . '/includes/admin-page.php',
         'PortunaAddon\\Base' => __DIR__ . '/../..' . '/includes/base.php',
         'PortunaAddon\\Controls\\Elementor_Area' => __DIR__ . '/../..' . '/includes/controls/elementor-area.php',
         'PortunaAddon\\Controls\\Select_Image' => __DIR__ . '/../..' . '/includes/controls/select-image.php',
@@ -28,7 +29,9 @@ class ComposerStaticInit16862581ea4482efdc7f8079dbd54cfc
         'PortunaAddon\\Core\\Cpt\\Init' => __DIR__ . '/../..' . '/includes/core/elementor-cpt/init.php',
         'PortunaAddon\\Core\\Cpt_Api' => __DIR__ . '/../..' . '/includes/core/elementor-cpt/cpt-api.php',
         'PortunaAddon\\Core\\Register_Cpt' => __DIR__ . '/../..' . '/includes/core/elementor-cpt/cpt-register.php',
+        'PortunaAddon\\Helpers\\Ajax' => __DIR__ . '/../..' . '/includes/helpers/ajax.php',
         'PortunaAddon\\Helpers\\ControlsManager' => __DIR__ . '/../..' . '/includes/helpers/controls-manager.php',
+        'PortunaAddon\\Helpers\\Options' => __DIR__ . '/../..' . '/includes/helpers/options.php',
         'PortunaAddon\\Helpers\\Utils' => __DIR__ . '/../..' . '/includes/helpers/utils.php',
         'PortunaAddon\\Helpers\\WidgetsManager' => __DIR__ . '/../..' . '/includes/helpers/widgets-manager.php',
         'PortunaAddon\\Modules\\Mega_Menu' => __DIR__ . '/../..' . '/includes/modules/mega-menu/mega-menu.php',
@@ -39,6 +42,7 @@ class ComposerStaticInit16862581ea4482efdc7f8079dbd54cfc
         'PortunaAddon\\Widgets\\Edit\\AdvancedHeading' => __DIR__ . '/../..' . '/includes/widgets/heading/edit.php',
         'PortunaAddon\\Widgets\\Edit\\BannerSlider' => __DIR__ . '/../..' . '/includes/widgets/banner-slider/edit.php',
         'PortunaAddon\\Widgets\\Edit\\CreativeButton' => __DIR__ . '/../..' . '/includes/widgets/creative-button/edit.php',
+        'PortunaAddon\\Widgets\\Edit\\GoogleMap' => __DIR__ . '/../..' . '/includes/widgets/google-map/edit.php',
         'PortunaAddon\\Widgets\\Edit\\MegaMenu' => __DIR__ . '/../..' . '/includes/widgets/mega-menu/edit.php',
         'PortunaAddon\\Widgets\\Portuna_Widget_Base' => __DIR__ . '/../..' . '/includes/portuna-widget-base.php',
     );

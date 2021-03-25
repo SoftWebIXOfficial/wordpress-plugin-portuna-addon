@@ -2,6 +2,7 @@
     "autoload": {
         "classmap": [
             "includes/base.php",
+            "includes/admin-page.php",
             "includes/portuna-widget-base.php",
             "includes/scripts-manager.php",
             "includes/controls/elementor-area.php",
@@ -9,6 +10,8 @@
             "includes/helpers/widgets-manager.php",
             "includes/helpers/controls-manager.php",
             "includes/helpers/utils.php",
+            "includes/helpers/ajax.php",
+            "includes/helpers/options.php",
             "includes/modules/mega-menu/mega-menu.php",
             "includes/modules/mega-menu/mega-menu-edit-walker.php",
             "includes/modules/mega-menu/mega-menu-nav-walker.php",

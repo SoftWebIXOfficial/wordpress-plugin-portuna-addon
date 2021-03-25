@@ -107,6 +107,7 @@ class Base {
 
             // ***
             \PortunaAddon\ScriptsManager::instance();
+            AdminPage::instance();
 
 //             // register custom elementor controls
 //             add_action( 'elementor/controls/controls_registered', [ $this, 'register_custom_elementor_control' ] );
@@ -136,55 +137,9 @@ class Base {
     }
 
     public function __construct() {
-        //add_action( 'elementor/init', [ $this, 'register_cpt' ] );
         //$this->i18n();
 
         //$this->init_class();
         $this->add_actions();
-
-        //include_once PORTUNA_PLUGIN_PATH . 'includes/core/elementor-cpt/init.php';
-        //new \PortunaAddon\Core\Cpt\Init();
-    }
-
-    public function register_cpt() {
-        $labels = [
-            'name'                  => _x( 'Portuna Addon items', 'Post Type General Name', 'portuna-addon' ),
-            'singular_name'         => _x( 'Portuna Addon item', 'Post Type Singular Name', 'portuna-addon' ),
-            'menu_name'             => esc_html__( 'Portuna Addon item', 'portuna-addon' ),
-        ];
-
-        $rewrite = [
-            'slug'                  => 'portuna-content',
-            'with_front'            => true,
-            'pages'                 => false,
-            'feeds'                 => false
-        ];
-
-        $supports = apply_filters( 'portuna-addon/cpt/register/supports', [ 'title', 'editor', 'elementor', 'permalink' ] );
-
-        $args = [
-            'labels'                => $labels,
-            'supports'              => $supports,
-            'taxonomies'            => [],
-            'hierarchical'          => false,
-            'public'                => true,
-            'show_ui'               => true,
-            'show_in_menu'          => true,
-            'show_in_admin_bar'     => true,
-            'show_in_nav_menus'     => false,
-            'can_export'            => true,
-            'has_archive'           => false,
-            'publicly_queryable'    => true,
-            'rewrite'               => $rewrite,
-            'query_var'             => true,
-            'exclude_from_search'   => true,
-            'publicly_queryable'    => true,
-            'capability_type'       => 'post',
-            'show_in_rest'          => true,
-            'menu_position'         => 5,
-            'rest_base'             => 'portuna-content',
-        ];
-
-        register_post_type( 'portuna_content', $args );
     }
 }

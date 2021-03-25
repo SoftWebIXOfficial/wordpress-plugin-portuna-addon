@@ -106,6 +106,7 @@ import debounce from 'lodash/debounce';
                     } );
                 }
             }
+
             controlMegaMenuWidth();
 
             $( window ).on( 'resize orientationchange', debounce( controlMegaMenuWidth, 100 ) );
