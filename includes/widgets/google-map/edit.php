@@ -195,6 +195,28 @@ class GoogleMap extends Portuna_Widget_Base {
             );
 
             $this->add_control(
+                'portuna_marker_content_opened_switch',
+                [
+                    'label'        => __( 'Marker content open by default?', 'portuna-addon' ),
+                    'type'         => Controls_Manager::SWITCHER,
+                    'default'      => '',
+                    'return_value' => 'yes',
+                ]
+            );
+
+            $this->add_control(
+                'portuna_marker_content_width',
+                [
+                    'label'              => __( 'Width (px)', 'portuna-addon' ),
+                    'type'               => Controls_Manager::NUMBER,
+                    'default'            => 250,
+                    'min'                => 100,
+                    'required'           => true,
+                    'frontend_available' => true,
+                ]
+            );
+
+            $this->add_control(
                 'portuna_marker_icon_switch',
                 [
                     'label'        => __( 'Enable Custom Marker Icon?', 'portuna-addon' ),
@@ -317,7 +339,7 @@ class GoogleMap extends Portuna_Widget_Base {
             );
 
             $repeater->add_control(
-                'portuna_marker_lon_multiple',
+                'portuna_marker_lng_multiple',
                 [
                     'label'       => __( 'Marker Longitude', 'portuna-addon' ),
                     'type'        => Controls_Manager::TEXT,
@@ -343,6 +365,28 @@ class GoogleMap extends Portuna_Widget_Base {
                     'type'        => Controls_Manager::TEXTAREA,
                     'default'     => __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'portuna-addon' ),
                     'label_block' => true,
+                ]
+            );
+
+            $repeater->add_control(
+                'portuna_marker_content_opened_switch',
+                [
+                    'label'        => __( 'Marker content open by default?', 'portuna-addon' ),
+                    'type'         => Controls_Manager::SWITCHER,
+                    'default'      => '',
+                    'return_value' => 'yes',
+                ]
+            );
+
+            $repeater->add_control(
+                'portuna_marker_content_width',
+                [
+                    'label'              => __( 'Width (px)', 'portuna-addon' ),
+                    'type'               => Controls_Manager::NUMBER,
+                    'default'            => 250,
+                    'min'                => 100,
+                    'required'           => true,
+                    'frontend_available' => true,
                 ]
             );
 
@@ -740,6 +784,22 @@ class GoogleMap extends Portuna_Widget_Base {
 
     protected function render() {
         $this->server_side_render();
+    }
+
+    public function set_map_style_theme( $settings ) {
+        if ( $settings[ 'portuna_map_source' ] == 'custom' ) {
+            return strip_tags( $settings[ 'portuna_map_custom' ] );
+        } else {
+            $themes = include( 'map-styles.php' );
+
+            if ( isset( $themes[ $settings[ 'portuna_map_source' ] ][ $settings[ 'portuna_map_gstandard' ] ] ) ) {
+                return $themes[ $settings[ 'portuna_map_source' ] ][ $settings[ 'portuna_map_gstandard' ] ];
+            } elseif ( isset( $themes[ $settings[ 'portuna_map_source' ] ][ $settings[ 'portuna_map_snazzymaps' ] ] ) ) {
+                return $themes[ $settings[ 'portuna_map_source' ] ][ $settings[ 'portuna_map_snazzymaps' ] ];
+            } else {
+                return;
+            }
+        }
     }
 }
 

@@ -142,11 +142,20 @@ class Utils {
 
         $all_params = [
             'type',
-            'zoom-level',
-            'address-type',
-            'address',
-            'centerlat',
-            'centerlon',
+            'zoomLevel',
+            'addressType',
+            'addressName',
+            'centerLat',
+            'centerLng',
+            'markerContent',
+            'popupMaxWidth',
+            'isPopupOpen',
+            'isCustomIcon',
+            'iconUrl',
+            'iconWidth',
+            'iconHeight',
+            'multipleMarkers',
+            'mapStyleTheme',
         ];
 
         foreach ( $all_params as $param ) {
