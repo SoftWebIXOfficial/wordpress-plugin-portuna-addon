@@ -118,7 +118,7 @@ class GoogleMap extends Portuna_Widget_Base {
                         ],
                     ],
                     'default'   => 'address',
-                ],
+                ]
             );
 
             $this->add_control(
@@ -130,7 +130,7 @@ class GoogleMap extends Portuna_Widget_Base {
                     'condition' => [
                         'portuna_address_type' => 'address'
                     ]
-                ],
+                ]
             );
 
             $this->add_control(
@@ -142,7 +142,7 @@ class GoogleMap extends Portuna_Widget_Base {
                     'condition' => [
                         'portuna_address_type' => 'coordinates'
                     ]
-                ],
+                ]
             );
 
             $this->add_control(
@@ -154,7 +154,7 @@ class GoogleMap extends Portuna_Widget_Base {
                     'condition' => [
                         'portuna_address_type' => 'coordinates'
                     ]
-                ],
+                ]
             );
 
         $this->end_controls_section();
