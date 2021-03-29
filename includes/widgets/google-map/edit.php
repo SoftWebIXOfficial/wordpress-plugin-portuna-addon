@@ -638,7 +638,7 @@ class GoogleMap extends Portuna_Widget_Base {
                         ],
                     ],
                     'default'   => 'gstandard',
-                ],
+                ]
             );
 
             $this->add_control(
