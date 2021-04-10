@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'PortunaAddon\\' => array($baseDir . '/includes'),
+    'Cloudipsp\\' => array($vendorDir . '/cloudipsp/php-sdk-v2/lib'),
 );

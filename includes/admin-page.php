@@ -13,12 +13,15 @@ class AdminPage {
 
     public function __construct() {
         $this->options = \PortunaAddon\Helpers\Options::instance();
-//         new Helpers\Ajax;
 
         add_action( 'admin_menu', [ $this, 'register_admin_panel_menu' ] );
+        add_action( 'admin_menu', [ $this, 'update_admin_panel_menu' ], 20 );
+
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_panel_enqueue_scripts' ], 100 );
 
         add_action( 'wp_ajax_' . self::PORTUNA_NONCE, [ $this, 'save_user_data' ] );
+
+        add_action( 'in_admin_header', [ $this, 'remove_all_notices' ], PHP_INT_MAX );
     }
 
     public function save_user_data() {
@@ -64,6 +67,22 @@ class AdminPage {
             true
         );
 
+        wp_enqueue_script(
+            'portuna-admin-panel-script',
+            $dir_js . 'admin-panel.min.js',
+            [ 'jquery' ],
+            $version,
+            true
+        );
+
+        wp_enqueue_script(
+            'pay-fondy',
+            ( is_ssl() ? 'https' : 'http' ) . '://pay.fondy.eu/static_common/v1/checkout/ipsp.js',
+            null,
+            null,
+            true
+        );
+
         wp_localize_script(
             'portuna-admin-panel-script',
             'portunaAjax',
@@ -79,35 +98,106 @@ class AdminPage {
 
     public function register_admin_panel_menu() {
         add_menu_page(
-            __( 'Portuna Addon Settings', 'portuna-addon' ),
-            __( 'Portuna Settings', 'portuna-addon' ),
+            __( 'Portuna Addon', 'portuna-addon' ),
+            __( 'Portuna', 'portuna-addon' ),
             'manage_options',
             self::PORTUNA_SLUG,
-            [ $this, 'admin_init' ],
+            [ $this, 'admin_frontend_init' ],
             'dashicons-admin-tools',
             3.22
         );
+
+        $submenu_item = $this->admin_submenu_navigation();
+
+        if ( is_array( $submenu_item ) ) :
+            foreach ( $submenu_item as $key => $data ) :
+                if ( empty( $data[ 'frontend_file' ] ) || ! is_callable( $data[ 'frontend_file' ] ) ) :
+                    continue;
+                endif;
+
+                add_submenu_page(
+                    self::PORTUNA_SLUG,
+                    sprintf(
+                        __( '%s Portuna', 'portuna-addon'),
+                        $data[ 'sub_title' ]
+                    ),
+                    $data[ 'sub_title' ],
+                    'manage_options',
+                    self::PORTUNA_SLUG . '#' . $key,
+                    $data[ 'frontend_file' ]
+                );
+            endforeach;
+        endif;
     }
 
-    public function admin_init() {
-        $userData    = $this->options->get_option( 'user_data', [] );
+    public function admin_submenu_navigation() {
+        $submenu_item = [
+            'settings'  => [
+                'sub_title'     => __( 'Settings', 'portuna-addon' ),
+                'frontend_file' => [ $this, 'admin_frontend_init' ],
+            ],
+            'pro'       => [
+                'sub_title'     => __( 'Pro', 'portuna-addon' ),
+                'frontend_file' => [ $this, 'admin_frontend_pro' ],
+            ],
+        ];
 
-        ?>
-        	<div class="wrap">
-        		<h2><?php echo get_admin_page_title() ?></h2>
-
-        		<form action="" method="POST" id="portuna-addon-form">
-
-        		    <!------------- Google API ----------->
-        		    <div class="google-maps-api-settings">
-                        <label><?php echo esc_html__( 'Google Map', 'portuna-addon' ); ?></label>
-                        <input placeholder="AIzaSyA-10-OHpfss9XvUDWILmos62MnG_L4MYw" name="user_data[google_api_key]" value="<?php echo ( ! isset( $userData[ 'user_data' ][ 'google_api_key' ] ) ) ? '' : ( $userData[ 'user_data' ][ 'google_api_key' ] ) ?>" />
-        		    </div>
-
-        			<button disabled class="portuna-addon-form-save-btn" type="submit"><div></div><?php esc_html_e( 'Save Changes', 'simpli' ); ?></button>
-        		</form>
-        	</div>
-        <?php
+        return apply_filters( 'get_admin_submenus', $submenu_item );
     }
 
+    /**
+     * Update admin menus.
+     */
+    public function update_admin_panel_menu() {
+        if ( ! current_user_can( 'manage_options' ) ) :
+           return;
+        endif;
+
+        global $submenu;
+
+        $menu = $submenu[ self::PORTUNA_SLUG ];
+        array_shift( $menu );
+        $submenu[ self::PORTUNA_SLUG ] = $menu;
+    }
+
+    /**
+     * Frontend options.
+     */
+    public function load_file_frontend( $file_name ) {
+        $get_file = dirname( __FILE__ ) . '/views/admin-panel-' . $file_name . '.php';
+
+
+        if ( is_readable( $get_file ) ) :
+            include( $get_file );
+        endif;
+    }
+
+    public function admin_frontend_init() {
+        $this->load_file_frontend( 'init' );
+    }
+
+    public function admin_frontend_settings() {
+        $this->load_file_frontend( 'settings' );
+    }
+
+    public function admin_frontend_pro() {
+        $this->load_file_frontend( 'pro' );
+    }
+
+    /**
+     * Remove all notices messages.
+     */
+    public function portuna_is_page() {
+        return (
+            isset( $_GET[ 'page' ] )
+            && $_GET[ 'page' ] === self::PORTUNA_SLUG
+        );
+    }
+
+    public function remove_all_notices() {
+        if ( $this->portuna_is_page() ) :
+            remove_all_actions( 'admin_notices' );
+            remove_all_actions( 'all_admin_notices' );
+        endif;
+    }
 }

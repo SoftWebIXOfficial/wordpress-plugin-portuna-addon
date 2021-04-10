@@ -155,7 +155,13 @@ class Utils {
             'iconWidth',
             'iconHeight',
             'multipleMarkers',
+            'mapStreetView',
             'mapStyleTheme',
+            'mapTypeControl',
+            'mapZoomControl',
+            'mapFullScreen',
+            'mapScrollWheel',
+            'multipleMarkers',
         ];
 
         foreach ( $all_params as $param ) {

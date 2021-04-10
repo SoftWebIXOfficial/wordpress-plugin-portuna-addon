@@ -1,0 +1,7 @@
+$wrap_class: '.portuna-addon--google-map';
+
+#{ $wrap_class }--layout1 {
+    .gm-style img {
+        max-width: none;
+    }
+}

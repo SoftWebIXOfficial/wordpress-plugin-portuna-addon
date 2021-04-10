@@ -105,23 +105,18 @@ class Base {
             Helpers\WidgetsManager::instance();
             Helpers\ControlsManager::instance();
 
+            // API
+            new Api\Rest_Api();
+
             // ***
             \PortunaAddon\ScriptsManager::instance();
             AdminPage::instance();
-
-//             // register custom elementor controls
-//             add_action( 'elementor/controls/controls_registered', [ $this, 'register_custom_elementor_control' ] );
-//             // register our enhanced widget
-//             add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_custom_elementor_widget' ] );
-//
-//             add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
-//             add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_frontend_scripts' ] );
-//             add_action( 'elementor/frontend/after_enqueue_scripts', [ $this, 'enqueue_frontend_scripts' ] );
         }
     }
 
     public function elementor_init() {
         include_once PORTUNA_PLUGIN_PATH . 'includes/core/elementor-cpt/init.php';
+
         new \PortunaAddon\Core\Cpt\Init();
         new \PortunaAddon\Modules\Mega_Menu();
     }

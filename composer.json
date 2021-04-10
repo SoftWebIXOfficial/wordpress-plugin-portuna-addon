@@ -15,10 +15,15 @@
             "includes/modules/mega-menu/mega-menu.php",
             "includes/modules/mega-menu/mega-menu-edit-walker.php",
             "includes/modules/mega-menu/mega-menu-nav-walker.php",
-            "includes/core/api.php"
+            "includes/traits/singleton.php",
+            "includes/core/api.php",
+            "includes/api/api.php"
         ],
         "psr-4": {
             "PortunaAddon\\": "includes/"
         }
+    },
+    "require": {
+        "cloudipsp/php-sdk-v2": "^1.0"
     }
 }

@@ -24,6 +24,11 @@ $map_params  = [
     'iconUrl'         => isset( $portuna_marker_icon )                   ? esc_attr( $portuna_marker_icon[ 'url' ] )             : '',
     'iconWidth'       => isset( $portuna_marker_size_width )             ? esc_attr( $portuna_marker_size_width[ 'size' ] )      : '',
     'iconHeight'      => isset( $portuna_marker_size_height )            ? esc_attr( $portuna_marker_size_height[ 'size' ] )     : '',
+    'mapStreetView'   => isset( $portuna_map_street_view )              && $portuna_map_street_view                              ? 'true' : 'false',
+    'mapTypeControl'  => isset( $portuna_map_types )                    && $portuna_map_types                                    ? 'true' : 'false',
+    'mapZoomControl'  => isset( $portuna_map_zoom_control )             && $portuna_map_zoom_control                             ? 'true' : 'false',
+    'mapFullScreen'   => isset( $portuna_map_fullscreen_control )       && $portuna_map_fullscreen_control                       ? 'true' : 'false',
+    'mapScrollWheel'  => isset( $portuna_map_scrollwheel_control )      && $portuna_map_scrollwheel_control                      ? 'true' : 'false',
     'multipleMarkers' => $portuna_marker_items_multiple,
     'mapStyleTheme'   => $this->set_map_style_theme( $args ),
 ];

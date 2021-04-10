@@ -8,7 +8,7 @@ import isEqual from 'lodash/isEqual';
     const googleMap = {
         onInit: function () {
             if ( ! window.google ) return;
-
+            console.log( window.elementorModules.frontend.handlers.Base );
             const widgetName = {
                 'portuna-addon-google-map.default' : googleMap.googleMapInit,
             }
@@ -26,15 +26,16 @@ import isEqual from 'lodash/isEqual';
             const coordinates = { lat: parseFloat( centerLat || 23.7808875 ) , lng: parseFloat( centerLng || 90.2792373 ) },
                   mapStyle    = decodeURIComponent( mapStyleTheme );
 
-            let mapOptions    = {
+            let options    = {
                 zoom:   parseInt( zoomLevel ),
                 center: coordinates,
                 styles: mapStyle !== '' ? $.parseJSON( mapStyle ) : {},
             }
 
-            const map = new google.maps.Map( container[0], mapOptions );
+            const map = new google.maps.Map( container[0], options );
 
             googleMap.markers( map, dataMap );
+            googleMap.mapOptions( map, dataMap );
         },
         markers: function ( map, options ) {
             const multipleMarkers                                  = [],
@@ -43,8 +44,6 @@ import isEqual from 'lodash/isEqual';
             if ( type === 'marker' ) {
                 $.each( settings, ( index, options ) => {
                     const { centerLat, centerLng } = options;
-
-                    console.log( options );
 
                     options.centerLat     = options.portuna_marker_lat_multiple;
                     options.centerLng     = options.portuna_marker_lng_multiple;
@@ -160,8 +159,16 @@ import isEqual from 'lodash/isEqual';
         focusOnMarker: function ( map, position ) {
             map.setCenter( new google.maps.LatLng( position.lat(), position.lng() ) );
         },
-        setMarkerIcon: function () {
+        mapOptions: function ( map, options ) {
+            const { mapStreetView, mapTypeControl, mapZoomControl, mapFullScreen, mapScrollWheel } = options;
 
+            map.setOptions( {
+                streetViewControl: $.parseJSON( mapStreetView ),
+                mapTypeControl: $.parseJSON( mapTypeControl ),
+                zoomControl: $.parseJSON( mapZoomControl ),
+                fullscreenControl: $.parseJSON( mapFullScreen ),
+                scrollwheel: $.parseJSON( mapScrollWheel ),
+            } );
         },
         createElement: ( type, attributes, ...children ) => {
             const el = document.createElement( type );
@@ -179,8 +186,12 @@ import isEqual from 'lodash/isEqual';
             } );
 
             return el;
+        },
+        onElementChange: function onElementChange( propertyName ) {
+            console.log( propertyName );
         }
     }
+
 
     $( window ).on( 'elementor/frontend/init', googleMap.onInit );
 } )( jQuery, window );

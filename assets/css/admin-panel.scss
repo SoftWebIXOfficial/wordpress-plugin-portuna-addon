@@ -1,0 +1,128 @@
+.toplevel_page_portuna-addon {
+    .wp-submenu {
+        li.current {
+            a:focus {
+                box-shadow: none;
+            }
+        }
+    }
+}
+
+.portuna-addon-admin {
+    $wrap: &;
+
+    h1, h2, h3, h4, h5, h6 {
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    h3 {
+        font-size: 24px;
+    }
+
+    h4 {
+
+    }
+
+    h5 {
+
+    }
+
+    h6 {
+
+    }
+
+    a {
+        border: none;
+        text-decoration: none;
+    }
+
+    // Front content.
+    #{ $wrap }--content-menu {
+        &--front {
+            padding: 10px;
+
+            &.nav-is-active {
+                display: block;
+            }
+
+            &:not( .nav-is-active ) {
+                display: none;
+            }
+        }
+
+        &--settings {
+
+        }
+
+        &--pro {
+
+            .portuna-addon-admin-panel {
+                &--pro {
+                    .portuna-addon-admin-panel--container {
+                        display: flex;
+                        justify-content: center;
+                        //align-items: center;
+                        margin: 40px 0;
+
+                        .portuna-addon-admin--panel {
+                            width: calc( 28% - 15px );
+                            padding: 32px 20px;
+                            background: #ffffff;
+                            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+                            border-radius: 3px;
+                            margin: 0 15px;
+
+                            &:first-child {
+                                margin-left: 0;
+                            }
+
+                            &-heading {
+                                text-align: center;
+                            }
+
+                            &-price {
+                                text-align: center;
+                                font-size: 22px;
+                            }
+
+                            &-btn {
+                                text-align: center;
+
+                                .portuna-addon-admin--panel-redirect {
+                                    padding: 14px;
+                                    display: block;
+                                    max-width: 130px;
+                                    border-radius: 3px;
+                                    font-size: 16px;
+                                    text-transform: uppercase;
+                                    margin: 0 auto;
+                                    color: #ffffff;
+                                    background: #57a152;
+                                    transition: all .23s ease-in-out;
+
+                                    &:hover {
+                                        background: #72c66d;
+                                    }
+                                }
+                            }
+
+                            &-lists {
+                                display: block;
+                                margin: 30px 0;
+                                text-align: center;
+
+                                & > li {
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

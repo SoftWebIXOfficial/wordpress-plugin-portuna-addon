@@ -11,6 +11,10 @@ class ComposerStaticInit16862581ea4482efdc7f8079dbd54cfc
         array (
             'PortunaAddon\\' => 13,
         ),
+        'C' => 
+        array (
+            'Cloudipsp\\' => 10,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -18,17 +22,60 @@ class ComposerStaticInit16862581ea4482efdc7f8079dbd54cfc
         array (
             0 => __DIR__ . '/../..' . '/includes',
         ),
+        'Cloudipsp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib',
+        ),
     );
 
     public static $classMap = array (
+        'Cloudipsp\\Api\\Api' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Api.php',
+        'Cloudipsp\\Api\\Checkout\\Button' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Checkout/Button.php',
+        'Cloudipsp\\Api\\Checkout\\Form' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Checkout/Form.php',
+        'Cloudipsp\\Api\\Checkout\\Token' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Checkout/Token.php',
+        'Cloudipsp\\Api\\Checkout\\Url' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Checkout/Url.php',
+        'Cloudipsp\\Api\\Checkout\\Verification' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Checkout/Verification.php',
+        'Cloudipsp\\Api\\Order\\Atol' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Order/Atol.php',
+        'Cloudipsp\\Api\\Order\\Capture' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Order/Capture.php',
+        'Cloudipsp\\Api\\Order\\Reverse' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Order/Reverse.php',
+        'Cloudipsp\\Api\\Order\\Settlements' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Order/Settlements.php',
+        'Cloudipsp\\Api\\Order\\Status' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Order/Status.php',
+        'Cloudipsp\\Api\\Order\\TransactionList' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Order/TransactionList.php',
+        'Cloudipsp\\Api\\P2pcredit\\Credit' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/P2pcredit/Credit.php',
+        'Cloudipsp\\Api\\Payment\\Pcidss\\StepOne' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Payment/Pcidss/StepOne.php',
+        'Cloudipsp\\Api\\Payment\\Pcidss\\StepTwo' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Payment/Pcidss/StepTwo.php',
+        'Cloudipsp\\Api\\Payment\\Rectoken' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Payment/Rectoken.php',
+        'Cloudipsp\\Api\\Payment\\Reports' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Api/Payment/Reports.php',
+        'Cloudipsp\\Checkout' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Checkout.php',
+        'Cloudipsp\\Configuration' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Configuration.php',
+        'Cloudipsp\\Exception\\ApiException' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Exception/ApiException.php',
+        'Cloudipsp\\Exception\\HttpClientException' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Exception/HttpClientException.php',
+        'Cloudipsp\\Exception\\MainException' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Exception/MainException.php',
+        'Cloudipsp\\Helper\\ApiHelper' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Helper/ApiHelper.php',
+        'Cloudipsp\\Helper\\RequestHelper' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Helper/RequestHelper.php',
+        'Cloudipsp\\Helper\\ResponseHelper' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Helper/ResponseHelper.php',
+        'Cloudipsp\\Helper\\ResultHelper' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Helper/ResultHelper.php',
+        'Cloudipsp\\Helper\\ValidationHelper' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Helper/ValidationHelper.php',
+        'Cloudipsp\\HttpClient\\ClientInterface' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/HttpClient/ClientInterface.php',
+        'Cloudipsp\\HttpClient\\HttpCurl' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/HttpClient/HttpCurl.php',
+        'Cloudipsp\\HttpClient\\HttpGuzzle' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/HttpClient/HttpGuzzle.php',
+        'Cloudipsp\\Order' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Order.php',
+        'Cloudipsp\\P2pcredit' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/P2pcredit.php',
+        'Cloudipsp\\Payment' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Payment.php',
+        'Cloudipsp\\Pcidss' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Pcidss.php',
+        'Cloudipsp\\Response\\OrderResponse' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Response/OrderResponse.php',
+        'Cloudipsp\\Response\\PcidssResponse' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Response/PcidssResponse.php',
+        'Cloudipsp\\Response\\Response' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Response/Response.php',
+        'Cloudipsp\\Result\\Result' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Result/Result.php',
+        'Cloudipsp\\Subscription' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Subscription.php',
+        'Cloudipsp\\Verification' => __DIR__ . '/..' . '/cloudipsp/php-sdk-v2/lib/Verification.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'PortunaAddon\\AdminPage' => __DIR__ . '/../..' . '/includes/admin-page.php',
+        'PortunaAddon\\Api\\Rest_Api' => __DIR__ . '/../..' . '/includes/api/api.php',
         'PortunaAddon\\Base' => __DIR__ . '/../..' . '/includes/base.php',
         'PortunaAddon\\Controls\\Elementor_Area' => __DIR__ . '/../..' . '/includes/controls/elementor-area.php',
         'PortunaAddon\\Controls\\Select_Image' => __DIR__ . '/../..' . '/includes/controls/select-image.php',
         'PortunaAddon\\Core\\Api' => __DIR__ . '/../..' . '/includes/core/api.php',
-        'PortunaAddon\\Core\\Cpt\\Init' => __DIR__ . '/../..' . '/includes/core/elementor-cpt/init.php',
-        'PortunaAddon\\Core\\Cpt_Api' => __DIR__ . '/../..' . '/includes/core/elementor-cpt/cpt-api.php',
-        'PortunaAddon\\Core\\Register_Cpt' => __DIR__ . '/../..' . '/includes/core/elementor-cpt/cpt-register.php',
         'PortunaAddon\\Helpers\\Ajax' => __DIR__ . '/../..' . '/includes/helpers/ajax.php',
         'PortunaAddon\\Helpers\\ControlsManager' => __DIR__ . '/../..' . '/includes/helpers/controls-manager.php',
         'PortunaAddon\\Helpers\\Options' => __DIR__ . '/../..' . '/includes/helpers/options.php',
@@ -39,11 +86,6 @@ class ComposerStaticInit16862581ea4482efdc7f8079dbd54cfc
         'PortunaAddon\\Modules\\Mega_Menu_Nav_Walker' => __DIR__ . '/../..' . '/includes/modules/mega-menu/mega-menu-nav-walker.php',
         'PortunaAddon\\ScriptsManager' => __DIR__ . '/../..' . '/includes/scripts-manager.php',
         'PortunaAddon\\Traits\\Singleton' => __DIR__ . '/../..' . '/includes/traits/singleton.php',
-        'PortunaAddon\\Widgets\\Edit\\AdvancedHeading' => __DIR__ . '/../..' . '/includes/widgets/heading/edit.php',
-        'PortunaAddon\\Widgets\\Edit\\BannerSlider' => __DIR__ . '/../..' . '/includes/widgets/banner-slider/edit.php',
-        'PortunaAddon\\Widgets\\Edit\\CreativeButton' => __DIR__ . '/../..' . '/includes/widgets/creative-button/edit.php',
-        'PortunaAddon\\Widgets\\Edit\\GoogleMap' => __DIR__ . '/../..' . '/includes/widgets/google-map/edit.php',
-        'PortunaAddon\\Widgets\\Edit\\MegaMenu' => __DIR__ . '/../..' . '/includes/widgets/mega-menu/edit.php',
         'PortunaAddon\\Widgets\\Portuna_Widget_Base' => __DIR__ . '/../..' . '/includes/portuna-widget-base.php',
     );
 

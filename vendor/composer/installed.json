@@ -1,0 +1,50 @@
+{
+    "packages": [
+        {
+            "name": "cloudipsp/php-sdk-v2",
+            "version": "1.0.8",
+            "version_normalized": "1.0.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cloudipsp/php-sdk-v2.git",
+                "reference": "328573f7e2b9f5a47f69255bc692a491ac6a6fa5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cloudipsp/php-sdk-v2/zipball/328573f7e2b9f5a47f69255bc692a491ac6a6fa5",
+                "reference": "328573f7e2b9f5a47f69255bc692a491ac6a6fa5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": "^5.4|^7.0|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5|~8|~9"
+            },
+            "time": "2021-01-29T20:51:33+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Cloudipsp\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitriy",
+                    "email": "dmmatrix222@gmail.com"
+                }
+            ],
+            "description": "Cloudipsp php sdk v2",
+            "install-path": "../cloudipsp/php-sdk-v2"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

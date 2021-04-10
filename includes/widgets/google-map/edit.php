@@ -17,12 +17,12 @@ class GoogleMap extends Portuna_Widget_Base {
     public function __construct( $data = [], $args = null ) {
         parent::__construct( $data, $args );
 
-//         wp_register_style(
-//             'google-map-style-layout1',
-//             plugin_dir_url( dirname( __FILE__ ) ) . 'google-map/assets/css/layout1.min.css',
-//             [],
-//             null
-//         );
+        wp_register_style(
+            'google-map-style-layout1',
+            plugin_dir_url( dirname( __FILE__ ) ) . 'google-map/assets/css/layout1.min.css',
+            [],
+            null
+        );
 
         wp_register_script(
             'google-map-style-layout1',
@@ -37,7 +37,7 @@ class GoogleMap extends Portuna_Widget_Base {
     }
 
     public function get_script_depends() {
-        return [ 'google-map-api', 'google-map-style-layout1' ]; //'google-map-style'
+        return [ 'google-map-api', 'google-map-style-layout1' ];
     }
 
     private static $css_map = [
