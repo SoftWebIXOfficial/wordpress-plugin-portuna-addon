@@ -92,20 +92,23 @@ class Rest_Api {
     }
 
     public function successHtml( $key ) {
-        ?>
-            <div class="">
-                <?php echo $key; ?>
-            </div>
-        <?php
+        $output = "<div>";
+            $output .= $key;
+        $output .= "</div>";
+
+        echo sprintf( '%s', $output );
     }
 
     public function __construct() {
-        $callback        = file_get_contents('php://input');
-        $callback_object = json_decode( $callback );
+        $callbackData = json_decode( file_get_contents( 'php://input' ), TRUE ); // if request in json
 
-        var_dump( $callback_object );
+        if ( $callbackData )
+            die( $callbackData );
+        else
+            die( 'No data' );
+        //var_dump( $callbackData );
 
-        $this->rest_api();
+        //$this->rest_api();
 //         $callback = file_get_contents('php://input');
 //         $callaback_object = json_decode($callback);
 //         var_dump( $_SERVER );
