@@ -103,9 +103,9 @@ class Rest_Api {
         $callbackData = json_decode( file_get_contents( 'php://input' ), TRUE ); // if request in json
 
         if ( $callbackData )
-            die( $callbackData );
+            echo $callbackData;
         else
-            die( 'No data' );
+            echo 'No data';
         //var_dump( $callbackData );
 
         //$this->rest_api();
