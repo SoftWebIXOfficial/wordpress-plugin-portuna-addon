@@ -85,7 +85,7 @@ class Slider extends Portuna_Widget_Base {
      * font-awesome icons, simply return the class name as a string.
      */
     public function get_icon() {
-        return 'sm sm-accordion';
+        return 'mdi mdi-view-carousel';
     }
 
     public function get_keywords() {

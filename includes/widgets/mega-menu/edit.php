@@ -90,7 +90,7 @@ class MegaMenu extends Portuna_Widget_Base {
      * font-awesome icons, simply return the class name as a string.
      */
     public function get_icon() {
-        return 'sm sm-accordion';
+        return 'mdi mdi-form-dropdown';
     }
 
     public function get_keywords() {

@@ -20,7 +20,7 @@ $data = [
     )
 ];
 
-$url = \Cloudipsp\Checkout::url($data);
+$url  = \Cloudipsp\Checkout::url($data);
 $data = $url->getData();
 
 //var_dump( home_url() );
@@ -48,7 +48,7 @@ $data = $url->getData();
             <h3 class="portuna-addon-admin--panel-heading"><?php esc_html_e( 'Pro', 'portuna-addon' ); ?></h3>
             <p class="portuna-addon-admin--panel-price"><?php esc_html_e( '$10', 'portuna-addon' ); ?></p>
             <p class="portuna-addon-admin--panel-btn">
-                <a href="#" target="_blank" rel="noopener noreferrer" class="portuna-addon-admin--panel-redirect"><?php esc_html_e( 'Buy Now', 'portuna-addon' ); ?></a>
+                <a href="https://pay.fondy.eu/s/Yysh" target="_blank" rel="noopener noreferrer" class="portuna-addon-admin--panel-redirect"><?php esc_html_e( 'Buy Now', 'portuna-addon' ); ?></a>
             </p>
             <ul class="portuna-addon-admin--panel-lists">
                 <li><?php esc_html_e( 'Support', 'portuna-addon' ); ?></li>
@@ -63,7 +63,6 @@ $data = $url->getData();
 $callback        = file_get_contents( 'php://input' );
 $callback_object = simplexml_load_string( $callback );
 
-echo $callback_object;
-
+echo 'This is callback data - ' . $callback_object;
 
 ?>

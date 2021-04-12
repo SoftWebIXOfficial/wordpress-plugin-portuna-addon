@@ -100,7 +100,7 @@ class Rest_Api {
     }
 
     public function __construct() {
-        $this->rest_api();
+        //$this->rest_api();
 //         $callback = file_get_contents('php://input');
 //         $callaback_object = json_decode($callback);
 //         var_dump( $_SERVER );

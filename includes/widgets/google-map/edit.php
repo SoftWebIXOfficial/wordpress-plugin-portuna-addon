@@ -60,7 +60,7 @@ class GoogleMap extends Portuna_Widget_Base {
     }
 
     public function get_icon() {
-        return 'sm sm-google-map';
+        return 'mdi mdi-google-maps';
     }
 
     public function get_categories() {

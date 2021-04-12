@@ -70,7 +70,7 @@ class AdvancedHeading extends Portuna_Widget_Base {
     }
 
     public function get_icon() {
-        return 'sm sm-accordion';
+        return 'mdi mdi-format-title';
     }
 
     public function get_categories() {

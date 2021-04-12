@@ -129,11 +129,9 @@
                 'value':'127318273',   //не обязательно, по умолчанию пустое
                 'readonly':true, //не обязательно, по умолчанию false
                 'required':true, //не обязательно, по умолчанию false
-            });
+            }); 
 
-            purchasedLink.attr( 'href', button.getUrl() );
-
-
+            //purchasedLink.attr( 'href', button.getUrl() );
         }
     };
 

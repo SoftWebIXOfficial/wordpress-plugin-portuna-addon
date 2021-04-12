@@ -95,10 +95,20 @@ class ScriptsManager {
         );
     }
 
+    public function editor_enqueue_scripts() {
+        wp_enqueue_style(
+            'material-design-icons',
+            ( is_ssl() ? 'https' : 'http' ) . '://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css'
+        );
+    }
+
     public function __construct() {
         add_action( 'wp_enqueue_scripts', [ $this, 'front_js' ] );
 
         add_action( 'wp_enqueue_scripts', [ $this, 'register_styles' ], 5 );
         add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ], 3 );
+
+        // Elementor enqueue scripts.
+        add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'editor_enqueue_scripts' ] );
     }
 }
