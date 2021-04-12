@@ -100,15 +100,7 @@ class Rest_Api {
     }
 
     public function __construct() {
-        $callbackData = json_decode( file_get_contents( 'php://input' ), TRUE ); // if request in json
-
-        if ( $callbackData )
-            echo $callbackData;
-        else
-            echo 'No data';
-        //var_dump( $callbackData );
-
-        //$this->rest_api();
+        $this->rest_api();
 //         $callback = file_get_contents('php://input');
 //         $callaback_object = json_decode($callback);
 //         var_dump( $_SERVER );
