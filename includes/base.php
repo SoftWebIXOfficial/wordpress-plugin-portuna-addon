@@ -143,5 +143,8 @@ class Base {
         $callaback_object = json_decode($callback);
 
         echo 'This is callback data - ' . $callaback_object;
+
+        $header = curl_getinfo($ch);
+        print_r($header);
     }
 }
