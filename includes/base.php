@@ -144,7 +144,7 @@ class Base {
 
         echo 'This is callback data - ' . $callaback_object;
 
-        $header = curl_getinfo($ch);
-        print_r($header);
+        global $_GET;
+        var_dump($_GET);
     }
 }
