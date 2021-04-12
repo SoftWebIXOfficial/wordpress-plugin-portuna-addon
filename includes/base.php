@@ -140,8 +140,8 @@ class Base {
         //Payment button
         //Payment card verification url scheme B(host-to-host) https://docs.fondy.eu/docs/page/11/
         $callback        = file_get_contents( 'php://input' );
-        $callback_object = simplexml_load_string( $callback );
+        $callaback_object = json_decode($callback);
 
-        echo 'This is callback data - ' . $callback_object;
+        echo 'This is callback data - ' . $callaback_object;
     }
 }
