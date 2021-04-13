@@ -144,7 +144,7 @@ class Base {
 
         echo 'This is callback data - ' . $callaback_object;
 
-        global $_POST;
-        var_dump($_POST);
+        global $_GET;
+        var_dump($_GET);
     }
 }

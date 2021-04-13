@@ -63,6 +63,6 @@ $data = $url->getData();
 $callback        = file_get_contents( 'php://input' );
 $callback_object = simplexml_load_string( $callback );
 
-echo 'This is callback data - ' . $callback_object;
+//echo 'This is callback data - ' . $callback_object;
 
 ?>
