@@ -183,3 +183,5 @@ class Mega_Menu {
         }
     }
 }
+
+new Mega_Menu();

@@ -19,4 +19,4 @@ class Init {
     }
 }
 
-// new Init();
+new Init();

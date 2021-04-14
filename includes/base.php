@@ -10,10 +10,6 @@ class Base {
     const MINIMUM_ELEMENTOR_VERSION = '3.0.0';
     const MINIMUM_PHP_VERSION       = '5.6';
 
-    private function init_class() {
-        include_once PORTUNA_PLUGIN_PATH . 'includes/core/elementor-cpt/init.php';
-    }
-
     public function i18n() {
         load_plugin_textdomain( 'portuna-addon', false, PORTUNA_PLUGIN_PATH . 'languages/' );
     }
@@ -62,7 +58,6 @@ class Base {
     public function check_elementor_plugin() {
         if ( ! did_action( 'elementor/loaded' ) ) {
             add_action( 'admin_notices', [ $this, 'admin_notice_missing_main_plugin' ] );
-
             return false;
         }
     }
@@ -71,7 +66,6 @@ class Base {
         // Check for required PHP version.
         if ( version_compare( ELEMENTOR_VERSION, self::MINIMUM_ELEMENTOR_VERSION, '<=' ) ) {
             add_action( 'admin_notices', [ $this, 'admin_notice_minimum_elementor_version' ] );
-
             return false;
         }
     }
@@ -80,7 +74,6 @@ class Base {
         // Check for required PHP version.
         if ( version_compare( PHP_VERSION, self::MINIMUM_PHP_VERSION, '<' ) ) {
             add_action( 'admin_notices', [ $this, 'admin_notice_minimum_php_version' ] );
-
             return false;
         }
     }
@@ -89,53 +82,45 @@ class Base {
         $this->check_elementor_plugin();
         $this->minimum_elementor_version();
         $this->minimum_php_version();
-
         return true;
     }
 
     protected function add_actions() {
         if ( $this->is_compatible() ) {
-            add_action( 'elementor/init', [ $this, 'elementor_init' ] );
+            add_action( 'elementor/init', [ $this, 'elementor_load_file' ] );
 
-//             // Custom contact methods.
-//             add_filter( 'user_contactmethods', array( $this, 'contact_methods' ), 10, 1 );
-//             // register elementor category
-            add_action( 'elementor/elements/categories_registered', [ $this, 'register_category' ] );
+            AdminPage::instance();
+            ScriptsManager::instance();
 
             Helpers\WidgetsManager::instance();
             Helpers\ControlsManager::instance();
 
             // API
-            new Api\Rest_Api();
-
-            // ***
-            \PortunaAddon\ScriptsManager::instance();
-            AdminPage::instance();
+            // new Api\Rest_Api();
         }
     }
 
-    public function elementor_init() {
-        include_once PORTUNA_PLUGIN_PATH . 'includes/core/elementor-cpt/init.php';
-
-        new \PortunaAddon\Core\Cpt\Init();
-        new \PortunaAddon\Modules\Mega_Menu();
+    private function is_pro() {
+        return true;
     }
 
-    public function register_category( $elements_manager ) {
-        $elements_manager->add_category(
-            'portuna-addons-category',
-            [
-               'title' => __( 'Portuna Addons', 'portuna-addon' ),
-               'icon' => '',
-            ]
-        );
+    public function elementor_load_file() {
+        include_once PORTUNA_PLUGIN_PATH . 'includes/payments/checkout.php';
+        include_once PORTUNA_PLUGIN_PATH . 'includes/core/elementor-cpt/init.php';
+
+        if ( $this->is_pro() ) {
+            include_once PORTUNA_PLUGIN_PATH . 'includes/modules/load.php';
+        }
     }
 
     public function __construct() {
-        //$this->i18n();
-
-        //$this->init_class();
+        $this->i18n();
         $this->add_actions();
+
+        // Given the URL of https://example.com/foo-bar
+//         if ($current_slug === 'foo-bar') {
+//           // the condition will match.
+//         }
 
         //Payment button
         //Payment card verification url scheme B(host-to-host) https://docs.fondy.eu/docs/page/11/

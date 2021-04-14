@@ -17,7 +17,18 @@ class WidgetsManager {
         }
     }
 
+    public function register_category( $elements_manager ) {
+        $elements_manager->add_category(
+            'portuna-addons-category',
+            [
+               'title' => __( 'Portuna Addons', 'portuna-addon' ),
+               'icon'  => '',
+            ]
+        );
+    }
+
     public function __construct() {
         add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_widgets' ] );
+        add_action( 'elementor/elements/categories_registered', [ $this, 'register_category' ] );
     }
 }
