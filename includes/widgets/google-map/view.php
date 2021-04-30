@@ -8,6 +8,7 @@ $this->add_render_attribute( 'wrapper', 'class', 'portuna-addon--google-map--lay
 
 $options     = \PortunaAddon\Helpers\Options::instance();
 $userData    = $options->get_option( 'user_data', [] );
+
 $hasApiKey   = ! empty( $userData[ 'user_data' ][ 'google_api_key' ] ) && '' != $userData[ 'user_data' ][ 'google_api_key' ];
 
 $map_params  = [

@@ -60,6 +60,69 @@
 
         &--pro {
 
+            .portuna-addon-admin--license {
+                display: flex;
+                justify-content: center;
+                margin-top: 40px;
+
+                &-key {
+                    &-container {
+                        display: flex;
+                    }
+
+                    &-input {
+                        margin: 0;
+                        padding: 1rem 1.2rem;
+                        border-radius: 0.2rem;
+                        border: 1px solid #cccccc;
+                        outline: none;
+                        max-height: 46px;
+                        min-width: 250px;
+                        font-size: 12px;
+
+                        &:focus {
+                            border-color: #7c7c7c;
+                        }
+
+                        &.success {
+                            color: #5aa557bd;
+                            border-color: #5aa557bd;
+                        }
+                    }
+
+                    &-btn {
+                        padding: 1rem 1.2rem;
+                        border-radius: 0.2rem;
+                        margin-left: 5px;
+                        outline: none;
+                        max-height: 46px;
+                        cursor: pointer;
+                        background: #ffffff;
+                        border: 1px solid #cccccc;
+                        color: #6d6d6d;
+
+                        &:disabled {
+                            cursor: not-allowed;
+                            background-color: rgba(255, 255, 255, .6);
+                            color: #cccccc;
+                            border-color: #e7e7e7;
+
+                            &.success {
+                                color: #5aa557bd;
+                                border-color: #5aa557bd;
+                                background-color: #55b35112;
+                            }
+
+                            &.error {
+                                color: #b35157;
+                                border-color: #b35157;
+                                background-color: #b3515712;
+                            }
+                        }
+                    }
+                }
+            }
+
             .portuna-addon-admin-panel {
                 &--pro {
                     .portuna-addon-admin-panel--container {
@@ -69,12 +132,19 @@
                         margin: 40px 0;
 
                         .portuna-addon-admin--panel {
+                            position: relative;
                             width: calc( 28% - 15px );
                             padding: 32px 20px;
                             background: #ffffff;
                             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
                             border-radius: 3px;
                             margin: 0 15px;
+
+                            &-purchased {
+                                color: #5aa557;
+                                text-align: center;
+                                font-size: 22px;
+                            }
 
                             &:first-child {
                                 margin-left: 0;

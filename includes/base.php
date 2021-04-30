@@ -96,7 +96,7 @@ class Base {
             Helpers\ControlsManager::instance();
 
             // API
-            // new Api\Rest_Api();
+            new Api\Rest_Api();
         }
     }
 

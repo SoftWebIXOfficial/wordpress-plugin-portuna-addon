@@ -614,6 +614,7 @@ class GoogleMap extends Portuna_Widget_Base {
             [
                 'label' => __( 'Map Style', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_CONTENT,
+                'pro'   => true
             ]
         );
 

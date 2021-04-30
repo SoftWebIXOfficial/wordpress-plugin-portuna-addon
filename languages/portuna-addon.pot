@@ -13,25 +13,1535 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. translators: 1: Plugin name 2: Elementor
-#: includes/base.php:26
-msgid "\"%1$s\" requires \"%2$s\" to be installed and activated."
+#: includes/admin-page.php:118, includes/views/admin-panel-pro.php:17
+msgid "Save Key"
 msgstr ""
 
-#: includes/base.php:27, includes/base.php:40, includes/base.php:54
+#: includes/admin-page.php:119
+msgid "Changes Saved"
+msgstr ""
+
+#: includes/admin-page.php:120, includes/views/admin-panel-pro.php:19
+msgid "Valid"
+msgstr ""
+
+#: includes/admin-page.php:121
+msgid "Invalid"
+msgstr ""
+
+#: includes/admin-page.php:128
+msgid "Portuna Addon"
+msgstr ""
+
+#: includes/admin-page.php:129, includes/base.php:23, includes/base.php:36, includes/base.php:50
 msgid "Portuna"
 msgstr ""
 
-#: includes/base.php:28, includes/base.php:41
+#: includes/admin-page.php:148
+msgid "%s Portuna"
+msgstr ""
+
+#: includes/admin-page.php:163, includes/widgets/creative-button/edit.php:121
+msgid "Settings"
+msgstr ""
+
+#: includes/admin-page.php:167, includes/views/admin-panel-pro.php:34
+msgid "Pro"
+msgstr ""
+
+#. translators: 1: Plugin name 2: Elementor
+#: includes/base.php:22
+msgid "\"%1$s\" requires \"%2$s\" to be installed and activated."
+msgstr ""
+
+#: includes/base.php:24, includes/base.php:37
 msgid "Elementor"
 msgstr ""
 
 #. translators: 1: Plugin name 2: Elementor 3: Required Elementor version
 #. translators: 1: Plugin name 2: PHP 3: Required PHP version
-#: includes/base.php:39, includes/base.php:53
+#: includes/base.php:35, includes/base.php:49
 msgid "\"%1$s\" requires \"%2$s\" version %3$s or greater."
 msgstr ""
 
-#: includes/base.php:55
+#: includes/base.php:51
 msgid "PHP"
+msgstr ""
+
+#: includes/api/api.php:88
+msgid "Sorry, this content isn't available right now."
+msgstr ""
+
+#: includes/helpers/utils.php:41
+msgid "Edit"
+msgstr ""
+
+#: includes/helpers/utils.php:54
+msgid "Click the button in the right corner to add content."
+msgstr ""
+
+#: includes/helpers/widgets-manager.php:24
+msgid "Portuna Addons"
+msgstr ""
+
+#: includes/payments/checkout.php:70
+msgid "Purchase Confirmation and Instructions"
+msgstr ""
+
+#: includes/payments/checkout.php:85
+msgid "Purchase Receipt"
+msgstr ""
+
+#: includes/payments/checkout.php:91
+msgid "Dear User,"
+msgstr ""
+
+#: includes/payments/checkout.php:92
+msgid "Thank you for purchasing the extended version of the plugin Portuna Addon. To get started with the plugin you need to copy and enter this key in the plugin settings, here is your API key:"
+msgstr ""
+
+#: includes/payments/checkout.php:94
+msgid "What's Next?"
+msgstr ""
+
+#: includes/payments/checkout.php:96
+msgid "%s. After purchasing, go to your admin dashboard in WordPress."
+msgstr ""
+
+#: includes/payments/checkout.php:96
+msgid "Login to your account WordPress"
+msgstr ""
+
+#: includes/payments/checkout.php:97
+msgid "%s. Go to %s, and insert your key in the input \"License key\" and submitted."
+msgstr ""
+
+#: includes/payments/checkout.php:97
+msgid "Activate the license key"
+msgstr ""
+
+#: includes/payments/checkout.php:97, includes/payments/checkout.php:98
+msgid "Portuna > Pro"
+msgstr ""
+
+#: includes/payments/checkout.php:98
+msgid "%s. Now you can use the plugin for all 100 percent."
+msgstr ""
+
+#: includes/payments/checkout.php:98
+msgid "Successfully activated"
+msgstr ""
+
+#: includes/payments/checkout.php:100
+msgid "We hope you enjoy using Portuna Addon Pro, %s."
+msgstr ""
+
+#: includes/payments/checkout.php:100
+msgid "The SoftWebIX Team"
+msgstr ""
+
+#: includes/payments/checkout.php:101
+msgid "P.S. Don't hesitate to reply directly to this email if you have any issues with Portuna Addon or any questions - we would be happy to help you."
+msgstr ""
+
+#: includes/payments/checkout.php:104
+msgid "%s: $12.00"
+msgstr ""
+
+#: includes/payments/checkout.php:104
+msgid "Total"
+msgstr ""
+
+#: includes/payments/checkout.php:105
+msgid "%s: %s"
+msgstr ""
+
+#: includes/payments/checkout.php:105
+msgid "Date of Purchase"
+msgstr ""
+
+#: includes/payments/checkout.php:138
+msgid "Oops! It seems there was a problem sending the e-mail. Please try again!"
+msgstr ""
+
+#: includes/payments/checkout.php:136
+msgid "Thanks for your feedback! We will acknowledge and make it better in the future."
+msgstr ""
+
+#: includes/views/admin-elementor-area.php:13
+msgid "Portuna Addon Widget Area"
+msgstr ""
+
+#: includes/views/admin-elementor-area.php:20, includes/views/admin-elementor-area.php:21
+msgid "Close"
+msgstr ""
+
+#: includes/views/admin-elementor-area.php:47
+msgid "Loading"
+msgstr ""
+
+#: includes/views/admin-panel-pro.php:9
+msgid "Flexible Pricing for Everyone"
+msgstr ""
+
+#: includes/views/admin-panel-pro.php:15
+msgid "Put your license key here..."
+msgstr ""
+
+#: includes/views/admin-panel-pro.php:27
+msgid "Free"
+msgstr ""
+
+#: includes/views/admin-panel-pro.php:28
+msgid "$0"
+msgstr ""
+
+#: includes/views/admin-panel-pro.php:30, includes/views/admin-panel-pro.php:46
+msgid "Support"
+msgstr ""
+
+#: includes/views/admin-panel-pro.php:38
+msgid "Purchased"
+msgstr ""
+
+#: includes/views/admin-panel-pro.php:36
+msgid "$12"
+msgstr ""
+
+#: includes/views/admin-panel-pro.php:42
+msgid "Buy Now"
+msgstr ""
+
+#: includes/views/admin-panel-settings.php:13, includes/widgets/google-map/edit.php:59
+msgid "Google Map"
+msgstr ""
+
+#: includes/views/admin-panel-settings.php:17
+msgid "Save Changes"
+msgstr ""
+
+#: includes/core/elementor-cpt/cpt-register.php:13
+msgctxt "Post Type General Name"
+msgid "Portuna Addon items"
+msgstr ""
+
+#: includes/core/elementor-cpt/cpt-register.php:14
+msgctxt "Post Type Singular Name"
+msgid "Portuna Addon item"
+msgstr ""
+
+#: includes/core/elementor-cpt/cpt-register.php:15
+msgid "Portuna Addon item"
+msgstr ""
+
+#: includes/modules/mega-menu/mega-menu-edit-walker.php:58
+msgid "Select Icon Type"
+msgstr ""
+
+#: includes/modules/mega-menu/mega-menu-edit-walker.php:61, includes/widgets/contact-form/edit.php:201, includes/widgets/contact-form/edit.php:838, includes/widgets/creative-button/edit.php:275, includes/widgets/heading/edit.php:481, includes/widgets/heading/edit.php:559, includes/widgets/mega-menu/edit.php:396, includes/widgets/mega-menu/edit.php:410, includes/widgets/mega-menu/edit.php:430, includes/widgets/mega-menu/edit.php:711, includes/widgets/mega-menu/edit.php:900, includes/widgets/mega-menu/edit.php:914, includes/widgets/mega-menu/edit.php:934, includes/widgets/mega-menu/edit.php:983, includes/widgets/mega-menu/edit.php:1995, includes/widgets/mega-menu/edit.php:2131, includes/widgets/mega-menu/edit.php:2372, includes/widgets/slider/edit.php:191, includes/widgets/slider/edit.php:828
+msgid "None"
+msgstr ""
+
+#: includes/modules/mega-menu/mega-menu-edit-walker.php:64, includes/modules/mega-menu/mega-menu-edit-walker.php:75
+msgid "Icon Library"
+msgstr ""
+
+#: includes/modules/mega-menu/mega-menu-edit-walker.php:67, includes/modules/mega-menu/mega-menu-edit-walker.php:92, includes/modules/mega-menu/mega-menu.php:102
+msgid "Custom Icon"
+msgstr ""
+
+#: includes/modules/mega-menu/mega-menu-edit-walker.php:100, includes/modules/mega-menu/mega-menu.php:103
+msgid "+"
+msgstr ""
+
+#: includes/modules/mega-menu/mega-menu-edit-walker.php:110, includes/widgets/mega-menu/edit.php:2497, includes/widgets/mega-menu/edit.php:2553, includes/widgets/mega-menu/edit.php:2609
+msgid "Icon Color"
+msgstr ""
+
+#: includes/modules/mega-menu/mega-menu-edit-walker.php:116
+msgid "Badge Text"
+msgstr ""
+
+#: includes/modules/mega-menu/mega-menu-edit-walker.php:122
+msgid "Bagde Text Color"
+msgstr ""
+
+#: includes/modules/mega-menu/mega-menu-edit-walker.php:127
+msgid "Bagde Background Color"
+msgstr ""
+
+#: includes/modules/mega-menu/mega-menu-edit-walker.php:134
+msgid "Mega Menu Enable"
+msgstr ""
+
+#: includes/modules/mega-menu/mega-menu-edit-walker.php:140
+msgid "Edit Mega Menu Content"
+msgstr ""
+
+#: includes/modules/mega-menu/mega-menu-nav-walker.php:283
+msgid "Not Content Find"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:59
+msgid "Contact Form"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:100
+msgid "Form Fields"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:112, includes/widgets/google-map/edit.php:189, includes/widgets/google-map/edit.php:364
+msgid "Content"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:119
+msgid "Field Type"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:122, includes/widgets/contact-form/edit.php:399, includes/widgets/slider/edit.php:389
+msgid "Text"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:123
+msgid "Email"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:124
+msgid "Textarea"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:125, includes/widgets/creative-button/edit.php:162
+msgid "URL"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:126
+msgid "Tel"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:127
+msgid "Radio"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:128
+msgid "Select"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:129
+msgid "Checkbox"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:130
+msgid "Acceptance"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:131
+msgid "Number"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:132
+msgid "Date"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:133
+msgid "Time"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:134
+msgid "File Upload"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:135
+msgid "Password"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:136
+msgid "HTML"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:137
+msgid "Hidden"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:148
+msgid "Advanced"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:159
+msgid "Fields Items"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:164, includes/widgets/slider/edit.php:154
+msgid "Slide Heading 1"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:167, includes/widgets/slider/edit.php:157
+msgid "Slide Heading 2"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:170, includes/widgets/slider/edit.php:160
+msgid "Slide Heading 3"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:186, includes/widgets/slider/edit.php:176
+msgid "Slider Settings"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:194, includes/widgets/slider/edit.php:184
+msgid "Navigation"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:198, includes/widgets/slider/edit.php:188
+msgid "Arrows & Dots"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:199, includes/widgets/contact-form/edit.php:210, includes/widgets/contact-form/edit.php:226, includes/widgets/slider/edit.php:189, includes/widgets/slider/edit.php:200, includes/widgets/slider/edit.php:216
+msgid "Arrows"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:200, includes/widgets/slider/edit.php:190
+msgid "Dots"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:222, includes/widgets/slider/edit.php:212
+msgid "Arrows Type"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:227, includes/widgets/slider/edit.php:217
+msgid "Arrows Custom (Pro)"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:239, includes/widgets/slider/edit.php:229
+msgid "Arrow Icon (Prev)"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:256, includes/widgets/slider/edit.php:246
+msgid "Arrow Icon (Next)"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:273, includes/widgets/slider/edit.php:263
+msgid "Arrow Size"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:312, includes/widgets/slider/edit.php:302
+msgid "Arrows Between Distance"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:315, includes/widgets/slider/edit.php:305
+msgid "Together"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:316, includes/widgets/slider/edit.php:306
+msgid "Separately"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:329, includes/widgets/slider/edit.php:319
+msgid "Arrows Between Space"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:361, includes/widgets/slider/edit.php:351
+msgid "Arrows Distance"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:393, includes/widgets/slider/edit.php:383
+msgid "Separator Type"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:403, includes/widgets/creative-button/edit.php:470, includes/widgets/creative-button/edit.php:488, includes/widgets/mega-menu/edit.php:1170, includes/widgets/mega-menu/edit.php:1282, includes/widgets/slider/edit.php:393
+msgid "Icon"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:418, includes/widgets/slider/edit.php:408
+msgid "Separator Text"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:420, includes/widgets/slider/edit.php:410
+msgid "|"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:434, includes/widgets/slider/edit.php:424
+msgid "Separator Color"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:452, includes/widgets/slider/edit.php:442
+msgid "Separator Icon"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:471, includes/widgets/slider/edit.php:461
+msgid "Separator Icon Color"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:490, includes/widgets/slider/edit.php:480
+msgid "Separator Icon Size"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:531, includes/widgets/slider/edit.php:521
+msgid "Arrows Horizontal Orientation"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:537, includes/widgets/contact-form/edit.php:930, includes/widgets/creative-button/edit.php:181, includes/widgets/creative-button/edit.php:529, includes/widgets/heading/edit.php:106, includes/widgets/heading/edit.php:575, includes/widgets/mega-menu/edit.php:274, includes/widgets/mega-menu/edit.php:309, includes/widgets/mega-menu/edit.php:1225, includes/widgets/mega-menu/edit.php:1337, includes/widgets/mega-menu/edit.php:1607, includes/widgets/mega-menu/edit.php:1710, includes/widgets/mega-menu/edit.php:2309, includes/widgets/slider/edit.php:527, includes/widgets/slider/edit.php:920
+msgid "Left"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:541, includes/widgets/contact-form/edit.php:934, includes/widgets/creative-button/edit.php:189, includes/widgets/creative-button/edit.php:533, includes/widgets/heading/edit.php:114, includes/widgets/heading/edit.php:579, includes/widgets/mega-menu/edit.php:282, includes/widgets/mega-menu/edit.php:286, includes/widgets/mega-menu/edit.php:317, includes/widgets/mega-menu/edit.php:1221, includes/widgets/mega-menu/edit.php:1333, includes/widgets/mega-menu/edit.php:1611, includes/widgets/mega-menu/edit.php:1706, includes/widgets/mega-menu/edit.php:2317, includes/widgets/slider/edit.php:531, includes/widgets/slider/edit.php:924
+msgid "Right"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:557, includes/widgets/contact-form/edit.php:598, includes/widgets/contact-form/edit.php:949, includes/widgets/contact-form/edit.php:991, includes/widgets/slider/edit.php:547, includes/widgets/slider/edit.php:588, includes/widgets/slider/edit.php:939, includes/widgets/slider/edit.php:981
+msgid "Offset (Horizontal)"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:639, includes/widgets/slider/edit.php:629
+msgid "Arrows Vertical Orientation"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:645, includes/widgets/contact-form/edit.php:1039, includes/widgets/heading/edit.php:239, includes/widgets/heading/edit.php:602, includes/widgets/slider/edit.php:635, includes/widgets/slider/edit.php:1029
+msgid "Top"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:649, includes/widgets/contact-form/edit.php:1043, includes/widgets/heading/edit.php:243, includes/widgets/heading/edit.php:598, includes/widgets/slider/edit.php:639, includes/widgets/slider/edit.php:1033
+msgid "Bottom"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:664, includes/widgets/contact-form/edit.php:704, includes/widgets/contact-form/edit.php:1057, includes/widgets/contact-form/edit.php:1097, includes/widgets/slider/edit.php:654, includes/widgets/slider/edit.php:694, includes/widgets/slider/edit.php:1047, includes/widgets/slider/edit.php:1087
+msgid "Offset (Vertical)"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:746, includes/widgets/contact-form/edit.php:1159, includes/widgets/creative-button/edit.php:330, includes/widgets/creative-button/edit.php:561, includes/widgets/heading/edit.php:363, includes/widgets/heading/edit.php:655, includes/widgets/mega-menu/edit.php:501, includes/widgets/mega-menu/edit.php:1023, includes/widgets/mega-menu/edit.php:1391, includes/widgets/mega-menu/edit.php:1470, includes/widgets/mega-menu/edit.php:1764, includes/widgets/mega-menu/edit.php:1843, includes/widgets/mega-menu/edit.php:2487, includes/widgets/slider/edit.php:736, includes/widgets/slider/edit.php:1149
+msgid "Normal"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:756, includes/widgets/contact-form/edit.php:785, includes/widgets/slider/edit.php:746, includes/widgets/slider/edit.php:775
+msgid "Arrows Color"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:775, includes/widgets/contact-form/edit.php:1231, includes/widgets/creative-button/edit.php:397, includes/widgets/creative-button/edit.php:583, includes/widgets/heading/edit.php:393, includes/widgets/heading/edit.php:724, includes/widgets/mega-menu/edit.php:534, includes/widgets/mega-menu/edit.php:1071, includes/widgets/mega-menu/edit.php:1424, includes/widgets/mega-menu/edit.php:1503, includes/widgets/mega-menu/edit.php:1797, includes/widgets/mega-menu/edit.php:1876, includes/widgets/mega-menu/edit.php:2543, includes/widgets/slider/edit.php:765, includes/widgets/slider/edit.php:1221
+msgid "Hover"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:805, includes/widgets/slider/edit.php:795
+msgid "Pagination"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:817, includes/widgets/slider/edit.php:807
+msgid "Pagination Type"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:821, includes/widgets/slider/edit.php:811
+msgid "Bullets"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:822, includes/widgets/slider/edit.php:812
+msgid "Fraction"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:823, includes/widgets/slider/edit.php:813
+msgid "Progress Bar"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:835, includes/widgets/creative-button/edit.php:272, includes/widgets/heading/edit.php:478, includes/widgets/mega-menu/edit.php:708, includes/widgets/mega-menu/edit.php:980, includes/widgets/mega-menu/edit.php:1992, includes/widgets/mega-menu/edit.php:2128, includes/widgets/mega-menu/edit.php:2369, includes/widgets/slider/edit.php:825
+msgid "Border Type"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:839, includes/widgets/creative-button/edit.php:276, includes/widgets/heading/edit.php:482, includes/widgets/mega-menu/edit.php:712, includes/widgets/mega-menu/edit.php:984, includes/widgets/mega-menu/edit.php:1996, includes/widgets/mega-menu/edit.php:2132, includes/widgets/mega-menu/edit.php:2373, includes/widgets/slider/edit.php:829
+msgid "Solid"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:840, includes/widgets/creative-button/edit.php:277, includes/widgets/heading/edit.php:483, includes/widgets/mega-menu/edit.php:713, includes/widgets/mega-menu/edit.php:985, includes/widgets/mega-menu/edit.php:1997, includes/widgets/mega-menu/edit.php:2133, includes/widgets/mega-menu/edit.php:2374, includes/widgets/slider/edit.php:830
+msgid "Double"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:841, includes/widgets/creative-button/edit.php:278, includes/widgets/heading/edit.php:484, includes/widgets/mega-menu/edit.php:714, includes/widgets/mega-menu/edit.php:986, includes/widgets/mega-menu/edit.php:1998, includes/widgets/mega-menu/edit.php:2134, includes/widgets/mega-menu/edit.php:2375, includes/widgets/slider/edit.php:831
+msgid "Dotted"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:842, includes/widgets/creative-button/edit.php:279, includes/widgets/heading/edit.php:485, includes/widgets/mega-menu/edit.php:715, includes/widgets/mega-menu/edit.php:987, includes/widgets/mega-menu/edit.php:1999, includes/widgets/mega-menu/edit.php:2135, includes/widgets/mega-menu/edit.php:2376, includes/widgets/slider/edit.php:832
+msgid "Dashed"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:843, includes/widgets/creative-button/edit.php:280, includes/widgets/heading/edit.php:486, includes/widgets/mega-menu/edit.php:716, includes/widgets/mega-menu/edit.php:988, includes/widgets/mega-menu/edit.php:2000, includes/widgets/mega-menu/edit.php:2136, includes/widgets/mega-menu/edit.php:2377, includes/widgets/slider/edit.php:833
+msgid "Groove"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:859, includes/widgets/slider/edit.php:849
+msgid "Pagination Bullets Size"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:885, includes/widgets/creative-button/edit.php:291, includes/widgets/heading/edit.php:501, includes/widgets/mega-menu/edit.php:743, includes/widgets/mega-menu/edit.php:1000, includes/widgets/mega-menu/edit.php:2027, includes/widgets/mega-menu/edit.php:2163, includes/widgets/mega-menu/edit.php:2392, includes/widgets/slider/edit.php:875
+msgid "Border Width"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:908, includes/widgets/creative-button/edit.php:313, includes/widgets/heading/edit.php:532, includes/widgets/mega-menu/edit.php:764, includes/widgets/mega-menu/edit.php:2048, includes/widgets/mega-menu/edit.php:2184, includes/widgets/mega-menu/edit.php:2414, includes/widgets/slider/edit.php:898
+msgid "Border Radius"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:924, includes/widgets/slider/edit.php:914
+msgid "Horizontal Orientation"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1033, includes/widgets/slider/edit.php:1023
+msgid "Vertical Orientation"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1139, includes/widgets/slider/edit.php:1129
+msgid "Pagination Typography"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1169, includes/widgets/contact-form/edit.php:1242, includes/widgets/contact-form/edit.php:1299, includes/widgets/creative-button/edit.php:349, includes/widgets/creative-button/edit.php:432, includes/widgets/mega-menu/edit.php:520, includes/widgets/mega-menu/edit.php:553, includes/widgets/mega-menu/edit.php:1042, includes/widgets/mega-menu/edit.php:1090, includes/widgets/mega-menu/edit.php:1410, includes/widgets/mega-menu/edit.php:1443, includes/widgets/mega-menu/edit.php:1489, includes/widgets/mega-menu/edit.php:1522, includes/widgets/mega-menu/edit.php:1783, includes/widgets/mega-menu/edit.php:1816, includes/widgets/mega-menu/edit.php:1862, includes/widgets/mega-menu/edit.php:1895, includes/widgets/mega-menu/edit.php:2511, includes/widgets/mega-menu/edit.php:2567, includes/widgets/mega-menu/edit.php:2623, includes/widgets/slider/edit.php:1159, includes/widgets/slider/edit.php:1232, includes/widgets/slider/edit.php:1289
+msgid "Background Color"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1185, includes/widgets/slider/edit.php:1175
+msgid "Progress Background Color"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1200, includes/widgets/contact-form/edit.php:1257, includes/widgets/contact-form/edit.php:1314, includes/widgets/creative-button/edit.php:361, includes/widgets/creative-button/edit.php:416, includes/widgets/heading/edit.php:698, includes/widgets/heading/edit.php:768, includes/widgets/mega-menu/edit.php:728, includes/widgets/mega-menu/edit.php:1054, includes/widgets/mega-menu/edit.php:1120, includes/widgets/mega-menu/edit.php:2012, includes/widgets/mega-menu/edit.php:2148, includes/widgets/mega-menu/edit.php:2525, includes/widgets/mega-menu/edit.php:2581, includes/widgets/mega-menu/edit.php:2637, includes/widgets/slider/edit.php:1190, includes/widgets/slider/edit.php:1247, includes/widgets/slider/edit.php:1304
+msgid "Border Color"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1215, includes/widgets/contact-form/edit.php:1272, includes/widgets/creative-button/edit.php:337, includes/widgets/creative-button/edit.php:404, includes/widgets/mega-menu/edit.php:508, includes/widgets/mega-menu/edit.php:541, includes/widgets/mega-menu/edit.php:1030, includes/widgets/mega-menu/edit.php:1078, includes/widgets/mega-menu/edit.php:1955, includes/widgets/mega-menu/edit.php:2091, includes/widgets/slider/edit.php:1205, includes/widgets/slider/edit.php:1262
+msgid "Text Color"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1288, includes/widgets/mega-menu/edit.php:2599, includes/widgets/slider/edit.php:1278
+msgid "Active"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1333, includes/widgets/slider/edit.php:1323
+msgid "Slide Center"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1345, includes/widgets/slider/edit.php:1335
+msgid "Slides Preview"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1350, includes/widgets/slider/edit.php:1340
+msgid "Set your number of slides preview (slides visible at the same time on slider's container)."
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1358, includes/widgets/slider/edit.php:1348
+msgid "Space Between"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1363, includes/widgets/slider/edit.php:1353
+msgid "Distance between slides in px."
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1371, includes/widgets/slider/edit.php:1361
+msgid "Autoplay"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1382, includes/widgets/slider/edit.php:1372
+msgid "Autoplay Delay"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1387, includes/widgets/slider/edit.php:1377
+msgid "Set delay (in millisecond)."
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1398, includes/widgets/slider/edit.php:1388
+msgid "Pause on Interaction"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1412, includes/widgets/slider/edit.php:1402
+msgid "Pause on Mouse Hover"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1426, includes/widgets/slider/edit.php:1416
+msgid "Loop"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1437, includes/widgets/slider/edit.php:1427
+msgid "Simulate Touch"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1448, includes/widgets/slider/edit.php:1438
+msgid "Effect Type"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1452, includes/widgets/mega-menu/edit.php:412, includes/widgets/mega-menu/edit.php:916, includes/widgets/slider/edit.php:128, includes/widgets/slider/edit.php:1442
+msgid "Slide"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1453, includes/widgets/mega-menu/edit.php:169, includes/widgets/mega-menu/edit.php:411, includes/widgets/mega-menu/edit.php:431, includes/widgets/mega-menu/edit.php:915, includes/widgets/mega-menu/edit.php:935, includes/widgets/slider/edit.php:1443
+msgid "Fade"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1454, includes/widgets/slider/edit.php:1444
+msgid "Cube"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1455, includes/widgets/slider/edit.php:1445
+msgid "Coverflow"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1456, includes/widgets/slider/edit.php:1446
+msgid "Flip"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1465, includes/widgets/slider/edit.php:1455
+msgid "Effect Speed"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1471, includes/widgets/slider/edit.php:1461
+msgid "Set speed (in millisecond)."
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1478, includes/widgets/slider/edit.php:1468
+msgid "Direction"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1484, includes/widgets/mega-menu/edit.php:152, includes/widgets/slider/edit.php:1474
+msgid "Horizontal"
+msgstr ""
+
+#: includes/widgets/contact-form/edit.php:1488, includes/widgets/mega-menu/edit.php:153, includes/widgets/slider/edit.php:1478
+msgid "Vertical"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:80
+msgid "Creative Button"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:129
+msgid "Choose Style"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:131
+msgid "Unique style under the theme portuna"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:135
+msgid "Button Style 1"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:139
+msgid "Button Style 2"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:149
+msgid "Label Name"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:151, includes/widgets/creative-button/edit.php:152
+msgid "Learn More"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:177
+msgid "Button Alignment"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:185, includes/widgets/heading/edit.php:110, includes/widgets/mega-menu/edit.php:278, includes/widgets/mega-menu/edit.php:313, includes/widgets/mega-menu/edit.php:2313
+msgid "Center"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:193
+msgid "Justified"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:213
+msgid "Button ID"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:230, includes/widgets/mega-menu/edit.php:203, includes/widgets/mega-menu/edit.php:2236
+msgid "General Options"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:238
+msgid "Typography"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:252, includes/widgets/creative-button/edit.php:546, includes/widgets/mega-menu/edit.php:452, includes/widgets/mega-menu/edit.php:1239, includes/widgets/mega-menu/edit.php:1351, includes/widgets/mega-menu/edit.php:1625, includes/widgets/mega-menu/edit.php:1724, includes/widgets/mega-menu/edit.php:1967, includes/widgets/mega-menu/edit.php:2103, includes/widgets/mega-menu/edit.php:2338
+msgid "Padding"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:281
+msgid "Unique Portuna"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:377, includes/widgets/creative-button/edit.php:444
+msgid "Label Text Shadow"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:386, includes/widgets/creative-button/edit.php:453
+msgid "Box Shadow"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:478
+msgid "Enable Icon?"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:504
+msgid "Icon Size (px)"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:523, includes/widgets/mega-menu/edit.php:1216, includes/widgets/mega-menu/edit.php:1328, includes/widgets/mega-menu/edit.php:1602, includes/widgets/mega-menu/edit.php:1701
+msgid "Icon Position"
+msgstr ""
+
+#: includes/widgets/creative-button/edit.php:568, includes/widgets/creative-button/edit.php:590, includes/widgets/mega-menu/edit.php:1398, includes/widgets/mega-menu/edit.php:1431, includes/widgets/mega-menu/edit.php:1477, includes/widgets/mega-menu/edit.php:1510, includes/widgets/mega-menu/edit.php:1771, includes/widgets/mega-menu/edit.php:1804, includes/widgets/mega-menu/edit.php:1850, includes/widgets/mega-menu/edit.php:1883
+msgid "Color"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:86
+msgid "Map Settings"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:94
+msgid "Google Map Type"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:97
+msgid "Basic"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:98
+msgid "Multiple Marker"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:107
+msgid "Address Type"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:112, includes/widgets/google-map/edit.php:127
+msgid "Address"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:116
+msgid "Coordinates"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:129
+msgid "Dhaka, Bangladesh"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:139
+msgid "Center Latitude"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:141
+msgid "23.749981"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:151
+msgid "Center Longitude"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:153
+msgid "90.365641"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:167, includes/widgets/google-map/edit.php:321
+msgid "Map Marker Settings"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:178, includes/widgets/google-map/edit.php:354, includes/widgets/heading/edit.php:164
+msgid "Title"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:181
+msgid "Google Map Title"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:192, includes/widgets/google-map/edit.php:366
+msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo."
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:200, includes/widgets/google-map/edit.php:374
+msgid "Marker content open by default?"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:210, includes/widgets/google-map/edit.php:384
+msgid "Width (px)"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:222, includes/widgets/google-map/edit.php:396
+msgid "Enable Custom Marker Icon?"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:232, includes/widgets/google-map/edit.php:406
+msgid "Marker Icon"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:243, includes/widgets/google-map/edit.php:417
+msgid "Icon Width"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:280, includes/widgets/google-map/edit.php:454
+msgid "Icon Height"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:334
+msgid "Marker Latitude"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:336, includes/widgets/google-map/edit.php:497
+msgid "23.754539"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:344
+msgid "Marker Longitude"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:346, includes/widgets/google-map/edit.php:498
+msgid "90.3769106"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:356
+msgid "Marker Title"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:491
+msgid "Marker Items"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:496
+msgid "Daffodil International University"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:501
+msgid "National Parliament House"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:502
+msgid "23.7626233"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:503
+msgid "90.3777502"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:518
+msgid "Map Controls"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:526
+msgid "Zoom Level"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:546
+msgid "Street View Control"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:549, includes/widgets/google-map/edit.php:562, includes/widgets/google-map/edit.php:575, includes/widgets/google-map/edit.php:588, includes/widgets/google-map/edit.php:601
+msgid "On"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:550, includes/widgets/google-map/edit.php:563, includes/widgets/google-map/edit.php:576, includes/widgets/google-map/edit.php:589, includes/widgets/google-map/edit.php:602
+msgid "Off"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:559
+msgid "Map Type Control"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:572
+msgid "Zoom Control"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:585
+msgid "Fullscreen Control"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:598
+msgid "Scroll Wheel Control"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:615, includes/widgets/google-map/edit.php:648
+msgid "Map Style"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:624
+msgid "Map Source"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:629
+msgid "Google Standard"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:633
+msgid "Snazzy Maps"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:637
+msgid "Custom"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:651
+msgid "Standard"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:652
+msgid "Silver"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:653
+msgid "Retro"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:654, includes/widgets/google-map/edit.php:676
+msgid "Dark"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:655
+msgid "Night"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:656
+msgid "Aubergine"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:659, includes/widgets/google-map/edit.php:684
+msgid "Click here"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:659
+msgid "to generate your own theme and use JSON within Custom style field."
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:669
+msgid "SnazzyMaps Style"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:672
+msgid "Default"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:673
+msgid "Simple"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:674
+msgid "Colorful"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:675
+msgid "Complex"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:677
+msgid "Greyscale"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:678
+msgid "Light"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:679
+msgid "Monochrome"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:680
+msgid "No Labels"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:681
+msgid "Two Tone"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:684
+msgid "to explore more themes and use JSON within custom style field."
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:694
+msgid "Custom Style"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:710
+msgid "Map Container"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:718, includes/widgets/mega-menu/edit.php:609, includes/widgets/mega-menu/edit.php:635, includes/widgets/mega-menu/edit.php:785, includes/widgets/mega-menu/edit.php:814
+msgid "Width"
+msgstr ""
+
+#: includes/widgets/google-map/edit.php:752
+msgid "Height"
+msgstr ""
+
+#: includes/widgets/google-map/view.php:46
+msgid "Whoops!"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:69
+msgid "Advanced Heading"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:93
+msgid "Settings Content"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:101
+msgid "Title & Subtitle Alignment"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:145
+msgid "Heading"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:153
+msgid "Enable title?"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:166
+msgid "Set Your Title"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:176
+msgid "Title HTML Tag"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:179
+msgid "H1"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:180, includes/widgets/heading/edit.php:275
+msgid "H2"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:181, includes/widgets/heading/edit.php:276
+msgid "H3"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:182, includes/widgets/heading/edit.php:277
+msgid "H4"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:183, includes/widgets/heading/edit.php:278
+msgid "H5"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:184, includes/widgets/heading/edit.php:279
+msgid "H6"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:185, includes/widgets/heading/edit.php:280
+msgid "div"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:186, includes/widgets/heading/edit.php:281
+msgid "span"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:187, includes/widgets/heading/edit.php:282
+msgid "p"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:199
+msgid "Title Link"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:201, includes/widgets/heading/edit.php:296
+msgid "https://your-link.com"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:215, includes/widgets/heading/edit.php:260
+msgid "Subtitle"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:224
+msgid "Enable subtitle?"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:235
+msgid "Subtitle position"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:262
+msgid "Set Your Subtitle"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:272
+msgid "Subtitle HTML Tag"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:294
+msgid "Subtitle Link"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:316
+msgid "Title Style"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:327
+msgid "Title Typography"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:341
+msgid "Title Distance"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:370, includes/widgets/heading/edit.php:400
+msgid "Title Color"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:382, includes/widgets/heading/edit.php:412
+msgid "Title Text Shadow"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:431
+msgid "Subtitle Style"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:442
+msgid "Subtitle Typography"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:456
+msgid "Subtitle Padding"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:556
+msgid "Decoration Type"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:560
+msgid "Shadow Square"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:570
+msgid "Square Position Horizontal"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:593
+msgid "Square Position Vertical"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:616
+msgid "Square Background Color"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:631
+msgid "Animation Duration"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:662, includes/widgets/heading/edit.php:731
+msgid "Subtitle Color"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:674, includes/widgets/heading/edit.php:743
+msgid "Subtitle Text Shadow"
+msgstr ""
+
+#: includes/widgets/heading/edit.php:683, includes/widgets/heading/edit.php:752
+msgid "Subtitle Background Color"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:84
+msgid "Mega Menu"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:129
+msgid "Menu Settings"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:137
+msgid "Choose Menus"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:141
+msgid "<a href=\"%s\" target=\"_blank\">Manage Menus</a>."
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:148
+msgid "Menu Type Orientation"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:154
+msgid "Dropdown"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:165
+msgid "Menu Animation"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:170
+msgid "Fade Up"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:171
+msgid "Fade Down"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:182
+msgid "Sub Menu Side Position"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:186
+msgid "Left Side"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:187
+msgid "Right Side"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:211, includes/widgets/mega-menu/edit.php:240
+msgid "Menu Width"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:269, includes/widgets/mega-menu/edit.php:304
+msgid "Menu Alignment"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:339
+msgid "Menu Padding"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:358
+msgid "Menu Background Color"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:370
+msgid "Menu Box Shadow"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:384
+msgid "Menu"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:392, includes/widgets/mega-menu/edit.php:896
+msgid "Pointer (Hover)"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:397, includes/widgets/mega-menu/edit.php:901
+msgid "Underline"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:398, includes/widgets/mega-menu/edit.php:902
+msgid "Background"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:406, includes/widgets/mega-menu/edit.php:426, includes/widgets/mega-menu/edit.php:910, includes/widgets/mega-menu/edit.php:930
+msgid "Pointer Animation"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:413, includes/widgets/mega-menu/edit.php:432, includes/widgets/mega-menu/edit.php:917, includes/widgets/mega-menu/edit.php:936
+msgid "Grow"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:414, includes/widgets/mega-menu/edit.php:918
+msgid "Drop In"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:415, includes/widgets/mega-menu/edit.php:919
+msgid "Drop Out"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:433, includes/widgets/mega-menu/edit.php:937
+msgid "Shrink"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:434, includes/widgets/mega-menu/edit.php:938
+msgid "Sweep Left"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:435, includes/widgets/mega-menu/edit.php:939
+msgid "Sweep Right"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:436, includes/widgets/mega-menu/edit.php:940
+msgid "Seep Up"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:437, includes/widgets/mega-menu/edit.php:438, includes/widgets/mega-menu/edit.php:439, includes/widgets/mega-menu/edit.php:440, includes/widgets/mega-menu/edit.php:441, includes/widgets/mega-menu/edit.php:941, includes/widgets/mega-menu/edit.php:942, includes/widgets/mega-menu/edit.php:943, includes/widgets/mega-menu/edit.php:944, includes/widgets/mega-menu/edit.php:945
+msgid "Seep Down"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:464, includes/widgets/mega-menu/edit.php:1252, includes/widgets/mega-menu/edit.php:1364, includes/widgets/mega-menu/edit.php:1638, includes/widgets/mega-menu/edit.php:1737, includes/widgets/mega-menu/edit.php:1980, includes/widgets/mega-menu/edit.php:2116, includes/widgets/mega-menu/edit.php:2354
+msgid "Margin"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:476
+msgid "Menu Items"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:485, includes/widgets/mega-menu/edit.php:882
+msgid "Item Typography"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:568, includes/widgets/mega-menu/edit.php:1105
+msgid "Pointer Color"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:592
+msgid "Sub Menu"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:602
+msgid "Normal Panel"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:665
+msgid "Sub Menu Background"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:674
+msgid "Sub Menu Box Shadow"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:683
+msgid "Padding Container"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:696
+msgid "Margin Container"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:778
+msgid "Mega Panel"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:843
+msgid "Mega Menu is Active?"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:847
+msgid "yes"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:855, includes/widgets/mega-menu/edit.php:2209
+msgid "Badge Typography"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:873
+msgid "Sub Menu Items"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:956
+msgid "Padding Items"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:968
+msgid "Margin Items"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:1144
+msgid "Icon Indicator"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:1154, includes/widgets/mega-menu/edit.php:1161, includes/widgets/mega-menu/edit.php:1553, includes/widgets/mega-menu/edit.php:1560, includes/widgets/mega-menu/edit.php:1926
+msgid "First Level"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:1183, includes/widgets/mega-menu/edit.php:1295, includes/widgets/mega-menu/edit.php:1569, includes/widgets/mega-menu/edit.php:1668
+msgid "Icon Size"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:1266, includes/widgets/mega-menu/edit.php:1273, includes/widgets/mega-menu/edit.php:1652, includes/widgets/mega-menu/edit.php:1659, includes/widgets/mega-menu/edit.php:2062
+msgid "Nested Level"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:1380
+msgid "Icon Indicator Style (First Level)"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:1459
+msgid "Icon Indicator Style (Nested Level)"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:1543
+msgid "Icon Item"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:1753
+msgid "Icon Style (First Level)"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:1832
+msgid "Icon Style (Nested Level)"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:1916
+msgid "Badge Item"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:1933, includes/widgets/mega-menu/edit.php:2069
+msgid "Badge Background"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:1946, includes/widgets/mega-menu/edit.php:2082
+msgid "Badge Box Shadow"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2200
+msgid "Badge General"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2228
+msgid "Hamburger Options"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2245
+msgid "Enable Breakpoint?"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2255
+msgid "Breakpoint"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2259
+msgid "Tablet (< 1025px)"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2260
+msgid "Mobile (< 768px)"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2261
+msgid "Custom (<)"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2272
+msgid "Custom Number (< px)"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2277
+msgid "Set your responsive number (px) on which the hamburger menu should appear."
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2289
+msgid "Full Width"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2291
+msgid "Stretch the dropdown of the menu to full width."
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2304
+msgid "Toggle Align"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2429
+msgid "Hamburger (Toggle)"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2441
+msgid "Open Icon"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2457
+msgid "Hamburger (Close)"
+msgstr ""
+
+#: includes/widgets/mega-menu/edit.php:2469
+msgid "Close Icon"
+msgstr ""
+
+#: includes/widgets/slider/edit.php:79
+msgid "Slider"
+msgstr ""
+
+#: includes/widgets/slider/edit.php:120
+msgid "Slider Items"
+msgstr ""
+
+#: includes/widgets/slider/edit.php:139
+msgid "Title Item Slide"
+msgstr ""
+
+#: includes/widgets/slider/edit.php:141
+msgid "Slide Heading"
+msgstr ""
+
+#: includes/widgets/slider/edit.php:149
+msgid "Slide Items"
 msgstr ""

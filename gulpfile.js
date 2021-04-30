@@ -79,7 +79,26 @@ const configWidgets = {
             ] ]
         } )
     ]
-}
+};
+
+const configAssets = {
+    plugins: [
+        resolve(),
+        commonjs(),
+        rollupBabel( {
+            babelrc: false,
+            runtimeHelpers: true,
+            presets: [ '@babel/preset-env' ],
+            plugins: [ [
+                'module-resolver', {
+                    alias: {
+                        Utils: path.output.assetsJS,
+                    }
+                }
+            ] ]
+        } )
+    ]
+};
 
 const configVendors = {
     plugins: [
@@ -98,7 +117,7 @@ const configVendors = {
             ] ]
         } )
     ]
-}
+};
 
 // gulp.task( 'browser-sync', function() {
 //     const files = [
@@ -135,7 +154,7 @@ const compressedAssetsCSS = () => {
         } ) )
         .pipe( cleanCSS( { compatibility: 'ie8' } ) )
         .pipe( rename( { suffix: '.min' } ) )
-        .pipe( gulpif( ! util.env.production, sourcemaps.write('.') ) )
+        .pipe( gulpif( ! util.env.production, sourcemaps.write('.' ) ) )
         .pipe( gulp.dest( path.output.assetsStyle ) );
 }
 
@@ -183,6 +202,7 @@ const compressedModulesJS = () => {
 const compressedAssetsJS = () => {
     return gulp.src( path.src.assetsJS )
         .pipe( gulpif( ! util.env.production, sourcemaps.init() ) )
+        .pipe( rollup( configAssets, 'iife' ) )
         .pipe( babel( {
             presets: [ '@babel/env' ]
         } ) )
@@ -352,13 +372,13 @@ gulp.task( 'build', series(
 
 // Developing Task.
 gulp.task( 'dev', () => {
-    watch( path.src.assetsJS, series( compressedAssetsJS ) );
-    watch( path.src.assetsStyle, series( compressedAssetsCSS ) );
-    watch( path.src.widgetsJS, series( compressedWidgetsJS ) );
+    watch( path.src.assetsJS,     series( compressedAssetsJS ) );
+    watch( path.src.assetsStyle,  series( compressedAssetsCSS ) );
+    watch( path.src.widgetsJS,    series( compressedWidgetsJS ) );
     watch( path.src.widgetsStyle, series( compressedWidgetsCSS ) );
-    watch( path.src.vendorsJS, series( compressedVendorsJS ) );
+    watch( path.src.vendorsJS,    series( compressedVendorsJS ) );
     watch( path.src.vendorsStyle, series( compressedVendorsCSS ) );
-    watch( path.src.modulesJS, series( compressedModulesJS ) );
+    watch( path.src.modulesJS,    series( compressedModulesJS ) );
     watch( path.src.modulesStyle, series( compressedModulesCSS ) );
-    watch( path.src.img, series( buildImages ) );
+    watch( path.src.img,          series( buildImages ) );
 } );

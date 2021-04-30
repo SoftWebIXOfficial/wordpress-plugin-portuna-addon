@@ -33,6 +33,10 @@
                         elEmail.html( ': ' + userEmail );
                     }
                 }
+
+                if ( window.history.replaceState ) {
+                    window.history.replaceState( null, null, window.location.href );
+                }
             } else {
                 // window.location.replace( 'https://softwebixpreview.com/portuna/' );
             }

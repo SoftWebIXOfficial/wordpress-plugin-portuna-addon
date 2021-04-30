@@ -5,26 +5,28 @@
     const adminPanelSettings = {
         onInit: function() {
             this.getSelectorName();
-            this.bindEvents();
-            this.payments();
+            this.settingsPage();
+            this.proPage();
         },
 
         getSelectorName: function() {
             this._elements = {
-                $baseWrap:      $( '.portuna-addon-admin' ),
-                $linkWrap:      $( '#toplevel_page_portuna-addon' ),
-                $formSave:      $( '#portuna-addon-form-settings' ),
-                $saveBtn:       $( '.portuna-addon-form-save-btn' ),
-                $hash:          window.location.hash,
+                $baseWrap:          $( '.portuna-addon-admin' ),
+                $linkWrap:          $( '#toplevel_page_portuna-addon' ),
+                $formSettingsSave:  $( '#portuna-addon-form-settings' ),
+                $formProSave:       $( '#portuna-addon-form-pro' ),
+                $saveSettingsBtn:   $( '.portuna-addon-form-save-btn' ),
+                $saveApiBtn:        $( '.portuna-addon-api-saved-btn' ),
+                $hash:              window.location.hash,
             }
         },
 
-        bindEvents: function() {
+        settingsPage: function() {
             const {
                 $baseWrap,
                 $linkWrap,
-                $formSave,
-                $saveBtn,
+                $formSettingsSave,
+                $saveSettingsBtn,
                 $hash
             } = this._elements;
 
@@ -33,31 +35,31 @@
                 $getUrl    = 'admin.php?page=portuna-addon' + $hashRgx[0],
                 $tabSelect;
 
-            $formSave.on( 'submit', e => {
+            $formSettingsSave.on( 'submit', e => {
                 e.preventDefault();
 
                 $.post( {
                     url: _.ajaxUrl,
                     data: {
-                        nonce:  _.nonce,
-                        action: _.action,
-                        data:   $formSave.serialize()
+                        nonce:  _.nonces.nonce_api,
+                        action: _.actions.action_api,
+                        data:   $formSettingsSave.serialize()
                     },
                     beforeSend: () => {
-                        $saveBtn.text( '...' );
+                        $saveSettingsBtn.text( '...' );
                     },
-                    success: ($) => {
+                    success: $ => {
                         console.log($);
 
                         if ( $.success ) {
-                            $saveBtn.attr( 'disabled', !0 );
-                            $saveBtn.text( _.savedChangesText );
+                            $saveSettingsBtn.attr( 'disabled', !0 );
+                            $saveSettingsBtn.text( _.savedChangesText );
                         }
                     }
                 } );
             } ),
-                $formSave.on( 'keyup change paste', 'input, select, textarea, :checkbox, :radio', function() {
-                    $saveBtn.attr( 'disabled', !1 ).text( _.saveChangesText );
+                $formSettingsSave.on( 'keyup change paste', 'input, select, textarea, :checkbox, :radio', function() {
+                    $saveSettingsBtn.attr( 'disabled', !1 ).text( _.saveChangesText );
                 } );
 
             if ( $hashRgx[ $hashRgx.length - 1 ] == 0 ) {
@@ -101,37 +103,56 @@
                             .siblings()
                             .removeClass('nav-is-active');
 
-                        $(this)
+                        $( this )
                             .parent()
                             .addClass('current')
                             .siblings()
                             .removeClass('current');
                     } );
         },
-        payments: function() {
-            if ( ! window.$ipsp ) return;
-
+        proPage: function() {
             const {
-                $baseWrap,
+                $formProSave,
+                $saveApiBtn
             } = this._elements;
-            // $( document ).on( 'ready', () => {
-            const purchasedLink = $baseWrap.find( '.portuna-addon-admin--panel-redirect' );
 
-            var button = $ipsp.get('button');
+            $formProSave.on( 'submit', e => {
+                e.preventDefault();
 
-            button.setMerchantId( 1474027 );
-            button.setAmount( '10', 'USD', true );
-            button.setHost( 'pay.fondy.eu' );
-            console.log( window );
-            $ipsp('button').addField({
-                'label':'Account Id',
-                'name' :'account_id',
-                'value':'127318273',   //не обязательно, по умолчанию пустое
-                'readonly':true, //не обязательно, по умолчанию false
-                'required':true, //не обязательно, по умолчанию false
-            }); 
+                $.post( {
+                    url: _.ajaxUrl,
+                    data: {
+                        nonce:  _.nonces.pro_api,
+                        action: _.actions.pro_api,
+                        data:   $formProSave.serialize()
+                    },
+                    beforeSend: () => {
+                        $saveApiBtn.text( '...' );
+                    },
+                    success: data => {
 
-            //purchasedLink.attr( 'href', button.getUrl() );
+                        if ( data.success === true ) {
+                            $saveApiBtn.attr( 'disabled', !0 );
+                            $saveApiBtn.addClass( 'success' );
+                            $( '.portuna-addon-admin--license-key-input' ).addClass( 'success' );
+                            $saveApiBtn.text( _.licenseKeySuccess );
+                        } else {
+                            $saveApiBtn.attr( 'disabled', !0 );
+                            $saveApiBtn.addClass( 'error' );
+                            $saveApiBtn.text( _.licenseKeyError );
+                        }
+                    }
+                } );
+            } ),
+                $formProSave.on( 'keyup change paste', 'input, select, textarea, :checkbox, :radio', function() {
+                    $saveApiBtn.attr( 'disabled', !1 );
+                    $saveApiBtn.html( _.saveChangesText ).removeClass( 'error' );
+
+                    if ( $(this).val() === '' ) {
+                        $saveApiBtn.attr( 'disabled', 1 );
+                    }
+                } );
+
         }
     };
 

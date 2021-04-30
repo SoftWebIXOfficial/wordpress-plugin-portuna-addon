@@ -1,3 +1,7 @@
+<?php
+    $options  = \PortunaAddon\Helpers\Options::instance();
+    $userData = $options->get_option( 'user_data' );
+?>
 <form action="" method="POST" id="portuna-addon-form-settings">
     <div class="portuna-addon-admin--content-row">
         <div class="portuna-addon-admin--content-plugin">

@@ -7,21 +7,25 @@ defined( 'ABSPATH' ) || exit;
 class AdminPage {
     use Traits\Singleton;
 
-    const PORTUNA_SLUG  = 'portuna-addon';
-    const PORTUNA_NONCE = 'portuna_addon_ajax';
+    const PORTUNA_SLUG           = 'portuna-addon';
+    const PORTUNA_NONCE_SETTINGS = 'portuna_addon_ajax_save_settings';
+    const PORTUNA_NONCE_PRO      = 'portuna_addon_ajax_save_pro';
     public $options;
 
     public function __construct() {
         $this->options = \PortunaAddon\Helpers\Options::instance();
-
+//         $this->options->save_option( 'validation', '' );
         add_action( 'admin_menu', [ $this, 'register_admin_panel_menu' ] );
         add_action( 'admin_menu', [ $this, 'update_admin_panel_menu' ], 20 );
 
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_panel_enqueue_scripts' ], 100 );
 
-        add_action( 'wp_ajax_' . self::PORTUNA_NONCE, [ $this, 'save_user_data' ] );
+        add_action( 'wp_ajax_' . self::PORTUNA_NONCE_SETTINGS, [ $this, 'save_user_data' ] );
+        add_action( 'wp_ajax_' . self::PORTUNA_NONCE_PRO, [ $this, 'save_user_license' ] );
 
         add_action( 'in_admin_header', [ $this, 'remove_all_notices' ], PHP_INT_MAX );
+
+        //var_dump( $this->options->get_option( 'user_data' ) );
     }
 
     public function save_user_data() {
@@ -29,7 +33,7 @@ class AdminPage {
             return;
         }
 
-        if ( ! check_ajax_referer( self::PORTUNA_NONCE, 'nonce' ) ) {
+        if ( ! check_ajax_referer( self::PORTUNA_NONCE_SETTINGS, 'nonce' ) ) {
             wp_send_json_error();
         }
 
@@ -39,7 +43,38 @@ class AdminPage {
 
         $this->options->save_option( 'user_data', $data );
 
-        wp_send_json_success();
+        wp_send_json_success( $data );
+    }
+
+    public function save_user_license() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return;
+        }
+
+        if ( ! check_ajax_referer( self::PORTUNA_NONCE_PRO, 'nonce' ) ) {
+            wp_send_json_error();
+        }
+
+        $posted_data = ! empty( $_POST[ 'data' ] ) ? $_POST[ 'data' ] : '';
+        $data        = [];
+        parse_str( $posted_data, $data );
+
+        $response = wp_remote_get(
+            'http://localhost/InprogressProject/portuna/wp-json/api/v2/get?access_key=' . $data[ 'user_license' ][ 'license_key' ],
+            [ 'timeout' => 15 ]
+        );
+
+        $body_data = json_decode( wp_remote_retrieve_body( $response ), false );
+
+        $this->options->save_option( 'user_license', $data );
+
+        if ( json_last_error() === JSON_ERROR_NONE ) {
+            $this->options->save_option( 'validation', 'valid' );
+            wp_send_json_success( $body_data );
+            //$this->options->save_option( 'validation', 'valid' );
+        } else {
+            wp_send_json_error();
+        }
     }
 
     public function data_client_save( $data ) {
@@ -67,31 +102,23 @@ class AdminPage {
             true
         );
 
-        wp_enqueue_script(
-            'portuna-admin-panel-script',
-            $dir_js . 'admin-panel.min.js',
-            [ 'jquery' ],
-            $version,
-            true
-        );
-
-        wp_enqueue_script(
-            'pay-fondy',
-            ( is_ssl() ? 'https' : 'http' ) . '://pay.fondy.eu/static_common/v1/checkout/ipsp.js',
-            null,
-            null,
-            true
-        );
-
         wp_localize_script(
             'portuna-admin-panel-script',
             'portunaAjax',
             [
-                'nonce'            => wp_create_nonce( self::PORTUNA_NONCE ),
-                'ajaxUrl'          => admin_url( 'admin-ajax.php' ),
-                'action'           => self::PORTUNA_NONCE,
-                'saveChangesText'  => __( 'Save Changes', 'simpli' ),
-                'savedChangesText' => __( 'Changes Saved', 'simpli' ),
+                'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
+                'nonces'            => [
+                    'nonce_api'     =>  wp_create_nonce( self::PORTUNA_NONCE_SETTINGS ),
+                    'pro_api'       =>  wp_create_nonce( self::PORTUNA_NONCE_PRO ),
+                ],
+                'actions'           => [
+                    'action_api'    => self::PORTUNA_NONCE_SETTINGS,
+                    'pro_api'       => self::PORTUNA_NONCE_PRO,
+                ],
+                'saveChangesText'   => __( 'Save Key', 'portuna-addon' ),
+                'savedChangesText'  => __( 'Changes Saved', 'portuna-addon' ),
+                'licenseKeySuccess' => __( 'Valid', 'portuna-addon' ),
+                'licenseKeyError'   => __( 'Invalid', 'portuna-addon' ),
             ]
         );
     }
@@ -165,7 +192,6 @@ class AdminPage {
      */
     public function load_file_frontend( $file_name ) {
         $get_file = dirname( __FILE__ ) . '/views/admin-panel-' . $file_name . '.php';
-
 
         if ( is_readable( $get_file ) ) :
             include( $get_file );
