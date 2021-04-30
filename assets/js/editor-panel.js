@@ -19,7 +19,7 @@ const { __ } = wp.i18n;
 
                 editorPanelSettings.elementorControls( panel );
 
-                $( document ).on( 'click', '.elementor-component-tab.elementor-tab-control-content', () => {
+                $( document ).on( 'click', '.elementor-component-tab', () => {
                     editorPanelSettings.elementorControls( panel );
                 } );
             } );

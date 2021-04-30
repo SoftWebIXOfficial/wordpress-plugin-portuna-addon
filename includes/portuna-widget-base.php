@@ -13,7 +13,7 @@ abstract class Portuna_Widget_Base extends Widget_Base {
 
     public function server_side_render() {
         $args          = $this->get_settings_for_display();
-        $get_view_file = $this->side_render_dir() . '/view.php';
+        $get_view_file = $this->side_render_dir() . '/layout1.php';
 
         if ( ! is_readable( $get_view_file ) ) {
             return;

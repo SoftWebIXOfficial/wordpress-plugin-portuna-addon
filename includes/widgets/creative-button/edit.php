@@ -126,16 +126,16 @@ class CreativeButton extends Portuna_Widget_Base {
             $this->add_control(
                 'section_template_style',
                 [
-                    'label'       => esc_html__( 'Choose Style', 'portuna-addon' ),
-                    'type'        => ControlsManager::SELECT_IMAGE,
-                    'description' => esc_html__( 'Unique style under the theme portuna', 'portuna-addon' ),
-                    'default'     => 'view',
-                    'options'     => [
-                        'view'           => [
+                    'label'        => esc_html__( 'Choose Style', 'portuna-addon' ),
+                    'type'         => ControlsManager::SELECT_IMAGE,
+                    'description'  => esc_html__( 'Unique style under the theme portuna', 'portuna-addon' ),
+                    'default'      => 'layout1',
+                    'options'      => [
+                        'layout1'  => [
                             'title'      => esc_html__( 'Button Style 1', 'portuna-addon' ),
                             'url'        => Utils::get_placeholder_image_src(),
                         ],
-                        'view_template1' => [
+                        'layout2'  => [
                             'title'      => esc_html__( 'Button Style 2', 'portuna-addon' ),
                             'url'        => Utils::get_placeholder_image_src(),
                         ],
@@ -609,8 +609,8 @@ class CreativeButton extends Portuna_Widget_Base {
      * render the code and generate the final HTML on the frontend using PHP.
      */
     protected function render() {
-        $settings = $this->get_settings_for_display();
 
+        $settings = $this->get_settings_for_display();
         extract( $settings );
 
         require $this->side_render_dir() . '/' . $section_template_style . '.php';

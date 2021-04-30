@@ -1491,6 +1491,7 @@ class Slider extends Portuna_Widget_Base {
      * render the code and generate the final HTML on the frontend using PHP.
      */
     protected function render() {
+
         $this->server_side_render();
     }
 }
