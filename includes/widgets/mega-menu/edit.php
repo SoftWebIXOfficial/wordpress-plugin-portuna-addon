@@ -52,6 +52,7 @@ class MegaMenu extends Portuna_Widget_Base {
         'wrap_submenu_content'                      => ' div.portuna-addon-sub-menu-content',
         'wrap_submegamenu_container'                => ' ul.portuna-addon-sub-mega-menu',
         'wrap_menu_padding'                         => ' .portuna-addon--mega-menu--content > .portuna-addon-menu-items',
+        'wrap_menu_content'                         => ' .portuna-addon-menu__wrapper-content',
         'wrap_menu_link'                            => ' .portuna-addon-menu__wrapper-content-link > a',
         'wrap_menu_item_link'                       => ' .portuna-addon-top-menu .portuna-addon-menu-item .first-level-link, .portuna-addon-sub-menu .portuna-addon-menu-item .nested-level-link',
         'wrap_menu_item_link_hover'                 => ' .portuna-addon-top-menu .portuna-addon-menu-item:hover .first-level-link, .portuna-addon-sub-menu .portuna-addon-menu-item:hover .nested-level-link',
@@ -381,7 +382,7 @@ class MegaMenu extends Portuna_Widget_Base {
         $this->start_controls_section(
             'section_menu_item_style',
             [
-                'label' => __( 'Menu', 'portuna-addon' ),
+                'label' => __( 'Menu (First Level)', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -452,8 +453,15 @@ class MegaMenu extends Portuna_Widget_Base {
                     'label'      => __( 'Padding', 'portuna-addon' ),
                     'type'       => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px', '%' ],
+                    'default'    => [
+                        'top'    => '0',
+                        'right'  => '20',
+                        'bottom' => '0',
+                        'left'   => '0',
+                        'unit'   => 'px'
+                    ],
                     'selectors'  => [
-                        '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_link' ] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                        '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_content' ] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
                     ],
                 ]
             );
@@ -465,7 +473,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     'type'       => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px', '%' ],
                     'selectors'  => [
-                        '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_link' ] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                        '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_content' ] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
                     ],
                 ]
             );
@@ -589,7 +597,7 @@ class MegaMenu extends Portuna_Widget_Base {
         $this->start_controls_section(
             'section_submenu_item_style',
             [
-                'label' => __( 'Sub Menu', 'portuna-addon' ),
+                'label' => __( 'Sub Menu (Nested Level)', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -1141,7 +1149,7 @@ class MegaMenu extends Portuna_Widget_Base {
         $this->start_controls_section(
             'section_submenu_icon_item_style',
             [
-                'label' => __( 'Icon Indicator', 'portuna-addon' ),
+                'label' => __( 'Icon (Dropdown)', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -1545,6 +1553,16 @@ class MegaMenu extends Portuna_Widget_Base {
             ]
         );
 
+            $this->add_control(
+                'section_icon_item_warning',
+                [
+                    'raw' 		      => sprintf( __( 'Set your Icon type in the Item - <a href="%s" target="_blank">Appearance > Menus</a>', 'portuna-addon' ), admin_url( 'nav-menus.php' ) ),
+                    'type' 		      => Controls_Manager::RAW_HTML,
+                    'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+                    'render_type' 	  => 'ui',
+                ]
+            );
+
             $this->start_controls_tabs( 'icon_group' );
 
                 $this->start_controls_tab(
@@ -1918,6 +1936,16 @@ class MegaMenu extends Portuna_Widget_Base {
             ]
         );
 
+            $this->add_control(
+                'section_badge_warning',
+                [
+                    'raw' 		      => sprintf( __( 'Set your Badge text in the Item - <a href="%s" target="_blank">Appearance > Menus</a>', 'portuna-addon' ), admin_url( 'nav-menus.php' ) ),
+                    'type' 		      => Controls_Manager::RAW_HTML,
+                    'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+                    'render_type' 	  => 'ui',
+                ]
+            );
+
             $this->start_controls_tabs( 'bagde_group' );
 
                 $this->start_controls_tab(
@@ -2233,7 +2261,7 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'device_general',
                 [
-                    'label'     => __( 'General Options', 'portuna-addon' ),
+                    'label'     => __( 'Breakpoint Options', 'portuna-addon' ),
                     'type'      => Controls_Manager::HEADING,
                     'separator' => 'before'
                 ]
@@ -2244,6 +2272,7 @@ class MegaMenu extends Portuna_Widget_Base {
                 [
                     'label'        => __( 'Enable Breakpoint?', 'portuna-addon' ),
                     'type'         => Controls_Manager::SWITCHER,
+                    'prefix_class' => 'portuna-addon-breakpoint--',
                     'default'      => 'yes',
                     'return_value' => 'yes',
                 ]
@@ -2252,15 +2281,16 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'device_breakpoint_responsive',
                 [
-                    'label'       => __( 'Breakpoint', 'portuna-addon' ),
-                    'type'        => Controls_Manager::SELECT,
-                    'default'     => 'mobile',
-                    'options'     => [
+                    'label'        => __( 'Breakpoint', 'portuna-addon' ),
+                    'type'         => Controls_Manager::SELECT,
+                    'default'      => 'mobile',
+                    'prefix_class' => 'portuna-addon-breakpoint-menu--',
+                    'options'      => [
                         'tablet'    => __( 'Tablet (< 1025px)', 'portuna-addon' ),
                         'mobile'    => __( 'Mobile (< 768px)', 'portuna-addon' ),
                         'custom'    => __( 'Custom (<)', 'portuna-addon' ),
                     ],
-                    'condition'   => [
+                    'condition'    => [
                         'device_breakpoint_hamburger' => 'yes',
                     ],
                 ]
@@ -2274,6 +2304,9 @@ class MegaMenu extends Portuna_Widget_Base {
                     'default'            => 1000,
                     'min'                => 1,
                     'required'           => true,
+                    'selectors'          => [
+                        '{{WRAPPER}}' => '--breakpoint: {{VALUE}}px;',
+                    ],
                     'description'        => __( 'Set your responsive number (px) on which the hamburger menu should appear.', 'portuna-addon' ),
                     'frontend_available' => true,
                     'condition'          => [

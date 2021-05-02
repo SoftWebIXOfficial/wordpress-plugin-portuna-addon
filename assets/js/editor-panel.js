@@ -1,4 +1,4 @@
-import data from './pro-widgets.js';
+//import data from './pro-widgets.js';
 
 const { __ } = wp.i18n;
 

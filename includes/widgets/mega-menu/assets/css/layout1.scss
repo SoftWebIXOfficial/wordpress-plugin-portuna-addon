@@ -2,10 +2,14 @@ $wrap_class: '.portuna-addon--mega-menu';
 $wrap_nav:   '.portuna-addon-menu';
 
 #{ $wrap_nav } {
+
     &-vertical {
+
         #{ $wrap_class }--layout1 {
+
             &-left-side {
-                body:not(.rtl) & {
+
+                body:not( .rtl ) & {
                     #{ $wrap_nav }__wrapper-content {
                         flex-direction: row-reverse;
                     }
@@ -132,7 +136,7 @@ $wrap_nav:   '.portuna-addon-menu';
             }
 
             #{ $wrap_nav }-item {
-                position: static;
+                position: relative;
                 display: flex;
 
                 #{ $wrap_nav }__wrapper-content {
@@ -152,7 +156,7 @@ $wrap_nav:   '.portuna-addon-menu';
                     margin: 0;
                     padding: 0;
                     top: 100%;
-                    left: 15px;
+                    //left: 15px;
                     z-index: 9999;
                     pointer-events: none;
                     transition: all 0.2s ease-out, width 0s, height 0s;
