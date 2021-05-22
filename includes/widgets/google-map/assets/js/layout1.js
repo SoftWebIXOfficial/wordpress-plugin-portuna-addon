@@ -6,9 +6,11 @@ import isEqual from 'lodash/isEqual';
     'use strict';
 
     const googleMap = {
+
         onInit: function () {
+
             if ( ! window.google ) return;
-            console.log( window.elementorModules.frontend.handlers.Base );
+
             const widgetName = {
                 'portuna-addon-google-map.default' : googleMap.googleMapInit,
             }
@@ -17,7 +19,9 @@ import isEqual from 'lodash/isEqual';
                 window.elementorFrontend.hooks.addAction( 'frontend/element_ready/' + widget, callback );
             } );
         },
+
         googleMapInit: function ( $scope ) {
+
             const wrap        = $( $scope[0] ),
                   container   = wrap.find( '.portuna-addon--google-map__container' ),
                   dataMap     = wrap.find( '.portuna-addon--google-map--layout1' ).data( 'map' ),
@@ -37,12 +41,16 @@ import isEqual from 'lodash/isEqual';
             googleMap.markers( map, dataMap );
             googleMap.mapOptions( map, dataMap );
         },
+
         markers: function ( map, options ) {
+
             const multipleMarkers                                  = [],
                   { addressType, type, multipleMarkers: settings } = options;
 
             if ( type === 'marker' ) {
+
                 $.each( settings, ( index, options ) => {
+
                     const { centerLat, centerLng } = options;
 
                     options.centerLat     = options.portuna_marker_lat_multiple;
@@ -80,13 +88,17 @@ import isEqual from 'lodash/isEqual';
                 }
             }
         },
+
         geocoder: function ( map, options ) {
+
             const { addressName } = options;
             const geocode         = address => {
                 return new Promise( ( resolve, reject ) => {
+
                     const geocoder = new window.google.maps.Geocoder();
 
                     geocoder.geocode( { address }, ( results, status ) => {
+
                         if ( isEqual( status, 'OK' ) ) {
                             const { location } = results[ 0 ].geometry;
 
@@ -110,17 +122,22 @@ import isEqual from 'lodash/isEqual';
                     console.log( alert );
                 } );
         },
+
         createMarker: function ( map, latlng, options ) {
+
             googleMap.focusOnMarker( map, latlng );
             googleMap.attachMessage( new window.google.maps.Marker( {
                 map: map,
                 position: latlng,
             } ), options, map );
         },
+
         attachMessage: function ( marker, options, map ) {
+
             const { markerContent, popupMaxWidth, isPopupOpen, isCustomIcon } = options;
 
             if ( !!markerContent ) {
+
                 marker.info = new window.google.maps.InfoWindow( {
                     content: googleMap.createElement(
                         'div',
@@ -132,6 +149,7 @@ import isEqual from 'lodash/isEqual';
             }
 
             if ( isCustomIcon ) {
+
                 const { iconUrl, iconWidth, iconHeight } = options;
 
                 marker.setIcon( {
@@ -144,6 +162,7 @@ import isEqual from 'lodash/isEqual';
             }
 
             if ( isPopupOpen && has( marker, 'info' ) ) {
+
                 setTimeout( () =>
                         marker.info.open( map, marker ),
                     1000
@@ -151,15 +170,20 @@ import isEqual from 'lodash/isEqual';
             }
 
             if ( has( marker, 'info' ) ) {
+
                 marker.addListener( 'click', () =>
                     marker.info.open( map, marker )
                 );
             }
         },
+
         focusOnMarker: function ( map, position ) {
+
             map.setCenter( new google.maps.LatLng( position.lat(), position.lng() ) );
         },
+
         mapOptions: function ( map, options ) {
+
             const { mapStreetView, mapTypeControl, mapZoomControl, mapFullScreen, mapScrollWheel } = options;
 
             map.setOptions( {
@@ -170,15 +194,20 @@ import isEqual from 'lodash/isEqual';
                 scrollwheel: $.parseJSON( mapScrollWheel ),
             } );
         },
+
         createElement: ( type, attributes, ...children ) => {
+
             const el = document.createElement( type );
 
             for ( let key in attributes ) {
+
                 el.setAttribute( key, attributes[ key ] );
             }
 
             children.forEach( child => {
+
                 if ( typeof child === 'string' ) {
+
                     el.appendChild( document.createTextNode( child ) );
                 } else {
                     el.appendChild( child );
@@ -187,11 +216,13 @@ import isEqual from 'lodash/isEqual';
 
             return el;
         },
+
         onElementChange: function onElementChange( propertyName ) {
-            console.log( propertyName );
+
+            //console.log( propertyName );
         }
     }
 
-
     $( window ).on( 'elementor/frontend/init', googleMap.onInit );
+
 } )( jQuery, window );

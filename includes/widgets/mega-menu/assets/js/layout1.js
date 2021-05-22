@@ -2,9 +2,11 @@ import debounce from 'lodash/debounce';
 
 ;
 (function ( $, window ) {
+
     'use strict';
 
     const megaMenu = {
+
         onRegister: function () {
 
             const widgetName = {
@@ -12,11 +14,14 @@ import debounce from 'lodash/debounce';
             }
 
             if ( window.elementorFrontend && window.elementorFrontend.hooks ) {
+
                 $.each( widgetName, ( widget, callback ) => {
+
                     window.elementorFrontend.hooks.addAction( 'frontend/element_ready/' + widget, callback );
                 } );
             }
         },
+
         onInit: function ( $scope ) {
 
             let $target   = $scope,
@@ -28,10 +33,10 @@ import debounce from 'lodash/debounce';
     }
 
     const megaMenuExtensions = function( $scope ) {
-        const self = this,
-              el   = $scope;
 
-        const wrap           = $( $scope[0] ),
+        const self           = this,
+              el             = $scope,
+              wrap           = $( $scope[0] ),
               megaMenu       = wrap.find( 'ul.portuna-addon-sub-mega-menu' ),
               subMenu        = wrap.find( 'ul.portuna-addon-sub-menu' ),
               subMenuInverse = wrap.find( 'ul.portuna-addon-sub-menu.inverse-side' );
@@ -41,12 +46,16 @@ import debounce from 'lodash/debounce';
 
         self.init = function () {
 
-            const resizerLists = {
-                'positionResize' : self.megaMenuControlPosition,
-                'widthResize'    : self.megaMenuControlWidth,
-            }
-
+            // Event Loaded.
+            //self.subMenuControlWidth();
             self.megaMenuControlBreakpoint();
+
+            // Event Resize.
+            const resizerLists = {
+                'positionResize'     : self.megaMenuControlPosition,
+                'widthResize'        : self.megaMenuControlWidth,
+                'breakpointResize'   : self.megaMenuControlBreakpoint,
+            }
 
             $.each( resizerLists, ( resizerList, callback ) => {
                 $( window ).on( 'resize orientationchange', debounce( callback, 100 ) );
@@ -58,17 +67,19 @@ import debounce from 'lodash/debounce';
             const absWidth = $( 'body' ).outerWidth( true );
 
             if ( clearSubMenuPosition ) {
+                
                 subMenuInverse.removeClass( 'inverse-side' );
-
                 clearSubMenuPosition = false;
             }
 
             if ( subMenu[0] ) {
+
                 subMenu.each( function() {
+
                     const that                = $( this ),
-                        subMenuOffsetLeft     = that.offset().left,
-                        subMenuOffsetRight    = subMenuOffsetLeft + that.outerWidth( true ),
-                        subMenuSidePosition   = that.closest( '.portuna-addon--mega-menu--layout1' ).hasClass( 'portuna-addon--mega-menu--layout1-left-side' ) ? 'left-side' : 'right-side';
+                          subMenuOffsetLeft   = that.offset().left,
+                          subMenuOffsetRight  = subMenuOffsetLeft + that.outerWidth( true ),
+                          subMenuSidePosition = that.closest( '.portuna-addon--mega-menu--layout1' ).hasClass( 'portuna-addon--mega-menu--layout1-left-side' ) ? 'left-side' : 'right-side';
 
                     if ( 'right-side' === subMenuSidePosition ) {
                         if ( subMenuOffsetRight >= absWidth ) {
@@ -96,6 +107,7 @@ import debounce from 'lodash/debounce';
             const absWidth = $( 'body' ).outerWidth( true );
 
             if ( clearMegaMenuWidth ) {
+
                 megaMenu.css( {
                     'maxWidth': ''
                 } );
@@ -108,12 +120,14 @@ import debounce from 'lodash/debounce';
             // }
 
             if ( megaMenu[0] ) {
+
                 megaMenu.each( function() {
-                    const that                  = $( this ),
-                        megaMenuX             = that.css( 'transform' ).replace( /,/g, '' ).split( ' ' )[4] || 0,
-                        megaMenuOffsetLeft    = that.offset().left - megaMenuX,
-                        megaMenuOffsetRight   = megaMenuOffsetLeft + that.outerWidth( true ),
-                        megaMenuSidePosition  = that.closest( '.portuna-addon--mega-menu--layout1' ).hasClass( 'portuna-addon--mega-menu--layout1-left-side' ) ? 'left-side' : 'right-side';
+
+                    const that                 = $( this ),
+                          megaMenuX            = that.css( 'transform' ).replace( /,/g, '' ).split( ' ' )[4] || 0,
+                          megaMenuOffsetLeft   = that.offset().left - megaMenuX,
+                          megaMenuOffsetRight  = megaMenuOffsetLeft + that.outerWidth( true ),
+                          megaMenuSidePosition = that.closest( '.portuna-addon--mega-menu--layout1' ).hasClass( 'portuna-addon--mega-menu--layout1-left-side' ) ? 'left-side' : 'right-side';
 
                     if ( 'right-side' === megaMenuSidePosition ) {
                         if ( megaMenuOffsetRight >= absWidth ) {
@@ -136,18 +150,84 @@ import debounce from 'lodash/debounce';
             }
         };
 
-        self.megaMenuControlBreakpoint     = function () {
-            const breakpointChecks = $scope.is( '.portuna-addon-breakpoint-menu--custom' );
+        self.subMenuControlWidth           = function () {
+            const windowWidth = $( window ).width(),
+                  subMenus    = $scope.find( '.portuna-addon-menu-item > ul' );
 
-            if ( breakpointChecks ) {
-                console.log( 'true' );
+            subMenus.each( function() {
+                const menuOffsetLeft = $( this ).closest( '.portuna-addon-menu-item' ).offset().left;
+
+                $( this ).width( windowWidth );
+            } );
+        };
+
+        self.megaMenuControlBreakpoint     = function () {
+
+            const wrapClass         = $scope.find( '.portuna-addon--mega-menu--layout1' );
+            const breakpointEnabled = $scope.find( '.portuna-addon--mega-menu--layout1-breakpoint--yes' );
+
+            if ( breakpointEnabled ) {
+
+                const absWidth     = $( 'body' ).outerWidth( true ),
+                      windowWidth  = $( window ).outerWidth( true );
+                let   scopeClasses = ( $scope.attr( 'class' ) || '' ).split(' ');
+
+                for ( let i = 0, len = scopeClasses.length; i < len; i++ ) {
+                    switch ( scopeClasses[ i ] ) {
+                        case 'portuna-addon-menu-breakpoint--mobile':
+                            if ( windowWidth < '768' ) {
+                                wrapClass.addClass( 'portuna-addon-menu--responsibility' );
+                                self.megaMenuControlResponsibility();
+                            } else {
+                                wrapClass.removeClass( 'portuna-addon-menu--responsibility' );
+                            }
+
+                            break;
+                        case 'portuna-addon-menu-breakpoint--tablet':
+                            if ( windowWidth < '1025' ) {
+                                wrapClass.addClass( 'portuna-addon-menu--responsibility' );
+                                self.megaMenuControlResponsibility();
+                            } else {
+                                wrapClass.removeClass( 'portuna-addon-menu--responsibility' );
+                            }
+
+                            break;
+                        case 'portuna-addon-menu-breakpoint--custom':
+                            const scopeObjStyle    = window.getComputedStyle( $scope[0] ),
+                                  scopeGetValue    = scopeObjStyle.getPropertyValue( '--breakpoint' ),
+                                  customBreakpoint = parseInt( scopeGetValue );
+
+                            if ( windowWidth <= customBreakpoint ) {
+                                wrapClass.addClass( 'portuna-addon-menu--responsibility' );
+                                self.megaMenuControlResponsibility();
+                            } else {
+                                wrapClass.removeClass( 'portuna-addon-menu--responsibility' );
+                            }
+
+                            break;
+                    }
+                }
             }
         }
 
         self.megaMenuControlResponsibility = function () {
 
+            const menuOpen    = $scope.find( '.portuna-addon--mega-menu--toggle.open-menu' ),
+                  menuClose   = $scope.find( '.portuna-addon--mega-menu--toggle.close-menu' ),
+                  menuContent = $scope.find( '.portuna-addon--mega-menu--content' );
+
+            menuOpen.on( 'click', () => {
+                menuContent.addClass( 'show' );
+                menuOpen.hide();
+            } );
+
+            menuClose.on( 'click', () => {
+                menuContent.removeClass( 'show' );
+                menuOpen.show();
+            } );
         }
     }
 
     $( window ).on( 'elementor/frontend/init', megaMenu.onRegister );
+
 } )( jQuery, window );

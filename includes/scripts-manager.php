@@ -121,6 +121,17 @@ class ScriptsManager {
         );
     }
 
+//     public function editor_enqueue_test() {
+//
+//         wp_enqueue_script(
+//             'mega-menu-script-editor',
+//             plugin_dir_url( dirname( __FILE__ ) ) . 'mega-menu/assets/js/editor.min.js',
+//             [ 'jquery' ],
+//             null,
+//             true
+//         );
+//     }
+
     public function __construct() {
 
         add_action( 'wp_enqueue_scripts', [ $this, 'front_js' ] );
@@ -131,5 +142,7 @@ class ScriptsManager {
         // Elementor enqueue scripts.
         add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'editor_enqueue_styles' ] );
         add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'editor_enqueue_scripts' ] );
+
+        //add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'editor_enqueue_test' ] );
     }
 }

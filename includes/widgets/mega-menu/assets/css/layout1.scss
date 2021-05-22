@@ -1,7 +1,11 @@
+$wrap_scope: '.portuna-addon-menu';
 $wrap_class: '.portuna-addon--mega-menu';
-$wrap_nav:   '.portuna-addon-menu';
 
-#{ $wrap_nav } {
+#{ $wrap_scope } {
+    &-vertical,
+    &-horizontal {
+
+    }
 
     &-vertical {
 
@@ -10,16 +14,16 @@ $wrap_nav:   '.portuna-addon-menu';
             &-left-side {
 
                 body:not( .rtl ) & {
-                    #{ $wrap_nav }__wrapper-content {
+                    #{ $wrap_scope }__wrapper-content {
                         flex-direction: row-reverse;
                     }
                 }
 
-                #{ $wrap_nav }__wrapper-content-link {
+                #{ $wrap_scope }__wrapper-content-link {
                     text-align: right;
                 }
 
-                #{ $wrap_nav }-badge {
+                #{ $wrap_scope }-badge {
                     direction: rtl;
                 }
 
@@ -68,78 +72,29 @@ $wrap_nav:   '.portuna-addon-menu';
                 }
             }
         }
-
-        #{ $wrap_nav }-items {
-            flex-flow: column nowrap;
-
-            &.portuna-addon-sub-menu {
-                width: fit-content;
-            }
-
-            #{ $wrap_nav }-item {
-                position: relative;
-
-                #{ $wrap_nav }__wrapper-content {
-                    width: 100%;
-
-                    &-link {
-                        width: inherit;
-                    }
-
-                    #{ $wrap_nav }-dropdown {
-                        background: transparent;
-                        border: none;
-                        color: #000;
-
-                        i {
-                            color: inherit;
-                        }
-                    }
-                }
-
-                & > .portuna-addon-sub-menu-content {
-                    width: max-content;
-                }
-
-                & > .portuna-addon-sub-menu,
-                & > .portuna-addon-sub-mega-menu {
-                    visibility: hidden;
-                    position: absolute;
-                    display: block;
-                    box-shadow: 2px 2px 5px rgba( 0, 0, 0, 0.2 );
-                    background-color: #FFFFFF;
-                    opacity: 0;
-                    margin: 0;
-                    padding: 0;
-                    top: 0;
-                    z-index: 9999;
-                    pointer-events: none;
-                    transition: all 0.2s ease-out, width 0s, height 0s;
-                }
-
-                &:hover > .portuna-addon-sub-menu,
-                &:hover > .portuna-addon-sub-mega-menu {
-                    visibility: visible;
-                    opacity: 1;
-                    pointer-events: auto;
-                }
-            }
-        }
     }
 
     &-horizontal {
-        #{ $wrap_nav }-items {
+        #{ $wrap_scope }-items {
             flex-flow: row wrap;
 
             &.portuna-addon-sub-menu {
                 width: fit-content;
             }
 
-            #{ $wrap_nav }-item {
+            #{ $wrap_scope }-mega-menu-item {
+                position: static;
+            }
+
+            .portuna-addon-simple-menu-item,
+            .portuna-addon-no-content {
                 position: relative;
+            }
+
+            #{ $wrap_scope }-item {
                 display: flex;
 
-                #{ $wrap_nav }__wrapper-content {
+                #{ $wrap_scope }__wrapper-content {
                     width: 100%;
 
                     &-link {
@@ -156,7 +111,7 @@ $wrap_nav:   '.portuna-addon-menu';
                     margin: 0;
                     padding: 0;
                     top: 100%;
-                    //left: 15px;
+                    left: 0px;
                     z-index: 9999;
                     pointer-events: none;
                     transition: all 0.2s ease-out, width 0s, height 0s;
@@ -171,18 +126,52 @@ $wrap_nav:   '.portuna-addon-menu';
             }
         }
     }
-}
 
-// Animations
-#{ $wrap_nav } {
+    // Animations
     &-animation {
 
     }
 }
 
 #{ $wrap_class }--layout1 {
+    // Responsibility
+    &-breakpoint--yes {
+        #{ $wrap_class }--content {
+            display: none;
+            opacity: 0;
+
+            &.show {
+                display: block;
+                opacity: 1;
+            }
+        }
+
+        &:not( #{ $wrap_scope }--responsibility ) {
+            #{ $wrap_class }--content {
+                display: block;
+                opacity: 1;
+            }
+
+            #{ $wrap_class }--toggle {
+                display: none;
+            }
+        }
+
+        &#{ $wrap_scope }--responsibility {
+            #{ $wrap_class }--toggle {
+                &.open-menu {
+
+                }
+
+                &.close-menu {
+
+                }
+            }
+        }
+    }
+
     #{ $wrap_class }--content {
-        #{ $wrap_nav }-items {
+        #{ $wrap_scope }-items {
             display: flex;
             justify-content: center;
             align-items: stretch;
@@ -191,7 +180,7 @@ $wrap_nav:   '.portuna-addon-menu';
             padding: 0;
             list-style: none;
 
-            #{ $wrap_nav }-item {
+            #{ $wrap_scope }-item {
                 & > .portuna-addon-sub-menu,
                 & > .portuna-addon-sub-mega-menu {
                     &::before {
@@ -203,16 +192,22 @@ $wrap_nav:   '.portuna-addon-menu';
                     }
                 }
 
-                #{ $wrap_nav }__wrapper-content {
+                #{ $wrap_scope }__wrapper-content {
                     display: flex;
 
                     &-link {
 
                     }
 
-                    #{ $wrap_nav }-dropdown {
+                    #{ $wrap_scope }-dropdown {
                         padding: 0;
                         margin: 0;
+                        background: transparent;
+                        border: none;
+
+                        svg, g, path {
+                            fill: currentColor
+                        }
                     }
                 }
             }

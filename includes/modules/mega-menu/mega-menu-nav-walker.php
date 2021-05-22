@@ -5,16 +5,19 @@
 
 namespace PortunaAddon\Modules;
 
+use \Elementor\Icons_Manager;
 use Walker_Nav_Menu;
 
 defined( 'ABSPATH' ) || exit;
 
 class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
+
     private $settings      = [];
     private $item_settings = null;
     private $mega_menu_is  = false;
 
     public function __construct( $settings, $mega_menu_is = false ) {
+
         $this->settings     = $settings;
         $this->mega_menu_is = $mega_menu_is;
     }
@@ -30,7 +33,8 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
      * @param int      $depth  Depth of page. Used for padding.
      * @param stdClass $args   Not used.
      */
-    public function start_lvl( &$output, $depth = 0, $args = array() ) {
+    public function start_lvl( &$output, $depth = 0, $args = [] ) {
+
         if ( 'mega' === $this->get_item_type() ) {
             return;
         }
@@ -63,7 +67,8 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
      * @param int      $depth  Depth of menu item. Used for padding.
      * @param stdClass $args   An object of wp_nav_menu() arguments.
      */
-    public function end_lvl( &$output, $depth = 0, $args = array() ) {
+    public function end_lvl( &$output, $depth = 0, $args = [] ) {
+
         if ( 'mega' === $this->get_item_type() ) {
             return;
         }
@@ -96,10 +101,15 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
      * @param int      $id     Current item ID.
      */
     public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
+
         $this->item_settings = null;
         $this->set_item_type( $item->ID, $depth );
 
         $item_settings = $this->get_settings( $item->ID );
+
+        $mega_item     = get_post_meta( $item->ID, 'portuna-addon-menu-item', true );
+        $mega_item     = isset( $mega_item[ 'mega_menu_id' ] ) ? $mega_item[ 'mega_menu_id' ] : '';
+        $mega_item_id  = isset( $mega_item->ID ) ? $mega_item->ID : '';
 
         if ( 'mega' === $this->get_item_type() && 0 < $depth ) {
             return;
@@ -113,15 +123,18 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
             $n = "\n";
         }
 
-        $indent   = ( $depth ) ? str_repeat( $t, $depth ) : '';
-
-        $settings = $this->get_settings( $item->ID );
-        $classes  = empty( $item->classes ) ? array() : (array) $item->classes;
+        $indent         = ( $depth ) ? str_repeat( $t, $depth ) : '';
+        $menus_settings = $this->get_settings( $item->ID );
+        $classes        = empty( $item->classes ) ? array() : (array) $item->classes;
 
         if ( 'mega' === $this->get_item_type() ) {
             $classes[] = 'mega-menu-item';
         } else {
             $classes[] = 'simple-menu-item';
+        }
+
+        if ( $mega_item_id == '' ) {
+            $classes[] = 'no-content';
         }
 
         if ( $this->is_mega_enabled( $item->ID ) ) {
@@ -194,7 +207,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
 
         $link_classes[]   = ( 0 === $depth ) ? 'first-level-link'  : 'nested-level-link';
 
-        if ( $this->mega_menu_is && isset( $settings[ 'mega_menu_checkbox' ] ) && $settings[ 'mega_menu_checkbox' ] == true ) {
+        if ( $this->mega_menu_is && isset( $menus_settings[ 'mega_menu_checkbox' ] ) && $menus_settings[ 'mega_menu_checkbox' ] == true ) {
             $link_classes[] = 'mega-menu-is-enabled';
         }
 
@@ -244,9 +257,9 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
          */
         $nav_title    = apply_filters( 'nav_menu_item_title', $title, $item, $args, $depth );
 
-        $render_icon  = $this->renderIcon( $settings );
-        $render_badge = $this->renderBadge( $settings );
-        $render_arrow = $this->renderArrow( $item, $settings );
+        $render_icon  = $this->renderIcon( $menus_settings );
+        $render_badge = $this->renderBadge( $menus_settings );
+        $render_arrow = $this->renderArrow( $item, $menus_settings, $depth );
 
         $item_output = $args->before;
             $item_output .= '<div class="portuna-addon-menu__wrapper-content">';
@@ -263,14 +276,12 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
 
         $is_elementor = ( isset( $_GET[ 'elementor-preview' ] ) ) ? true : false;
 
-        $mega_item    = get_post_meta( $item->ID, 'portuna-addon-menu-item', true );
-        $mega_item    = isset( $mega_item[ 'mega_menu_id' ] ) ? $mega_item[ 'mega_menu_id' ] : '';
-        $mega_item_id = isset( $mega_item->ID ) ? $mega_item->ID : '';
-
         if ( $this->mega_menu_is && $this->is_mega_enabled( $item->ID ) && ! $is_elementor ) {
+
             $content       = '';
 
             if ( class_exists( 'Elementor\Plugin' ) ) {
+
                 $elementor = \Elementor\Plugin::instance();
                 $content   = $elementor->frontend->get_builder_content_for_display( $mega_item_id );
             }
@@ -317,6 +328,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
      * @param stdClass $args   An object of wp_nav_menu() arguments.
      */
     public function end_el( &$output, $item, $depth = 0, $args = [] ) {
+
         if ( 'mega' === $this->get_item_type() && 0 < $depth ) {
             return;
         }
@@ -334,6 +346,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
      * @return void
      */
     public function modify_menu_item_classes( &$item, $index ) {
+
         if ( 0 === $index && 'menu-item' !== $item ) {
             return;
         }
@@ -348,6 +361,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
      * @param integer $depth   Current menu Item depth
      */
     public function set_item_type( $item_id = 0, $depth = 0 ) {
+
         if ( 0 < $depth ) {
             return;
         }
@@ -366,6 +380,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
      * @return [type] [description]
      */
     public function get_item_type() {
+
         return wp_cache_get( 'item-type', 'portuna-addon' );
     }
 
@@ -376,9 +391,9 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
      * @return boolean
      */
     public function is_mega_enabled( $item_id = 0 ) {
-        $item_settings = $this->get_settings( $item_id );
 
-        return ( $this->mega_menu_is && isset( $item_settings[ 'mega_menu_checkbox' ] ) && true == $item_settings[ 'mega_menu_checkbox' ] );
+        $menus_settings = $this->get_settings( $item_id );
+        return ( $this->mega_menu_is && isset( $menus_settings[ 'mega_menu_checkbox' ] ) && true == $menus_settings[ 'mega_menu_checkbox' ] );
     }
 
    /**
@@ -388,6 +403,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
     * @return array
     */
    	public function get_settings( $item_id = 0 ) {
+
    		if ( null === $this->item_settings ) {
    			$this->item_settings = get_post_meta( $item_id, 'portuna-addon-menu-item', true );
    		}
@@ -395,54 +411,58 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
    		return $this->item_settings;
    	}
 
-   	public function renderIcon( $settings ) {
+   	public function renderIcon( $menus_item_settings ) {
+
    	    $content = '';
 
-   	    if ( isset( $settings[ 'menu_type_icon' ] ) && $settings[ 'menu_type_icon' ] === 'icon_none' ) {
+   	    if ( isset( $menus_item_settings[ 'menu_type_icon' ] ) && $menus_item_settings[ 'menu_type_icon' ] === 'icon_none' ) {
    	        $content = null;
    	    }
 
-   	    if ( isset( $settings[ 'menu_type_icon' ] ) && $settings[ 'menu_type_icon' ] === 'icon_lib' ) {
-   	        if ( ! empty( $settings[ 'menu_icon' ] ) ) {
-   	            $style   = $settings[ 'menu_icon_color' ] != 'style="color: ' . esc_attr( $settings[ 'menu_icon_color' ] ) . ';"' ? : null;
+   	    if ( isset( $menus_item_settings[ 'menu_type_icon' ] ) && $menus_item_settings[ 'menu_type_icon' ] === 'icon_lib' ) {
+   	        if ( ! empty( $menus_item_settings[ 'menu_icon' ] ) ) {
+   	            $style   = $menus_item_settings[ 'menu_icon_color' ] != 'style="color: ' . esc_attr( $menus_item_settings[ 'menu_icon_color' ] ) . ';"' ? : null;
 
-                $content = '<span class="" ' . $style . '><i class="' . esc_attr( $settings[ 'menu_icon' ] ) . '"></i></span>';
+                $content = '<span class="" ' . $style . '><i class="' . esc_attr( $menus_item_settings[ 'menu_icon' ] ) . '"></i></span>';
    	        }
    	    }
 
-   	    if ( isset( $settings[ 'menu_type_icon' ] ) && $settings[ 'menu_type_icon' ] === 'icon_custom' ) {
-   	        if ( ! empty( $settings[ 'menu_icon_custom' ] ) ) {
-                $style   = $settings[ 'menu_icon_color' ] != 'style="color: ' . esc_attr( $settings[ 'menu_icon_color' ] ) . ';"' ? : null;
+   	    if ( isset( $menus_item_settings[ 'menu_type_icon' ] ) && $menus_item_settings[ 'menu_type_icon' ] === 'icon_custom' ) {
+   	        if ( ! empty( $menus_item_settings[ 'menu_icon_custom' ] ) ) {
+                $style   = $menus_item_settings[ 'menu_icon_color' ] != 'style="color: ' . esc_attr( $menus_item_settings[ 'menu_icon_color' ] ) . ';"' ? : null;
 
-   	            $content = '<span class="" ' . $style . '>' . $this->customSvgToHtml( $settings[ 'menu_icon_custom' ] ) . '</span>';
+   	            $content = '<span class="" ' . $style . '>' . $this->customSvgToHtml( $menus_item_settings[ 'menu_icon_custom' ] ) . '</span>';
    	        }
    	    }
 
         return $content;
    	}
 
-   	public function renderBadge( $settings ) {
+   	public function renderBadge( $menus_item_settings ) {
+
    	    $content    = '';
    	    $text_color = '';
    	    $bg_color   = '';
 
-   	    if ( isset( $settings[ 'menu_badge_color' ] ) && $settings[ 'menu_badge_color' ] != '' ) {
-            $text_color = 'color: ' . esc_attr( $settings[ 'menu_badge_color' ] ) . ';';
+   	    if ( isset( $menus_item_settings[ 'menu_badge_color' ] ) && $menus_item_settings[ 'menu_badge_color' ] != '' ) {
+            $text_color = 'color: ' . esc_attr( $menus_item_settings[ 'menu_badge_color' ] ) . ';';
    	    }
 
-   	    if ( isset( $settings[ 'menu_badge_bgcolor' ] ) && $settings[ 'menu_badge_bgcolor' ] != '' ) {
-            $bg_color = 'background-color: ' . esc_attr( $settings[ 'menu_badge_bgcolor' ] ) . ';';
+   	    if ( isset( $menus_item_settings[ 'menu_badge_bgcolor' ] ) && $menus_item_settings[ 'menu_badge_bgcolor' ] != '' ) {
+            $bg_color = 'background-color: ' . esc_attr( $menus_item_settings[ 'menu_badge_bgcolor' ] ) . ';';
         }
 
-        if ( ! empty( $settings[ 'menu_badge_text' ] ) ) {
+        if ( ! empty( $menus_item_settings[ 'menu_badge_text' ] ) ) {
             $style   = sprintf( 'style="%1$s %2$s"', $text_color, $bg_color );
-            $content = '<span class="portuna-addon-menu-badge" ' . $style . '>' . esc_html( $settings[ 'menu_badge_text' ] ) . '</span>';
+            $content = '<span class="portuna-addon-menu-badge" ' . $style . '>' . esc_html( $menus_item_settings[ 'menu_badge_text' ] ) . '</span>';
         }
 
         return $content;
    	}
 
-   	public function renderArrow( $item, $settings ) {
+    // Dropdown Icon.
+   	public function renderArrow( $item, $menus_item_settings, $depth = 0 ) {
+
    	    if ( ! $this->mega_menu_is ) {
    	        return;
    	    }
@@ -452,7 +472,36 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
         $mega_menu    = $this->mega_menu_is && $this->is_mega_enabled( $item->ID );
 
         if ( $has_children || $mega_menu ) {
-   	        $content = '<button class="portuna-addon-menu-dropdown"><i class="fa fa-angle-down"></i></button>';
+
+            $content .= '<button class="portuna-addon-menu-dropdown">';
+                if ( $depth == 0 ) { // Top level.
+                    $icon_dropdown_first_lvl     = isset( $this->settings[ '__fa4_migrated' ][ 'icons_dropdown_first_level' ] );
+                    $icon_dropdown_first_lvl_new = empty( $icon_dropdown_first_lvl );
+
+                    if ( $icon_dropdown_first_lvl_new || $icon_dropdown_first_lvl ) {
+                        ob_start();
+                            Icons_Manager::render_icon( $this->settings[ 'icons_dropdown_first_level' ], [ 'aria-hidden' => 'true' ] );
+                        $custom_icon = ob_get_clean();
+
+                        $content .= $custom_icon;
+                    } else {
+                        $content .= '<i class="' . esc_attr( $this->settings[ 'icons_dropdown_first_level' ] ) . '" aria-hidden="true"></i>';
+                    }
+                } else if ( $depth == 1 ) { // Nested level.
+                    $icon_dropdown_nested_lvl     = isset( $this->settings[ '__fa4_migrated' ][ 'icons_dropdown_nested_level' ] );
+                    $icon_dropdown_nested_lvl_new = empty( $icon_dropdown_nested_lvl );
+
+                    if ( $icon_dropdown_nested_lvl_new || $icon_dropdown_nested_lvl ) {
+                        ob_start();
+                            Icons_Manager::render_icon( $this->settings[ 'icons_dropdown_nested_level' ], [ 'aria-hidden' => 'true' ] );
+                        $custom_icon = ob_get_clean();
+
+                        $content .= $custom_icon;
+                    } else {
+                        $content .= '<i class="' . esc_attr( $this->settings[ 'icons_dropdown_nested_level' ] ) . '" aria-hidden="true"></i>';
+                    }
+                }
+            $content .= '</button>';
         }
 
         return $content;
@@ -460,6 +509,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
 
     // Custom SVG converter.
     public function customSvgToHtml( $id = '' ) {
+
         if ( empty( $id ) ) {
             return;
         }
@@ -475,6 +525,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
     }
 
     private function getImgUrl( $url = null, $attr = [] ) {
+
         $url = esc_url( $url );
 
         if ( empty( $url ) ) {
@@ -507,6 +558,7 @@ class Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
     }
 
     private function getAttr( $attr = [] ) {
+
         if ( empty( $attr ) || ! is_array( $attr ) ) {
             return;
         }

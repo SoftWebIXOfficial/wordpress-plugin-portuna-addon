@@ -9,9 +9,11 @@ namespace PortunaAddon\Modules;
 defined( 'ABSPATH' ) || exit;
 
 class Mega_Menu {
+
     use \PortunaAddon\Traits\Singleton;
 
     public function admin_styles() {
+
         $is_menu = get_current_screen();
 
         if ( 'nav-menus' !== $is_menu->base ) {
@@ -84,6 +86,7 @@ class Mega_Menu {
     }
 
     public function mega_menu_wrap() {
+
         $is_menu = get_current_screen();
 
         if ( 'nav-menus' !== $is_menu->base ) {
@@ -94,6 +97,7 @@ class Mega_Menu {
     }
 
     public function wp_post_get_html( $item_id ) {
+
         $thumbnail_id = get_post_thumbnail_id( $item_id );
 
         $content      = sprintf(
@@ -111,6 +115,7 @@ class Mega_Menu {
      * Set thumbnail via ajax action.
      */
     public function menu_set_thumbnail() {
+
         $json    = ! empty( $_REQUEST[ 'json' ] );
         $post_ID = intval( $_POST[ 'post_id' ] );
 
@@ -148,6 +153,7 @@ class Mega_Menu {
      * @param array      $args            The arguments array.
      */
     public function update_custom_nav_fields( $menu_id, $menu_item_db_id, $args ) {
+
         extract( shortcode_atts( [
             'mega_menu_id'  =>  null,
         ], get_post_meta( $menu_item_db_id, 'portuna-addon-menu-item', true ) ) );
@@ -172,6 +178,7 @@ class Mega_Menu {
     }
 
     public function __construct() {
+
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_styles' ] );
         add_action( 'admin_footer', [ $this, 'mega_menu_wrap' ] );
         add_action( 'wp_ajax_portuna-addon-menu-set-thumbnail', [ $this, 'menu_set_thumbnail' ] );

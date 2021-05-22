@@ -15,15 +15,20 @@ use \PortunaAddon\Widgets\Portuna_Widget_Base;
 use \PortunaAddon\Helpers\ControlsManager;
 
 class MegaMenu extends Portuna_Widget_Base {
+
     public function __construct( $data = [], $args = null ) {
+
         parent::__construct( $data, $args );
 
+        // Styles.
         wp_register_style(
             'mega-menu-style-layout1',
             plugin_dir_url( dirname( __FILE__ ) ) . 'mega-menu/assets/css/layout1.min.css',
             [],
             null
         );
+
+        // Scripts.
         wp_register_script(
             'mega-menu-script-layout1',
             plugin_dir_url( dirname( __FILE__ ) ) . 'mega-menu/assets/js/layout1.min.js',
@@ -33,10 +38,12 @@ class MegaMenu extends Portuna_Widget_Base {
     }
 
     public function get_style_depends() {
+
         return [ 'mega-menu-style-layout1' ];
     }
 
     public function get_script_depends() {
+
     	return [ 'jquery', 'mega-menu-script-layout1' ];
     }
 
@@ -46,16 +53,21 @@ class MegaMenu extends Portuna_Widget_Base {
      */
     private static $css_map = [
         'wrap_menu'                                 => ' .portuna-addon-menu-items:not(.portuna-addon-sub-menu)',
-        'wrap_menu_horizontal'                      => '.portuna-addon-menu-horizontal .portuna-addon-menu-items:not(.portuna-addon-sub-menu)',
-        'wrap_menu_vertical'                        => '.portuna-addon-menu-vertical .portuna-addon-menu-items:not(.portuna-addon-sub-menu)',
+        'wrap_menu_horizontal'                      => ' .portuna-addon-menu-items.portuna-addon-top-menu',
+        'wrap_menu_vertical'                        => ' .portuna-addon-menu-vertical .portuna-addon-menu-items:not(.portuna-addon-sub-menu)',
+        'wrap_topmenu_container'                    => ' .portuna-addon-top-menu > .portuna-addon-menu-item',
         'wrap_submenu_container'                    => ' .portuna-addon-sub-menu',
         'wrap_submenu_content'                      => ' div.portuna-addon-sub-menu-content',
         'wrap_submegamenu_container'                => ' ul.portuna-addon-sub-mega-menu',
-        'wrap_menu_padding'                         => ' .portuna-addon--mega-menu--content > .portuna-addon-menu-items',
+        'wrap_menu_container'                         => ' .portuna-addon--mega-menu--content > .portuna-addon-menu-items',
         'wrap_menu_content'                         => ' .portuna-addon-menu__wrapper-content',
         'wrap_menu_link'                            => ' .portuna-addon-menu__wrapper-content-link > a',
         'wrap_menu_item_link'                       => ' .portuna-addon-top-menu .portuna-addon-menu-item .first-level-link, .portuna-addon-sub-menu .portuna-addon-menu-item .nested-level-link',
         'wrap_menu_item_link_hover'                 => ' .portuna-addon-top-menu .portuna-addon-menu-item:hover .first-level-link, .portuna-addon-sub-menu .portuna-addon-menu-item:hover .nested-level-link',
+        'wrap_menu_top_icon_dropdown_arrow'         => ' .portuna-addon-top-menu .portuna-addon-menu-item > .portuna-addon-menu__wrapper-content .portuna-addon-menu-dropdown',
+        'wrap_menu_top_icon_dropdown_arrow_hover'   => ' .portuna-addon-top-menu > .portuna-addon-menu-item:hover > .portuna-addon-menu__wrapper-content .portuna-addon-menu-dropdown',
+        'wrap_menu_nested_icon_dropdown_arrow'      => ' .portuna-addon-sub-menu .portuna-addon-menu-item > .portuna-addon-menu__wrapper-content .portuna-addon-menu-dropdown',
+        'wrap_menu_nested_icon_dropdown_arrow_hover'=> ' .portuna-addon-sub-menu .portuna-addon-menu-item:hover > .portuna-addon-menu__wrapper-content .portuna-addon-menu-dropdown',
         'wrap_submenu'                              => ' .portuna-addon-sub-menu',
         'wrap_submenu_indicator'                    => ' ',
         'wrap_menu_icon'                            => ' ',
@@ -82,7 +94,7 @@ class MegaMenu extends Portuna_Widget_Base {
      * you need to return the widget title that will be displayed as the widget label.
      */
     public function get_title() {
-        return __( 'Mega Menu', 'portuna-addon' );
+        return esc_html__( 'Mega Menu', 'portuna-addon' );
     }
 
     /**
@@ -111,23 +123,26 @@ class MegaMenu extends Portuna_Widget_Base {
      * controls (setting fields) your widget will have.
      */
     protected function _register_controls() {
-        // Initialize contents tab.
-        $this->settings_section1();
 
-        $this->style_section1();
-        $this->style_section2();
-        $this->style_section3();
-        $this->style_section4();
-        $this->style_section5();
-        $this->style_section6();
-        $this->style_section7();
+        // Initialize contents sections.
+        $this->content_MenuSettings();
+
+        // Initialize styles sections.
+        $this->style_GeneralOptions();
+        $this->style_MenuFirstLevel();
+        $this->style_SubMenuNestedLevel();
+        $this->style_IconDropdown();
+        $this->style_IconItem();
+        $this->style_BadgeItem();
+        $this->style_HamburgerOptions();
     }
 
-    public function settings_section1() {
+    public function content_MenuSettings() {
+
         $this->start_controls_section(
             'section_content_menu',
             [
-                'label' => __( 'Menu Settings', 'portuna-addon' ),
+                'label' => esc_html__( 'Menu Settings', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -135,24 +150,28 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'menu_list',
                 [
-                    'label'       => __( 'Choose Menus', 'portuna-addon' ),
+                    'label'       => esc_html__( 'Choose Menus', 'portuna-addon' ),
                     'type'        => Controls_Manager::SELECT,
                     'default'     => '',
                     'options'     => $this->get_available_menus(),
-                    'description' => sprintf( __( '<a href="%s" target="_blank">Manage Menus</a>.', 'portuna-addon' ), admin_url( 'nav-menus.php' ) ),
+                    'description' => sprintf(
+                        '<a href="%s" target="_blank">%s</a>',
+                        admin_url( 'nav-menus.php' ),
+                        esc_html__( 'Manage Menus', 'portuna-addon' )
+                    ),
                 ]
             );
 
             $this->add_control(
                 'menu_type_orientation',
                 [
-                    'label'              => __( 'Menu Type Orientation', 'portuna-addon' ),
+                    'label'              => esc_html__( 'Menu Type Orientation', 'portuna-addon' ),
                     'type'               => Controls_Manager::SELECT,
                     'default'            => 'horizontal',
                     'options'            => [
-                        'horizontal'     => __( 'Horizontal', 'portuna-addon' ),
-                        'vertical'       => __( 'Vertical', 'portuna-addon' ),
-                        'dropdown'       => __( 'Dropdown', 'portuna-addon' ),
+                        'horizontal'     => esc_html__( 'Horizontal', 'portuna-addon' ),
+                        'vertical'       => esc_html__( 'Vertical', 'portuna-addon' ),
+                        'dropdown'       => esc_html__( 'Dropdown', 'portuna-addon' ),
                     ],
                     'prefix_class'       => 'portuna-addon-menu-',
                     'style_transfer'     => true,
@@ -163,13 +182,13 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'menu_type_animation_hr',
                 [
-                    'label'       => __( 'Menu Animation', 'portuna-addon' ),
+                    'label'       => esc_html__( 'Menu Animation', 'portuna-addon' ),
                     'type'        => Controls_Manager::SELECT,
                     'default'     => 'fade',
                     'options'     => [
-                        'fade'        => __( 'Fade', 'portuna-addon' ),
-                        'fade-up'     => __( 'Fade Up', 'portuna-addon' ),
-                        'fade-down'   => __( 'Fade Down', 'portuna-addon' ),
+                        'fade'        => esc_html__( 'Fade', 'portuna-addon' ),
+                        'fade-up'     => esc_html__( 'Fade Up', 'portuna-addon' ),
+                        'fade-down'   => esc_html__( 'Fade Down', 'portuna-addon' ),
                     ],
                     'condition'   => [
                         'menu_type_orientation' => 'horizontal'
@@ -180,12 +199,12 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'menu_type_side_position',
                 [
-                    'label'       => __( 'Sub Menu Side Position', 'portuna-addon' ),
+                    'label'       => esc_html__( 'Sub Menu Side Position', 'portuna-addon' ),
                     'type'        => Controls_Manager::SELECT,
                     'default'     => 'right-side',
                     'options'     => [
-                        'left-side'   => __( 'Left Side', 'portuna-addon' ),
-                        'right-side'  => __( 'Right Side', 'portuna-addon' ),
+                        'left-side'   => esc_html__( 'Left Side', 'portuna-addon' ),
+                        'right-side'  => esc_html__( 'Right Side', 'portuna-addon' ),
                     ],
                     'condition'   => [
                         'menu_type_orientation' => 'vertical'
@@ -197,11 +216,12 @@ class MegaMenu extends Portuna_Widget_Base {
     }
 
     // General Option
-    public function style_section1() {
+    public function style_GeneralOptions() {
+
         $this->start_controls_section(
             'section_general_style',
             [
-                'label' => __( 'General Options', 'portuna-addon' ),
+                'label' => esc_html__( 'General Options', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -209,12 +229,12 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_responsive_control(
                 'general_menu_width_hr',
                 [
-                    'label'    => __( 'Menu Width', 'portuna-addon' ),
+                    'label'    => esc_html__( 'Menu Width', 'portuna-addon' ),
                     'type'     => Controls_Manager::SLIDER,
                     'range'    => [
                         'px' => [
                             'min' => 0,
-                            'max' => 100,
+                            'max' => 1960,
                         ],
                         '%' => [
                             'min' => 0,
@@ -238,7 +258,7 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_responsive_control(
                 'general_menu_width_vr',
                 [
-                    'label'    => __( 'Menu Width', 'portuna-addon' ),
+                    'label'    => esc_html__( 'Menu Width', 'portuna-addon' ),
                     'type'     => Controls_Manager::SLIDER,
                     'range'    => [
                         'px' => [
@@ -267,24 +287,24 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_responsive_control(
                 'general_menu_alignment_hr',
                 [
-                    'label'     => __( 'Menu Alignment', 'portuna-addon' ),
+                    'label'     => esc_html__( 'Menu Alignment', 'portuna-addon' ),
                     'type'      => Controls_Manager::CHOOSE,
                     'toggle'    => false,
                     'options'   => [
                         'flex-start'     => [
-                            'title'  => __( 'Left', 'portuna-addon' ),
+                            'title'  => esc_html__( 'Left', 'portuna-addon' ),
                             'icon'   => 'eicon-h-align-left',
                         ],
                         'center'         => [
-                            'title'  => __( 'Center', 'portuna-addon' ),
+                            'title'  => esc_html__( 'Center', 'portuna-addon' ),
                             'icon'   => 'eicon-h-align-center',
                         ],
                         'flex-end'       => [
-                            'title'  => __( 'Right', 'portuna-addon' ),
+                            'title'  => esc_html__( 'Right', 'portuna-addon' ),
                             'icon'   => 'eicon-h-align-right',
                         ],
                         'space-between'  => [
-                            'title'  => __( 'Right', 'portuna-addon' ),
+                            'title'  => esc_html__( 'Right', 'portuna-addon' ),
                             'icon'   => 'eicon-h-align-stretch',
                         ],
                     ],
@@ -302,20 +322,20 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_responsive_control(
                 'general_menu_alignment_vr',
                 [
-                    'label'     => __( 'Menu Alignment', 'portuna-addon' ),
+                    'label'     => esc_html__( 'Menu Alignment', 'portuna-addon' ),
                     'type'      => Controls_Manager::CHOOSE,
                     'toggle'    => false,
                     'options'   => [
                         'left'     => [
-                            'title'  => __( 'Left', 'portuna-addon' ),
+                            'title'  => esc_html__( 'Left', 'portuna-addon' ),
                             'icon'   => 'eicon-h-align-left',
                         ],
                         'center'         => [
-                            'title'  => __( 'Center', 'portuna-addon' ),
+                            'title'  => esc_html__( 'Center', 'portuna-addon' ),
                             'icon'   => 'eicon-h-align-center',
                         ],
                         'right'       => [
-                            'title'  => __( 'Right', 'portuna-addon' ),
+                            'title'  => esc_html__( 'Right', 'portuna-addon' ),
                             'icon'   => 'eicon-h-align-right',
                         ]
                     ],
@@ -334,29 +354,10 @@ class MegaMenu extends Portuna_Widget_Base {
                 ]
             );
 
-            $this->add_responsive_control(
-                'general_menu_padding',
-                [
-                    'label'      => __( 'Menu Padding', 'portuna-addon' ),
-                    'type'       => Controls_Manager::DIMENSIONS,
-                    'size_units' => [ 'px', '%' ],
-                    'default'    => [
-                        'top'    => '7',
-                        'right'  => '32',
-                        'bottom' => '7',
-                        'left'   => '32',
-                        'unit'   => 'px'
-                    ],
-                    'selectors'  => [
-                        '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_padding' ] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-                    ],
-                ]
-            );
-
             $this->add_control(
                 'general_menu_background',
                 [
-                    'label'     => __( 'Menu Background Color', 'portuna-addon' ),
+                    'label'     => esc_html__( 'Menu Background Color', 'portuna-addon' ),
                     'type'      => Controls_Manager::COLOR,
                     //'default'   => '#212529',
                     'selectors' => [
@@ -368,21 +369,75 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_group_control(
                 Group_Control_Box_Shadow::get_type(),
                 [
-                    'label'    => __( 'Menu Box Shadow', 'portuna-addon' ),
+                    'label'    => esc_html__( 'Menu Box Shadow', 'portuna-addon' ),
                     'name'     => 'general_menu_box_shadow',
                     'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_menu' ],
+                ]
+            );
+
+            $this->add_group_control(
+                Group_Control_Typography::get_type(),
+                [
+                    'label'           => esc_html__( 'Menu Item Typography', 'portuna-addon' ),
+                    'name'            => 'menu_typography',
+                    'selector'        => '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_link' ],
+                    'fields_options'  => [
+                        'font_weight' => [
+                            'default' => '400'
+                        ]
+                    ],
+                ]
+            );
+            
+            $this->add_responsive_control(
+                'general_menu_padding',
+                [
+                    'label'      => esc_html__( 'Menu Padding', 'portuna-addon' ),
+                    'type'       => Controls_Manager::DIMENSIONS,
+                    'size_units' => [ 'px', '%' ],
+                    'default'    => [
+                        'top'    => '7',
+                        'right'  => '32',
+                        'bottom' => '7',
+                        'left'   => '32',
+                        'unit'   => 'px'
+                    ],
+                    'selectors'  => [
+                        '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_container' ] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                    ],
+                    'separator' => 'before'
+                ]
+            );
+            
+            $this->add_responsive_control(
+                'general_menu_radius',
+                [
+                    'label'      => esc_html__( 'Menu Radius', 'portuna-addon' ),
+                    'type'       => Controls_Manager::DIMENSIONS,
+                    'size_units' => [ 'px', '%' ],
+                    'default'    => [
+                        'top'    => '0',
+                        'right'  => '0',
+                        'bottom' => '0',
+                        'left'   => '0',
+                        'unit'   => 'px'
+                    ],
+                    'selectors'  => [
+                        '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_container' ] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                    ],
                 ]
             );
 
         $this->end_controls_section();
     }
 
-    // Menu
-    public function style_section2() {
+    // Menu (First Level)
+    public function style_MenuFirstLevel() {
+
         $this->start_controls_section(
             'section_menu_item_style',
             [
-                'label' => __( 'Menu (First Level)', 'portuna-addon' ),
+                'label' => esc_html__( 'Menu (First Level)', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -390,13 +445,13 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'menu_item_pointer',
                 [
-                    'label'       => __( 'Pointer (Hover)', 'portuna-addon' ),
+                    'label'       => esc_html__( 'Pointer (Hover)', 'portuna-addon' ),
                     'type'        => Controls_Manager::SELECT,
                     'default'     => 'none',
                     'options'     => [
-                        'none'       => __( 'None', 'portuna-addon' ),
-                        'underline'  => __( 'Underline', 'portuna-addon' ),
-                        'background' => __( 'Background', 'portuna-addon' ),
+                        'none'       => esc_html__( 'None', 'portuna-addon' ),
+                        'underline'  => esc_html__( 'Underline', 'portuna-addon' ),
+                        'background' => esc_html__( 'Background', 'portuna-addon' ),
                     ],
                 ]
             );
@@ -404,16 +459,16 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'menu_item_pointer_animation_line',
                 [
-                    'label'       => __( 'Pointer Animation', 'portuna-addon' ),
+                    'label'       => esc_html__( 'Pointer Animation', 'portuna-addon' ),
                     'type'        => Controls_Manager::SELECT,
                     'default'     => 'none',
                     'options'     => [
-                        'none'       => __( 'None', 'portuna-addon' ),
-                        'fade'       => __( 'Fade', 'portuna-addon' ),
-                        'slide'      => __( 'Slide', 'portuna-addon' ),
-                        'grow'       => __( 'Grow', 'portuna-addon' ),
-                        'drop-in'    => __( 'Drop In', 'portuna-addon' ),
-                        'drop-out'    => __( 'Drop Out', 'portuna-addon' ),
+                        'none'       => esc_html__( 'None', 'portuna-addon' ),
+                        'fade'       => esc_html__( 'Fade', 'portuna-addon' ),
+                        'slide'      => esc_html__( 'Slide', 'portuna-addon' ),
+                        'grow'       => esc_html__( 'Grow', 'portuna-addon' ),
+                        'drop-in'    => esc_html__( 'Drop In', 'portuna-addon' ),
+                        'drop-out'   => esc_html__( 'Drop Out', 'portuna-addon' ),
                     ],
                     'condition' => [
                         'menu_item_pointer' => [ 'underline' ],
@@ -424,22 +479,22 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'menu_item_pointer_animation_background',
                 [
-                    'label'       => __( 'Pointer Animation', 'portuna-addon' ),
+                    'label'       => esc_html__( 'Pointer Animation', 'portuna-addon' ),
                     'type'        => Controls_Manager::SELECT,
                     'default'     => 'none',
                     'options'     => [
-                        'none'                   => __( 'None', 'portuna-addon' ),
-                        'fade'                   => __( 'Fade', 'portuna-addon' ),
-                        'grow'                   => __( 'Grow', 'portuna-addon' ),
-                        'shrink'                 => __( 'Shrink', 'portuna-addon' ),
-                        'sweep-left'             => __( 'Sweep Left', 'portuna-addon' ),
-                        'sweep-right'            => __( 'Sweep Right', 'portuna-addon' ),
-                        'sweep-up'               => __( 'Seep Up', 'portuna-addon' ),
-                        'sweep-down'             => __( 'Seep Down', 'portuna-addon' ),
-                        'shutter-in-vertical'    => __( 'Seep Down', 'portuna-addon' ),
-                        'shutter-out-vertical'   => __( 'Seep Down', 'portuna-addon' ),
-                        'shutter-in-horizontal'  => __( 'Seep Down', 'portuna-addon' ),
-                        'shutter-out-horizontal' => __( 'Seep Down', 'portuna-addon' ),
+                        'none'                   => esc_html__( 'None', 'portuna-addon' ),
+                        'fade'                   => esc_html__( 'Fade', 'portuna-addon' ),
+                        'grow'                   => esc_html__( 'Grow', 'portuna-addon' ),
+                        'shrink'                 => esc_html__( 'Shrink', 'portuna-addon' ),
+                        'sweep-left'             => esc_html__( 'Sweep Left', 'portuna-addon' ),
+                        'sweep-right'            => esc_html__( 'Sweep Right', 'portuna-addon' ),
+                        'sweep-up'               => esc_html__( 'Seep Up', 'portuna-addon' ),
+                        'sweep-down'             => esc_html__( 'Seep Down', 'portuna-addon' ),
+                        'shutter-in-vertical'    => esc_html__( 'Seep Down', 'portuna-addon' ),
+                        'shutter-out-vertical'   => esc_html__( 'Seep Down', 'portuna-addon' ),
+                        'shutter-in-horizontal'  => esc_html__( 'Seep Down', 'portuna-addon' ),
+                        'shutter-out-horizontal' => esc_html__( 'Seep Down', 'portuna-addon' ),
                     ],
                     'condition' => [
                         'menu_item_pointer' => [ 'background' ],
@@ -450,18 +505,18 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_responsive_control(
                 'menu_item_padding',
                 [
-                    'label'      => __( 'Padding', 'portuna-addon' ),
+                    'label'      => esc_html__( 'Padding', 'portuna-addon' ),
                     'type'       => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px', '%' ],
                     'default'    => [
                         'top'    => '0',
                         'right'  => '20',
-                        'bottom' => '0',
+                        'bottom' => '10',
                         'left'   => '0',
                         'unit'   => 'px'
                     ],
                     'selectors'  => [
-                        '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_content' ] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                        '{{WRAPPER}}' . self::$css_map[ 'wrap_topmenu_container' ] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
                     ],
                 ]
             );
@@ -469,11 +524,11 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_responsive_control(
                 'menu_item_margin',
                 [
-                    'label'      => __( 'Margin', 'portuna-addon' ),
+                    'label'      => esc_html__( 'Margin', 'portuna-addon' ),
                     'type'       => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px', '%' ],
                     'selectors'  => [
-                        '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_content' ] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                        '{{WRAPPER}}' . self::$css_map[ 'wrap_topmenu_container' ] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
                     ],
                 ]
             );
@@ -481,23 +536,9 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'menu_heading_items',
                 [
-                    'label'     => __( 'Menu Items', 'portuna-addon' ),
+                    'label'     => esc_html__( 'Menu Items', 'portuna-addon' ),
                     'type'      => Controls_Manager::HEADING,
                     'separator' => 'before'
-                ]
-            );
-
-            $this->add_group_control(
-                Group_Control_Typography::get_type(),
-                [
-                    'label'           => __( 'Item Typography', 'portuna-addon' ),
-                    'name'            => 'menu_item_typo',
-                    //'selector'        => '{{WRAPPER}}' . self::$css_map[ '' ],
-                    'fields_options'  => [
-                        'font_weight' => [
-                            'default' => '400'
-                        ]
-                    ]
                 ]
             );
 
@@ -506,14 +547,14 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'menu_item_normal',
                     [
-                        'label' => __( 'Normal', 'portuna-addon' ),
+                        'label' => esc_html__( 'Normal', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
                         'menu_item_color',
                         [
-                            'label'     => __( 'Text Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Text Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -525,7 +566,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_control(
                         'menu_item_bgcolor',
                         [
-                            'label'     => __( 'Background Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -539,14 +580,14 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'menu_item_hover',
                     [
-                        'label' => __( 'Hover', 'portuna-addon' ),
+                        'label' => esc_html__( 'Hover', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
                         'menu_item_color_hover',
                         [
-                            'label'     => __( 'Text Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Text Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -558,7 +599,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_control(
                         'menu_item_bgcolor_hover',
                         [
-                            'label'     => __( 'Background Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -573,7 +614,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_control(
                         'menu_item_pointer_color_hover',
                         [
-                            'label'     => __( 'Pointer Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Pointer Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -592,12 +633,13 @@ class MegaMenu extends Portuna_Widget_Base {
         $this->end_controls_section();
     }
 
-    // Sub Menu
-    public function style_section3() {
+    // Sub Menu (Nested Level)
+    public function style_SubMenuNestedLevel() {
+
         $this->start_controls_section(
-            'section_submenu_item_style',
+            'section_submenu_style',
             [
-                'label' => __( 'Sub Menu (Nested Level)', 'portuna-addon' ),
+                'label' => esc_html__( 'Sub Menu (Nested Level)', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -605,16 +647,16 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->start_controls_tabs( 'submenu_group' );
 
                 $this->start_controls_tab(
-                    'submenu_normal_panel',
+                    'submenu_simple_panel',
                     [
-                        'label' => __( 'Normal Panel', 'portuna-addon' ),
+                        'label' => esc_html__( 'Simple Panel', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_responsive_control(
-                        'submenu_normal_panel_width_hr',
+                        'submenu_simple_panel_width_hr',
                         [
-                            'label'    => __( 'Width', 'portuna-addon' ),
+                            'label'    => esc_html__( 'Width', 'portuna-addon' ),
                             'type'     => Controls_Manager::SLIDER,
                             'range'    => [
                                 'px' => [
@@ -638,9 +680,9 @@ class MegaMenu extends Portuna_Widget_Base {
                     );
 
                     $this->add_responsive_control(
-                        'submenu_normal_panel_width_vr',
+                        'submenu_simple_panel_width_vr',
                         [
-                            'label'    => __( 'Width', 'portuna-addon' ),
+                            'label'    => esc_html__( 'Width', 'portuna-addon' ),
                             'type'     => Controls_Manager::SLIDER,
                             'range'    => [
                                 'px' => [
@@ -670,38 +712,60 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_group_control(
                         Group_Control_Background::get_type(),
                         [
-                            'label'    => __( 'Sub Menu Background', 'portuna-addon' ),
-                            'name'     => 'submenu_background_panel',
-                            'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_menu' ],
+                            'label'    => esc_html__( 'Background', 'portuna-addon' ),
+                            'name'     => 'submenu_simple_panel_background',
+                            'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_submenu_container' ],
                         ]
                     );
 
                     $this->add_group_control(
                         Group_Control_Box_Shadow::get_type(),
                         [
-                            'label'    => __( 'Sub Menu Box Shadow', 'portuna-addon' ),
-                            'name'     => 'submenu_shadow_panel',
-                            'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_menu' ],
+                            'label'          => esc_html__( 'Box Shadow', 'portuna-addon' ),
+                            'name'           => 'submenu_simple_panel_shadow',
+                            'selector'       => '{{WRAPPER}}' . self::$css_map[ 'wrap_submenu_container' ],
+                            'fields_options' => [
+                                'box_shadow_type' => [
+                                    'default'     => 'yes',
+                                ],
+                                'box_shadow'  => [
+                                    'default' => [
+                                        'horizontal' => 0,
+                                        'vertical'   => 0,
+                                        'blur'       => 7,
+                                        'spread'     => 0,
+                                        'color'      => 'rgba(0,0,0,0.4)',
+                                    ],
+                                ],
+                            ],
+                        ]
+                    );
+
+                    $this->add_control(
+                        'submenu_simple_panel_heading_container',
+                        [
+                            'label'     => esc_html__( 'Sub Menu (Container)', 'portuna-addon' ),
+                            'type'      => Controls_Manager::HEADING,
+                            'separator' => 'before',
                         ]
                     );
 
                     $this->add_responsive_control(
-                        'submenu_padding_panel',
+                        'submenu_simple_panel_padding',
                         [
-                            'label'      => __( 'Padding Container', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Padding Container', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
                             'selectors'  => [
                                 '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_link' ] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
                             ],
-                            'separator' => 'before'
                         ]
                     );
 
                     $this->add_responsive_control(
-                        'submenu_margin_panel',
+                        'submenu_simple_panel_margin',
                         [
-                            'label'      => __( 'Margin Container', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Margin Container', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
                             'selectors'  => [
@@ -711,19 +775,19 @@ class MegaMenu extends Portuna_Widget_Base {
                     );
 
                     $this->add_control(
-                        'submenu_border_panel',
+                        'submenu_simple_panel_border',
                         [
-                            'label'     => __( 'Border Type', 'portuna-addon' ),
-                            'type'      => Controls_Manager::SELECT,
-                            'options'   => [
-                                'none'   => __( 'None', 'portuna-addon' ),
-                                'solid'  => __( 'Solid', 'portuna-addon' ),
-                                'double' => __( 'Double', 'portuna-addon' ),
-                                'dotted' => __( 'Dotted', 'portuna-addon' ),
-                                'dashed' => __( 'Dashed', 'portuna-addon' ),
-                                'groove' => __( 'Groove', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Border Type', 'portuna-addon' ),
+                            'type'       => Controls_Manager::SELECT,
+                            'options'    => [
+                                'none'   => esc_html__( 'None', 'portuna-addon' ),
+                                'solid'  => esc_html__( 'Solid', 'portuna-addon' ),
+                                'double' => esc_html__( 'Double', 'portuna-addon' ),
+                                'dotted' => esc_html__( 'Dotted', 'portuna-addon' ),
+                                'dashed' => esc_html__( 'Dashed', 'portuna-addon' ),
+                                'groove' => esc_html__( 'Groove', 'portuna-addon' ),
                             ],
-                            'default'   => 'none',
+                            'default'    => 'none',
                             //'selectors' => [
                                 //'{{SELECTOR}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-style: {{VALUE}};',
                             //],
@@ -731,7 +795,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     );
 
                     $this->add_control(
-                        'submenu_border_color_panel',
+                        'submenu_simple_panel_border_color',
                         [
                             'label'      => esc_html__( 'Border Color', 'portuna-addon' ),
                             'type'       => Controls_Manager::COLOR,
@@ -740,13 +804,13 @@ class MegaMenu extends Portuna_Widget_Base {
                                 //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
                             //],
                             'condition' => [
-                                'submenu_border_panel!' => 'none',
+                                'submenu_simple_panel_border!' => 'none',
                             ],
                         ]
                     );
 
                     $this->add_responsive_control(
-                        'submenu_border_width_panel',
+                        'submenu_simple_panel_border_width',
                         [
                             'label'      => esc_html__( 'Border Width', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
@@ -761,13 +825,13 @@ class MegaMenu extends Portuna_Widget_Base {
                                 //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                             //],
                             'condition' => [
-                                'submenu_border_panel!' => 'none',
+                                'submenu_simple_panel_border!' => 'none',
                             ],
                         ]
                     );
 
                     $this->add_responsive_control(
-                        'submenu_radius_panel',
+                        'submenu_simple_panel_radius',
                         [
                             'label'      => esc_html__( 'Border Radius', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
@@ -777,20 +841,154 @@ class MegaMenu extends Portuna_Widget_Base {
                             //],
                         ]
                     );
+                    
+                    $this->add_control(
+                        'submenu_simple_panel_heading_items',
+                        [
+                            'label'     => esc_html__( 'Sub Menu (Items)', 'portuna-addon' ),
+                            'type'      => Controls_Manager::HEADING,
+                            'separator' => 'before',
+                        ]
+                    );
+        
+                    $this->add_control(
+                        'submenu_simple_panel_item_pointer',
+                        [
+                            'label'       => esc_html__( 'Pointer (Hover)', 'portuna-addon' ),
+                            'type'        => Controls_Manager::SELECT,
+                            'default'     => 'none',
+                            'options'     => [
+                                'none'       => esc_html__( 'None', 'portuna-addon' ),
+                                'underline'  => esc_html__( 'Underline', 'portuna-addon' ),
+                                'background' => esc_html__( 'Background', 'portuna-addon' ),
+                            ],
+                        ]
+                    );
+        
+                    $this->add_control(
+                        'submenu_simple_panel_item_animation',
+                        [
+                            'label'       => esc_html__( 'Pointer Animation', 'portuna-addon' ),
+                            'type'        => Controls_Manager::SELECT,
+                            'default'     => 'none',
+                            'options'     => [
+                                'none'       => esc_html__( 'None', 'portuna-addon' ),
+                                'fade'       => esc_html__( 'Fade', 'portuna-addon' ),
+                                'slide'      => esc_html__( 'Slide', 'portuna-addon' ),
+                                'grow'       => esc_html__( 'Grow', 'portuna-addon' ),
+                                'drop-in'    => esc_html__( 'Drop In', 'portuna-addon' ),
+                                'drop-out'   => esc_html__( 'Drop Out', 'portuna-addon' ),
+                            ],
+                            'condition' => [
+                                'submenu_simple_panel_item_pointer' => [ 'underline' ],
+                            ],
+                        ]
+                    );
+        
+                    $this->add_control(
+                        'submenu_simple_panel_item_animation_background',
+                        [
+                            'label'       => esc_html__( 'Pointer Animation', 'portuna-addon' ),
+                            'type'        => Controls_Manager::SELECT,
+                            'default'     => 'none',
+                            'options'     => [
+                                'none'                   => esc_html__( 'None', 'portuna-addon' ),
+                                'fade'                   => esc_html__( 'Fade', 'portuna-addon' ),
+                                'grow'                   => esc_html__( 'Grow', 'portuna-addon' ),
+                                'shrink'                 => esc_html__( 'Shrink', 'portuna-addon' ),
+                                'sweep-left'             => esc_html__( 'Sweep Left', 'portuna-addon' ),
+                                'sweep-right'            => esc_html__( 'Sweep Right', 'portuna-addon' ),
+                                'sweep-up'               => esc_html__( 'Seep Up', 'portuna-addon' ),
+                                'sweep-down'             => esc_html__( 'Seep Down', 'portuna-addon' ),
+                                'shutter-in-vertical'    => esc_html__( 'Seep Down', 'portuna-addon' ),
+                                'shutter-out-vertical'   => esc_html__( 'Seep Down', 'portuna-addon' ),
+                                'shutter-in-horizontal'  => esc_html__( 'Seep Down', 'portuna-addon' ),
+                                'shutter-out-horizontal' => esc_html__( 'Seep Down', 'portuna-addon' ),
+                            ],
+                            'condition' => [
+                                'submenu_simple_panel_item_pointer' => [ 'background' ],
+                            ],
+                        ]
+                    );
+        
+                    $this->add_responsive_control(
+                        'submenu_simple_panel_padding_items',
+                        [
+                            'label'      => esc_html__( 'Padding Items', 'portuna-addon' ),
+                            'type'       => Controls_Manager::DIMENSIONS,
+                            'size_units' => [ 'px', '%' ],
+                            'selectors'  => [
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_link' ] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                            ],
+                        ]
+                    );
+        
+                    $this->add_responsive_control(
+                        'submenu_simple_panel_margin_items',
+                        [
+                            'label'      => esc_html__( 'Margin Items', 'portuna-addon' ),
+                            'type'       => Controls_Manager::DIMENSIONS,
+                            'size_units' => [ 'px', '%' ],
+                            'selectors'  => [
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_link' ] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                            ],
+                        ]
+                    );
+        
+                    $this->add_control(
+                        'submenu_simple_panel_border_items',
+                        [
+                            'label'      => esc_html__( 'Border Type', 'portuna-addon' ),
+                            'type'       => Controls_Manager::SELECT,
+                            'options'    => [
+                                'none'   => esc_html__( 'None', 'portuna-addon' ),
+                                'solid'  => esc_html__( 'Solid', 'portuna-addon' ),
+                                'double' => esc_html__( 'Double', 'portuna-addon' ),
+                                'dotted' => esc_html__( 'Dotted', 'portuna-addon' ),
+                                'dashed' => esc_html__( 'Dashed', 'portuna-addon' ),
+                                'groove' => esc_html__( 'Groove', 'portuna-addon' ),
+                            ],
+                            'default'    => 'solid',
+                            //'selectors' => [
+                                //'{{SELECTOR}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-style: {{VALUE}};',
+                            //],
+                        ]
+                    );
+        
+                    $this->add_responsive_control(
+                        'submenu_simple_panel_border_width_items',
+                        [
+                            'label'      => esc_html__( 'Border Width', 'portuna-addon' ),
+                            'type'       => Controls_Manager::DIMENSIONS,
+                            'size_units' => [ 'px' ],
+                            'default'    => [
+                                'top'    => '1',
+                                'right'  => '1',
+                                'bottom' => '1',
+                                'left'   => '1'
+                            ],
+                            //'selectors'  => [
+                                //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                            //],
+                            'condition' => [
+                                'submenu_simple_panel_border_items!' => 'none',
+                            ],
+                        ]
+                    );
 
                 $this->end_controls_tab();
 
                 $this->start_controls_tab(
                     'submenu_mega_panel',
                     [
-                        'label' => __( 'Mega Panel', 'portuna-addon' ),
+                        'label' => esc_html__( 'Mega Panel', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_responsive_control(
-                        'mega_panel_width_hr',
+                        'submenu_mega_panel_width_hr',
                         [
-                            'label'    => __( 'Width', 'portuna-addon' ),
+                            'label'    => esc_html__( 'Width', 'portuna-addon' ),
                             'type'     => Controls_Manager::SLIDER,
                             'range'    => [
                                 'px' => [
@@ -817,9 +1015,9 @@ class MegaMenu extends Portuna_Widget_Base {
                     );
 
                     $this->add_responsive_control(
-                        'mega_panel_width_vr',
+                        'submenu_mega_panel_width_vr',
                         [
-                            'label'    => __( 'Width', 'portuna-addon' ),
+                            'label'    => esc_html__( 'Width', 'portuna-addon' ),
                             'type'     => Controls_Manager::SLIDER,
                             'range'    => [
                                 'px' => [
@@ -845,29 +1043,35 @@ class MegaMenu extends Portuna_Widget_Base {
                         ]
                     );
 
-                    $this->add_responsive_control(
-                        'mega_panel_is_active',
+                    $this->add_group_control(
+                        Group_Control_Background::get_type(),
                         [
-                            'label'      => esc_html__( 'Mega Menu is Active?', 'portuna-addon' ),
-                            'type'       => Controls_Manager::HIDDEN,
-                            'default'    => 'yes',
-                            'options'    => [
-                                'yes'   => __( 'yes', 'portuna-addon' ),
-                            ],
+                            'label'    => esc_html__( 'Background', 'portuna-addon' ),
+                            'name'     => 'submenu_mega_panel_background',
+                            'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_submegamenu_container' ],
                         ]
                     );
 
                     $this->add_group_control(
-                        Group_Control_Typography::get_type(),
+                        Group_Control_Box_Shadow::get_type(),
                         [
-                            'label'           => __( 'Badge Typography', 'portuna-addon' ),
-                            'name'            => 'icon_nested_typo',
-                            //'selector'        => '{{WRAPPER}}' . self::$css_map[ '' ],
-                            'fields_options'  => [
-                                'font_weight' => [
-                                    'default' => '400'
-                                ]
-                            ]
+                            'label'          => esc_html__( 'Box Shadow', 'portuna-addon' ),
+                            'name'           => 'submenu_mega_panel_shadow',
+                            'selector'       => '{{WRAPPER}}' . self::$css_map[ 'wrap_submegamenu_container' ],
+                            'fields_options' => [
+                                'box_shadow_type' => [
+                                    'default' => 'yes',
+                                ],
+                                'box_shadow'  => [
+                                    'default' => [
+                                        'horizontal' => 0,
+                                        'vertical'   => 0,
+                                        'blur'       => 7,
+                                        'spread'     => 0,
+                                        'color'      => 'rgba(0,0,0,0.4)',
+                                    ],
+                                ],
+                            ],
                         ]
                     );
 
@@ -876,166 +1080,27 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->end_controls_tabs();
 
             $this->add_control(
-                'submenu_heading_items',
+                'submenu_simple_panel_heading_states',
                 [
-                    'label'     => __( 'Sub Menu Items', 'portuna-addon' ),
+                    'label'     => esc_html__( 'Sub Menu (States)', 'portuna-addon' ),
                     'type'      => Controls_Manager::HEADING,
                     'separator' => 'before',
                 ]
             );
 
-            $this->add_group_control(
-                Group_Control_Typography::get_type(),
-                [
-                    'label'           => __( 'Item Typography', 'portuna-addon' ),
-                    'name'            => 'submenu_item_typo',
-                    //'selector'        => '{{WRAPPER}}' . self::$css_map[ '' ],
-                    'fields_options'  => [
-                        'font_weight' => [
-                            'default' => '400'
-                        ]
-                    ]
-                ]
-            );
-
-            $this->add_control(
-                'submenu_item_pointer',
-                [
-                    'label'       => __( 'Pointer (Hover)', 'portuna-addon' ),
-                    'type'        => Controls_Manager::SELECT,
-                    'default'     => 'none',
-                    'options'     => [
-                        'none'       => __( 'None', 'portuna-addon' ),
-                        'underline'  => __( 'Underline', 'portuna-addon' ),
-                        'background' => __( 'Background', 'portuna-addon' ),
-                    ],
-                ]
-            );
-
-            $this->add_control(
-                'submenu_item_pointer_animation_line',
-                [
-                    'label'       => __( 'Pointer Animation', 'portuna-addon' ),
-                    'type'        => Controls_Manager::SELECT,
-                    'default'     => 'none',
-                    'options'     => [
-                        'none'       => __( 'None', 'portuna-addon' ),
-                        'fade'       => __( 'Fade', 'portuna-addon' ),
-                        'slide'      => __( 'Slide', 'portuna-addon' ),
-                        'grow'       => __( 'Grow', 'portuna-addon' ),
-                        'drop-in'    => __( 'Drop In', 'portuna-addon' ),
-                        'drop-out'    => __( 'Drop Out', 'portuna-addon' ),
-                    ],
-                    'condition' => [
-                        'submenu_item_pointer' => [ 'underline' ],
-                    ],
-                ]
-            );
-
-            $this->add_control(
-                'submenu_item_pointer_animation_background',
-                [
-                    'label'       => __( 'Pointer Animation', 'portuna-addon' ),
-                    'type'        => Controls_Manager::SELECT,
-                    'default'     => 'none',
-                    'options'     => [
-                        'none'                   => __( 'None', 'portuna-addon' ),
-                        'fade'                   => __( 'Fade', 'portuna-addon' ),
-                        'grow'                   => __( 'Grow', 'portuna-addon' ),
-                        'shrink'                 => __( 'Shrink', 'portuna-addon' ),
-                        'sweep-left'             => __( 'Sweep Left', 'portuna-addon' ),
-                        'sweep-right'            => __( 'Sweep Right', 'portuna-addon' ),
-                        'sweep-up'               => __( 'Seep Up', 'portuna-addon' ),
-                        'sweep-down'             => __( 'Seep Down', 'portuna-addon' ),
-                        'shutter-in-vertical'    => __( 'Seep Down', 'portuna-addon' ),
-                        'shutter-out-vertical'   => __( 'Seep Down', 'portuna-addon' ),
-                        'shutter-in-horizontal'  => __( 'Seep Down', 'portuna-addon' ),
-                        'shutter-out-horizontal' => __( 'Seep Down', 'portuna-addon' ),
-                    ],
-                    'condition' => [
-                        'submenu_item_pointer' => [ 'background' ],
-                    ],
-                ]
-            );
-
-            $this->add_responsive_control(
-                'submenu_padding_items',
-                [
-                    'label'      => __( 'Padding Items', 'portuna-addon' ),
-                    'type'       => Controls_Manager::DIMENSIONS,
-                    'size_units' => [ 'px', '%' ],
-                    'selectors'  => [
-                        '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_link' ] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-                    ],
-                ]
-            );
-
-            $this->add_responsive_control(
-                'submenu_margin_items',
-                [
-                    'label'      => __( 'Margin Items', 'portuna-addon' ),
-                    'type'       => Controls_Manager::DIMENSIONS,
-                    'size_units' => [ 'px', '%' ],
-                    'selectors'  => [
-                        '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_link' ] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-                    ],
-                ]
-            );
-
-            $this->add_control(
-                'submenu_border_items',
-                [
-                    'label'     => __( 'Border Type', 'portuna-addon' ),
-                    'type'      => Controls_Manager::SELECT,
-                    'options'   => [
-                        'none'   => __( 'None', 'portuna-addon' ),
-                        'solid'  => __( 'Solid', 'portuna-addon' ),
-                        'double' => __( 'Double', 'portuna-addon' ),
-                        'dotted' => __( 'Dotted', 'portuna-addon' ),
-                        'dashed' => __( 'Dashed', 'portuna-addon' ),
-                        'groove' => __( 'Groove', 'portuna-addon' ),
-                    ],
-                    'default'   => 'solid',
-                    //'selectors' => [
-                        //'{{SELECTOR}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-style: {{VALUE}};',
-                    //],
-                ]
-            );
-
-            $this->add_responsive_control(
-                'submenu_border_width_items',
-                [
-                    'label'      => esc_html__( 'Border Width', 'portuna-addon' ),
-                    'type'       => Controls_Manager::DIMENSIONS,
-                    'size_units' => [ 'px' ],
-                    'default'    => [
-                        'top'    => '1',
-                        'right'  => '1',
-                        'bottom' => '1',
-                        'left'   => '1'
-                    ],
-                    //'selectors'  => [
-                        //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    //],
-                    'condition' => [
-                        'submenu_border_items!' => 'none',
-                    ],
-                ]
-            );
-
-            $this->start_controls_tabs( 'submenu_effects' );
+            $this->start_controls_tabs( 'submenu_simple_panel_states' );
 
                 $this->start_controls_tab(
-                    'submenu_item_normal',
+                    'submenu_simple_panel_item_normal',
                     [
-                        'label' => __( 'Normal', 'portuna-addon' ),
+                        'label' => esc_html__( 'Normal', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
-                        'submenu_item_color',
+                        'submenu_simple_panel_item_color',
                         [
-                            'label'     => __( 'Text Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Text Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -1045,9 +1110,9 @@ class MegaMenu extends Portuna_Widget_Base {
                     );
 
                     $this->add_control(
-                        'submenu_item_bgcolor',
+                        'submenu_simple_panel_item_bgcolor',
                         [
-                            'label'     => __( 'Background Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -1057,7 +1122,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     );
 
                     $this->add_control(
-                        'submenu_border_color_items',
+                        'submenu_simple_panel_items_border_color',
                         [
                             'label'      => esc_html__( 'Border Color', 'portuna-addon' ),
                             'type'       => Controls_Manager::COLOR,
@@ -1066,7 +1131,7 @@ class MegaMenu extends Portuna_Widget_Base {
                                 //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
                             //],
                             'condition' => [
-                                'submenu_border_items!' => 'none',
+                                'submenu_simple_panel_border_items!' => 'none',
                             ],
                         ]
                     );
@@ -1074,16 +1139,16 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->end_controls_tab();
 
                 $this->start_controls_tab(
-                    'submenu_item_hover',
+                    'submenu_simple_panel_item_hover',
                     [
-                        'label' => __( 'Hover', 'portuna-addon' ),
+                        'label' => esc_html__( 'Hover', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
-                        'submenu_item_color_hover',
+                        'submenu_simple_panel_item_color_hover',
                         [
-                            'label'     => __( 'Text Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Text Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -1093,37 +1158,37 @@ class MegaMenu extends Portuna_Widget_Base {
                     );
 
                     $this->add_control(
-                        'submenu_item_bgcolor_hover',
+                        'submenu_simple_panel_item_bgcolor_hover',
                         [
-                            'label'     => __( 'Background Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
                                 '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_item_link' ] => 'color: {{VALUE}};',
                             ],
                             'condition' => [
-                                'submenu_item_pointer!' => 'background'
+                                'submenu_simple_panel_item_pointer!' => 'background'
                             ]
                         ]
                     );
 
                     $this->add_control(
-                        'submenu_item_pointer_color_hover',
+                        'submenu_simple_panel_item_pointer_color_hover',
                         [
-                            'label'     => __( 'Pointer Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Pointer Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
                                 '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_item_link_hover' ] => 'color: {{VALUE}};',
                             ],
                             'condition' => [
-                                'submenu_item_pointer!'  =>  'none'
+                                'submenu_simple_panel_item_pointer!'  =>  'none'
                             ]
                         ]
                     );
 
                     $this->add_control(
-                        'submenu_border_color_items_hover',
+                        'submenu_simple_panel_item_border_color_hover',
                         [
                             'label'      => esc_html__( 'Border Color', 'portuna-addon' ),
                             'type'       => Controls_Manager::COLOR,
@@ -1132,7 +1197,7 @@ class MegaMenu extends Portuna_Widget_Base {
                                 //'{{WRAPPER}}' . self::$css_map[ 'wrap_content_subtitle_square' ] => 'border-color: {{VALUE}};',
                             //],
                             'condition' => [
-                                'submenu_border_items!' => 'none',
+                                'submenu_simple_panel_border_items!' => 'none',
                             ],
                         ]
                     );
@@ -1144,40 +1209,41 @@ class MegaMenu extends Portuna_Widget_Base {
         $this->end_controls_section();
     }
 
-    // Icon Indicator
-    public function style_section4() {
+    // Icon (Dropdown)
+    public function style_IconDropdown() {
+
         $this->start_controls_section(
-            'section_submenu_icon_item_style',
+            'section_icon_dropdown_style',
             [
-                'label' => __( 'Icon (Dropdown)', 'portuna-addon' ),
+                'label' => esc_html__( 'Icon (Dropdown)', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
-            $this->start_controls_tabs( 'icon_indicator_effect' );
+            $this->start_controls_tabs( 'icon_dropdown_tabs' );
 
                 $this->start_controls_tab(
-                    'icon_indicator_first_level',
+                    'icon_dropdown_first_level',
                     [
-                        'label' => __( 'First Level', 'portuna-addon' ),
+                        'label' => esc_html__( 'First Level', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
-                        'icon_indicator_first_level_heading',
+                        'icon_dropdown_first_level_heading',
                         [
-                            'label'     => __( 'First Level', 'portuna-addon' ),
+                            'label'     => esc_html__( 'First Level', 'portuna-addon' ),
                             'type'      => Controls_Manager::HEADING,
                             'separator' => 'before'
                         ]
                     );
 
                     $this->add_control(
-                        'icons_indicator_first_level',
+                        'icons_dropdown_first_level',
                         [
-                            'label'            => __( 'Icon', 'portuna-addon' ),
+                            'label'            => esc_html__( 'Icon', 'portuna-addon' ),
                             'type'             => Controls_Manager::ICONS,
-                            'fa4compatibility' => 'icon_indicator_normal',
+                            'fa4compatibility' => 'icon_dropdown_first_level',
                             'default'          => [
                                 'value'        => 'fas fa-chevron-down',
                                 'library'      => 'fa-solid',
@@ -1186,9 +1252,9 @@ class MegaMenu extends Portuna_Widget_Base {
                     );
 
                     $this->add_responsive_control(
-                        'indicator_size_first_level',
+                        'icon_dropdown_size_first_level',
                         [
-                            'label' => __( 'Icon Size', 'portuna-addon' ),
+                            'label' => esc_html__( 'Icon Size', 'portuna-addon' ),
                             'type'  => Controls_Manager::SLIDER,
                             'range' => [
                                 'px'  => [
@@ -1213,55 +1279,63 @@ class MegaMenu extends Portuna_Widget_Base {
                                 'unit'  => 'px'
                             ],
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_submenu_indicator' ] => 'font-size: {{SIZE}}{{UNIT}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_top_icon_dropdown_arrow' ]          => 'font-size: {{SIZE}}{{UNIT}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_top_icon_dropdown_arrow' ] . ' svg' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};',
                             ],
                         ]
                     );
 
                     $this->add_responsive_control(
-                        'indicator_pos_first_level',
+                        'icon_dropdown_order_first_level',
                         [
-                            'label'     => __( 'Icon Position', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Icon Position', 'portuna-addon' ),
                             'type'      => Controls_Manager::CHOOSE,
                             'toggle'    => false,
                             'options'   => [
-                                '1'       => [
-                                    'title'  => __( 'Right', 'portuna-addon' ),
-                                    'icon'   => 'eicon-h-align-right',
-                                ],
                                 '-1'     => [
-                                    'title'  => __( 'Left', 'portuna-addon' ),
+                                    'title'  => esc_html__( 'Left', 'portuna-addon' ),
                                     'icon'   => 'eicon-h-align-left',
+                                ],
+                                '1'       => [
+                                    'title'  => esc_html__( 'Right', 'portuna-addon' ),
+                                    'icon'   => 'eicon-h-align-right',
                                 ],
                             ],
                             'default'   => '1',
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu' ] => 'order: {{VALUE}}',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_top_icon_dropdown_arrow' ] => 'order: {{VALUE}}',
                             ],
                         ]
                     );
 
                     $this->add_responsive_control(
-                        'indicator_padding_first_level',
+                        'icon_dropdown_padding_first_level',
                         [
-                            'label'      => __( 'Padding', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Padding', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
                             'selectors'  => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_link' ] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_top_icon_dropdown_arrow' ] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
                             ],
                             'separator' => 'before'
                         ]
                     );
 
                     $this->add_responsive_control(
-                        'indicator_margin_first_level',
+                        'icon_dropdown_margin_first_level',
                         [
-                            'label'      => __( 'Margin', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Margin', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
+                            'default'    => [
+                                'top'    => '0',
+                                'right'  => '5',
+                                'bottom' => '0',
+                                'left'   => '5',
+                                'unit'   => 'px'
+                            ],
                             'selectors'  => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_link' ] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_top_icon_dropdown_arrow' ] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
                             ],
                         ]
                     );
@@ -1269,27 +1343,27 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->end_controls_tab();
 
                 $this->start_controls_tab(
-                    'icon_indicator_nested_level',
+                    'icon_dropdown_nested_level',
                     [
-                        'label' => __( 'Nested Level', 'portuna-addon' ),
+                        'label' => esc_html__( 'Nested Level', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
-                        'icons_indicator_nested_level_heading',
+                        'icon_dropdown_nested_level_heading',
                         [
-                            'label'     => __( 'Nested Level', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Nested Level', 'portuna-addon' ),
                             'type'      => Controls_Manager::HEADING,
                             'separator' => 'before'
                         ]
                     );
 
                     $this->add_control(
-                        'icons_indicator_nested_level',
+                        'icons_dropdown_nested_level',
                         [
-                            'label'            => __( 'Icon', 'portuna-addon' ),
+                            'label'            => esc_html__( 'Icon', 'portuna-addon' ),
                             'type'             => Controls_Manager::ICONS,
-                            'fa4compatibility' => 'icon_indicator_mega_panel',
+                            'fa4compatibility' => 'icon_dropdown_nested_level',
                             'default'          => [
                                 'value'        => 'fas fa-chevron-right',
                                 'library'      => 'fa-solid',
@@ -1298,9 +1372,9 @@ class MegaMenu extends Portuna_Widget_Base {
                     );
 
                     $this->add_responsive_control(
-                        'indicator_size_nested_level',
+                        'icon_dropdown_size_nested_level',
                         [
-                            'label' => __( 'Icon Size', 'portuna-addon' ),
+                            'label' => esc_html__( 'Icon Size', 'portuna-addon' ),
                             'type'  => Controls_Manager::SLIDER,
                             'range' => [
                                 'px'  => [
@@ -1325,55 +1399,63 @@ class MegaMenu extends Portuna_Widget_Base {
                                 'unit'  => 'px'
                             ],
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_submenu_indicator' ] => 'font-size: {{SIZE}}{{UNIT}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_nested_icon_dropdown_arrow' ]          => 'font-size: {{SIZE}}{{UNIT}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_nested_icon_dropdown_arrow' ] . ' svg' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};',
                             ],
                         ]
                     );
 
                     $this->add_responsive_control(
-                        'indicator_pos_nested_level',
+                        'icon_dropdown_order_nested_level',
                         [
-                            'label'     => __( 'Icon Position', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Icon Position', 'portuna-addon' ),
                             'type'      => Controls_Manager::CHOOSE,
                             'toggle'    => false,
                             'options'   => [
                                 '1'       => [
-                                    'title'  => __( 'Right', 'portuna-addon' ),
+                                    'title'  => esc_html__( 'Right', 'portuna-addon' ),
                                     'icon'   => 'eicon-h-align-right',
                                 ],
                                 '-1'     => [
-                                    'title'  => __( 'Left', 'portuna-addon' ),
+                                    'title'  => esc_html__( 'Left', 'portuna-addon' ),
                                     'icon'   => 'eicon-h-align-left',
                                 ],
                             ],
                             'default'   => '1',
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu' ] => 'order: {{VALUE}}',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_nested_icon_dropdown_arrow' ] => 'order: {{VALUE}}',
                             ],
                         ]
                     );
 
                     $this->add_responsive_control(
-                        'indicator_padding_nested_level',
+                        'icon_dropdown_padding_nested_level',
                         [
-                            'label'      => __( 'Padding', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Padding', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
                             'selectors'  => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_link' ] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_nested_icon_dropdown_arrow' ] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
                             ],
                             'separator' => 'before'
                         ]
                     );
 
                     $this->add_responsive_control(
-                        'indicator_margin_nested_level',
+                        'icon_dropdown_margin_nested_level',
                         [
-                            'label'      => __( 'Margin', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Margin', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
+                            'default'    => [
+                                'top'    => '0',
+                                'right'  => '5',
+                                'bottom' => '0',
+                                'left'   => '5',
+                                'unit'   => 'px'
+                            ],
                             'selectors'  => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_link' ] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_nested_icon_dropdown_arrow' ] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
                             ],
                         ]
                     );
@@ -1385,41 +1467,41 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'menu_icon_indicator_heading_first_lvl',
                 [
-                    'label'     => __( 'Icon Indicator Style (First Level)', 'portuna-addon' ),
+                    'label'     => esc_html__( 'Icon Dropdown Style (First Level)', 'portuna-addon' ),
                     'type'      => Controls_Manager::HEADING,
                     'separator' => 'before'
                 ]
             );
 
-            $this->start_controls_tabs( 'icon_indicator_effects_first_lvl' );
+            $this->start_controls_tabs( 'icon_dropdown_first_lvl' );
 
                 $this->start_controls_tab(
-                    'icon_indicator_item_normal_first_lvl',
+                    'icon_dropdown_normal_first_lvl',
                     [
-                        'label' => __( 'Normal', 'portuna-addon' ),
+                        'label' => esc_html__( 'Normal', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
-                        'icon_indicator_item_color_first_lvl',
+                        'icon_dropdown_color_first_lvl',
                         [
-                            'label'     => __( 'Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
-                            'default'   => '',
+                            'default'   => '#000000',
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_item_link' ] => 'color: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_top_icon_dropdown_arrow' ] => 'color: {{VALUE}};',
                             ],
                         ]
                     );
 
                     $this->add_control(
-                        'icon_indicator_item_bgcolor_first_lvl',
+                        'icon_dropdown_bgcolor_first_lvl',
                         [
-                            'label'     => __( 'Background Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_item_link' ] => 'background-color: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_top_icon_dropdown_arrow' ] => 'background-color: {{VALUE}};',
                             ],
                         ]
                     );
@@ -1427,32 +1509,32 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->end_controls_tab();
 
                 $this->start_controls_tab(
-                    'icon_indicator_hover_first_lvl',
+                    'icon_dropdown_hover_first_lvl',
                     [
-                        'label' => __( 'Hover', 'portuna-addon' ),
+                        'label' => esc_html__( 'Hover', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
-                        'icon_indicator_item_color_hover_first_lvl',
+                        'icon_dropdown_hover_color_first_lvl',
                         [
-                            'label'     => __( 'Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_item_link' ] => 'color: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_top_icon_dropdown_arrow_hover' ] => 'color: {{VALUE}};',
                             ],
                         ]
                     );
 
                     $this->add_control(
-                        'icon_indicator_item_bgcolor_hover_first_lvl',
+                        'icon_dropdown_hover_bgcolor_first_lvl',
                         [
-                            'label'     => __( 'Background Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_item_link' ] => 'background-color: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_top_icon_dropdown_arrow_hover' ] => 'background-color: {{VALUE}};',
                             ],
                         ]
                     );
@@ -1464,7 +1546,7 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'menu_icon_indicator_heading_nested_lvl',
                 [
-                    'label'     => __( 'Icon Indicator Style (Nested Level)', 'portuna-addon' ),
+                    'label'     => esc_html__( 'Icon Dropdown Style (Nested Level)', 'portuna-addon' ),
                     'type'      => Controls_Manager::HEADING,
                     'separator' => 'before'
                 ]
@@ -1475,18 +1557,18 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'icon_indicator_item_normal_nested_lvl',
                     [
-                        'label' => __( 'Normal', 'portuna-addon' ),
+                        'label' => esc_html__( 'Normal', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
                         'icon_indicator_item_color_nested_lvl',
                         [
-                            'label'     => __( 'Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_item_link' ] => 'color: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_nested_icon_dropdown_arrow' ] => 'color: {{VALUE}};',
                             ],
                         ]
                     );
@@ -1494,11 +1576,11 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_control(
                         'icon_indicator_item_bgcolor_nested_lvl',
                         [
-                            'label'     => __( 'Background Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_item_link' ] => 'background-color: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_nested_icon_dropdown_arrow' ] => 'background-color: {{VALUE}};',
                             ],
                         ]
                     );
@@ -1508,18 +1590,18 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'icon_indicator_hover_nested_lvl',
                     [
-                        'label' => __( 'Hover', 'portuna-addon' ),
+                        'label' => esc_html__( 'Hover', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
                         'icon_indicator_item_color_hover_nested_lvl',
                         [
-                            'label'     => __( 'Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_item_link' ] => 'color: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_nested_icon_dropdown_arrow_hover' ] => 'color: {{VALUE}};',
                             ],
                         ]
                     );
@@ -1527,11 +1609,11 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_control(
                         'icon_indicator_item_bgcolor_hover_nested_lvl',
                         [
-                            'label'     => __( 'Background Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
-                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_item_link' ] => 'background-color: {{VALUE}};',
+                                '{{WRAPPER}}' . self::$css_map[ 'wrap_menu_nested_icon_dropdown_arrow_hover' ] => 'background-color: {{VALUE}};',
                             ],
                         ]
                     );
@@ -1543,12 +1625,13 @@ class MegaMenu extends Portuna_Widget_Base {
         $this->end_controls_section();
     }
 
-    // Icon
-    public function style_section5() {
+    // Icon Item
+    public function style_IconItem() {
+
         $this->start_controls_section(
             'section_icon_item_style',
             [
-                'label' => __( 'Icon Item', 'portuna-addon' ),
+                'label' => esc_html__( 'Icon Item', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -1556,7 +1639,12 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'section_icon_item_warning',
                 [
-                    'raw' 		      => sprintf( __( 'Set your Icon type in the Item - <a href="%s" target="_blank">Appearance > Menus</a>', 'portuna-addon' ), admin_url( 'nav-menus.php' ) ),
+                    'raw' 		      => sprintf(
+                        '%s <a href="%s" target="_blank">%s</a>',
+                        esc_html__( 'Set your Icon type in the Item -', 'portuna-addon' ),
+                        admin_url( 'nav-menus.php' ),
+                        esc_html__( 'Appearance > Menus', 'portuna-addon' ),
+                    ),
                     'type' 		      => Controls_Manager::RAW_HTML,
                     'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
                     'render_type' 	  => 'ui',
@@ -1568,14 +1656,14 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'icon_first_level',
                     [
-                        'label' => __( 'First Level', 'portuna-addon' ),
+                        'label' => esc_html__( 'First Level', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
                         'menu_icon_heading_first_level',
                         [
-                            'label'     => __( 'First Level', 'portuna-addon' ),
+                            'label'     => esc_html__( 'First Level', 'portuna-addon' ),
                             'type'      => Controls_Manager::HEADING,
                             'separator' => 'before'
                         ]
@@ -1584,7 +1672,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_responsive_control(
                         'menu_icon_size_first_level',
                         [
-                            'label' => __( 'Icon Size', 'portuna-addon' ),
+                            'label' => esc_html__( 'Icon Size', 'portuna-addon' ),
                             'type'  => Controls_Manager::SLIDER,
                             'range' => [
                                 'px'  => [
@@ -1617,16 +1705,16 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_responsive_control(
                         'menu_icon_pos_first_level',
                         [
-                            'label'     => __( 'Icon Position', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Icon Position', 'portuna-addon' ),
                             'type'      => Controls_Manager::CHOOSE,
                             'toggle'    => false,
                             'options'   => [
                                 '-1'     => [
-                                    'title'  => __( 'Left', 'portuna-addon' ),
+                                    'title'  => esc_html__( 'Left', 'portuna-addon' ),
                                     'icon'   => 'eicon-h-align-left',
                                 ],
                                 '1'       => [
-                                    'title'  => __( 'Right', 'portuna-addon' ),
+                                    'title'  => esc_html__( 'Right', 'portuna-addon' ),
                                     'icon'   => 'eicon-h-align-right',
                                 ],
                             ],
@@ -1640,7 +1728,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_responsive_control(
                         'menu_icon_padding_first_level',
                         [
-                            'label'      => __( 'Padding', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Padding', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
                             'selectors'  => [
@@ -1653,7 +1741,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_responsive_control(
                         'menu_icon_margin_first_level',
                         [
-                            'label'      => __( 'Margin', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Margin', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
                             'selectors'  => [
@@ -1667,14 +1755,14 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'icon_nested_level',
                     [
-                        'label' => __( 'Nested Level', 'portuna-addon' ),
+                        'label' => esc_html__( 'Nested Level', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
                         'submenu_icon_heading_nested_level',
                         [
-                            'label'     => __( 'Nested Level', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Nested Level', 'portuna-addon' ),
                             'type'      => Controls_Manager::HEADING,
                             'separator' => 'before'
                         ]
@@ -1683,7 +1771,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_responsive_control(
                         'submenu_icon_size_nested_level',
                         [
-                            'label' => __( 'Icon Size', 'portuna-addon' ),
+                            'label' => esc_html__( 'Icon Size', 'portuna-addon' ),
                             'type'  => Controls_Manager::SLIDER,
                             'range' => [
                                 'px'  => [
@@ -1716,16 +1804,16 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_responsive_control(
                         'menu_icon_pos_nested_level',
                         [
-                            'label'     => __( 'Icon Position', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Icon Position', 'portuna-addon' ),
                             'type'      => Controls_Manager::CHOOSE,
                             'toggle'    => false,
                             'options'   => [
                                 '1'       => [
-                                    'title'  => __( 'Right', 'portuna-addon' ),
+                                    'title'  => esc_html__( 'Right', 'portuna-addon' ),
                                     'icon'   => 'eicon-h-align-right',
                                 ],
                                 '-1'     => [
-                                    'title'  => __( 'Left', 'portuna-addon' ),
+                                    'title'  => esc_html__( 'Left', 'portuna-addon' ),
                                     'icon'   => 'eicon-h-align-left',
                                 ],
                             ],
@@ -1739,7 +1827,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_responsive_control(
                         'menu_icon_padding_nested_level',
                         [
-                            'label'      => __( 'Padding', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Padding', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
                             'selectors'  => [
@@ -1752,7 +1840,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_responsive_control(
                         'menu_icon_margin_nested_level',
                         [
-                            'label'      => __( 'Margin', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Margin', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
                             'selectors'  => [
@@ -1768,7 +1856,7 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'icon_heading_first_lvl',
                 [
-                    'label'     => __( 'Icon Style (First Level)', 'portuna-addon' ),
+                    'label'     => esc_html__( 'Icon Style (First Level)', 'portuna-addon' ),
                     'type'      => Controls_Manager::HEADING,
                     'separator' => 'before'
                 ]
@@ -1779,14 +1867,14 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'icon_normal_first_lvl',
                     [
-                        'label' => __( 'Normal', 'portuna-addon' ),
+                        'label' => esc_html__( 'Normal', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
                         'icon_color_first_lvl',
                         [
-                            'label'     => __( 'Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -1798,7 +1886,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_control(
                         'icon_bgcolor_first_lvl',
                         [
-                            'label'     => __( 'Background Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -1812,14 +1900,14 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'icon_hover_first_lvl',
                     [
-                        'label' => __( 'Hover', 'portuna-addon' ),
+                        'label' => esc_html__( 'Hover', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
                         'icon_color_hover_first_lvl',
                         [
-                            'label'     => __( 'Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -1831,7 +1919,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_control(
                         'icon_bgcolor_hover_first_lvl',
                         [
-                            'label'     => __( 'Background Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -1847,7 +1935,7 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'icon_heading_nested_lvl',
                 [
-                    'label'     => __( 'Icon Style (Nested Level)', 'portuna-addon' ),
+                    'label'     => esc_html__( 'Icon Style (Nested Level)', 'portuna-addon' ),
                     'type'      => Controls_Manager::HEADING,
                     'separator' => 'before'
                 ]
@@ -1858,14 +1946,14 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'icon_normal_nested_lvl',
                     [
-                        'label' => __( 'Normal', 'portuna-addon' ),
+                        'label' => esc_html__( 'Normal', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
                         'icon_color_nested_lvl',
                         [
-                            'label'     => __( 'Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -1877,7 +1965,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_control(
                         'icon_bgcolor_nested_lvl',
                         [
-                            'label'     => __( 'Background Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -1891,14 +1979,14 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'icon_hover_nested_lvl',
                     [
-                        'label' => __( 'Hover', 'portuna-addon' ),
+                        'label' => esc_html__( 'Hover', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_control(
                         'icon_color_hover_nested_lvl',
                         [
-                            'label'     => __( 'Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -1910,7 +1998,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_control(
                         'icon_bgcolor_hover_nested_lvl',
                         [
-                            'label'     => __( 'Background Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Background Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             'default'   => '',
                             'selectors' => [
@@ -1926,12 +2014,13 @@ class MegaMenu extends Portuna_Widget_Base {
         $this->end_controls_section();
     }
 
-    // Badge
-    public function style_section6() {
+    // Badge Item
+    public function style_BadgeItem() {
+
         $this->start_controls_section(
             'section_badge_item_style',
             [
-                'label' => __( 'Badge Item', 'portuna-addon' ),
+                'label' => esc_html__( 'Badge Item', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -1939,7 +2028,12 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'section_badge_warning',
                 [
-                    'raw' 		      => sprintf( __( 'Set your Badge text in the Item - <a href="%s" target="_blank">Appearance > Menus</a>', 'portuna-addon' ), admin_url( 'nav-menus.php' ) ),
+                    'raw'             => sprintf(
+                        '%s <a href="%s" target="_blank">%s</a>',
+                        esc_html__( 'Set your Badge text in the Item -', 'portuna-addon' ),
+                        admin_url( 'nav-menus.php' ),
+                        esc_html__( 'Appearance > Menus', 'portuna-addon' )
+                    ),
                     'type' 		      => Controls_Manager::RAW_HTML,
                     'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
                     'render_type' 	  => 'ui',
@@ -1951,14 +2045,14 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'badge_first_level',
                     [
-                        'label' => __( 'First Level', 'portuna-addon' ),
+                        'label' => esc_html__( 'First Level', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_group_control(
                         Group_Control_Background::get_type(),
                         [
-                            'label'    => __( 'Badge Background', 'portuna-addon' ),
+                            'label'    => esc_html__( 'Badge Background', 'portuna-addon' ),
                             'name'     => 'badge_background_first_lvl',
                             'types'    => [ 'classic', 'gradient' ],
                             'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_menu' ],
@@ -1971,7 +2065,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_group_control(
                         Group_Control_Box_Shadow::get_type(),
                         [
-                            'label'    => __( 'Badge Box Shadow', 'portuna-addon' ),
+                            'label'    => esc_html__( 'Badge Box Shadow', 'portuna-addon' ),
                             'name'     => 'badge_shadow_first_lvl',
                             'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_menu' ],
                         ]
@@ -1980,7 +2074,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_control(
                         'badge_text_color_first_lvl',
                         [
-                            'label'     => __( 'Text Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Text Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             //'default'   => '#212529',
                             'selectors' => [
@@ -1992,7 +2086,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_responsive_control(
                         'badge_padding_first_lvl',
                         [
-                            'label'      => __( 'Padding', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Padding', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
                             'selectors'  => [
@@ -2005,7 +2099,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_responsive_control(
                         'badge_margin_first_lvl',
                         [
-                            'label'      => __( 'Margin', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Margin', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
                             'selectors'  => [
@@ -2017,15 +2111,15 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_control(
                         'badge_border_type_first_lvl',
                         [
-                            'label'     => __( 'Border Type', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Border Type', 'portuna-addon' ),
                             'type'      => Controls_Manager::SELECT,
                             'options'   => [
-                                'none'   => __( 'None', 'portuna-addon' ),
-                                'solid'  => __( 'Solid', 'portuna-addon' ),
-                                'double' => __( 'Double', 'portuna-addon' ),
-                                'dotted' => __( 'Dotted', 'portuna-addon' ),
-                                'dashed' => __( 'Dashed', 'portuna-addon' ),
-                                'groove' => __( 'Groove', 'portuna-addon' ),
+                                'none'   => esc_html__( 'None', 'portuna-addon' ),
+                                'solid'  => esc_html__( 'Solid', 'portuna-addon' ),
+                                'double' => esc_html__( 'Double', 'portuna-addon' ),
+                                'dotted' => esc_html__( 'Dotted', 'portuna-addon' ),
+                                'dashed' => esc_html__( 'Dashed', 'portuna-addon' ),
+                                'groove' => esc_html__( 'Groove', 'portuna-addon' ),
                             ],
                             'default'   => 'none',
                             //'selectors' => [
@@ -2087,14 +2181,14 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'badge_nested_level',
                     [
-                        'label' => __( 'Nested Level', 'portuna-addon' ),
+                        'label' => esc_html__( 'Nested Level', 'portuna-addon' ),
                     ]
                 );
 
                     $this->add_group_control(
                         Group_Control_Background::get_type(),
                         [
-                            'label'    => __( 'Badge Background', 'portuna-addon' ),
+                            'label'    => esc_html__( 'Badge Background', 'portuna-addon' ),
                             'name'     => 'badge_background_nested_lvl',
                             'types'    => [ 'classic', 'gradient' ],
                             'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_menu' ],
@@ -2107,7 +2201,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_group_control(
                         Group_Control_Box_Shadow::get_type(),
                         [
-                            'label'    => __( 'Badge Box Shadow', 'portuna-addon' ),
+                            'label'    => esc_html__( 'Badge Box Shadow', 'portuna-addon' ),
                             'name'     => 'badge_shadow_nested_lvl',
                             'selector' => '{{WRAPPER}}' . self::$css_map[ 'wrap_menu' ],
                         ]
@@ -2116,7 +2210,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_control(
                         'badge_text_color_nested_lvl',
                         [
-                            'label'     => __( 'Text Color', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Text Color', 'portuna-addon' ),
                             'type'      => Controls_Manager::COLOR,
                             //'default'   => '#212529',
                             'selectors' => [
@@ -2128,7 +2222,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_responsive_control(
                         'badge_padding_nested_lvl',
                         [
-                            'label'      => __( 'Padding', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Padding', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
                             'selectors'  => [
@@ -2141,7 +2235,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_responsive_control(
                         'badge_margin_nested_lvl',
                         [
-                            'label'      => __( 'Margin', 'portuna-addon' ),
+                            'label'      => esc_html__( 'Margin', 'portuna-addon' ),
                             'type'       => Controls_Manager::DIMENSIONS,
                             'size_units' => [ 'px', '%' ],
                             'selectors'  => [
@@ -2153,15 +2247,15 @@ class MegaMenu extends Portuna_Widget_Base {
                     $this->add_control(
                         'badge_border_type_nested_lvl',
                         [
-                            'label'     => __( 'Border Type', 'portuna-addon' ),
+                            'label'     => esc_html__( 'Border Type', 'portuna-addon' ),
                             'type'      => Controls_Manager::SELECT,
                             'options'   => [
-                                'none'   => __( 'None', 'portuna-addon' ),
-                                'solid'  => __( 'Solid', 'portuna-addon' ),
-                                'double' => __( 'Double', 'portuna-addon' ),
-                                'dotted' => __( 'Dotted', 'portuna-addon' ),
-                                'dashed' => __( 'Dashed', 'portuna-addon' ),
-                                'groove' => __( 'Groove', 'portuna-addon' ),
+                                'none'   => esc_html__( 'None', 'portuna-addon' ),
+                                'solid'  => esc_html__( 'Solid', 'portuna-addon' ),
+                                'double' => esc_html__( 'Double', 'portuna-addon' ),
+                                'dotted' => esc_html__( 'Dotted', 'portuna-addon' ),
+                                'dashed' => esc_html__( 'Dashed', 'portuna-addon' ),
+                                'groove' => esc_html__( 'Groove', 'portuna-addon' ),
                             ],
                             'default'   => 'none',
                             //'selectors' => [
@@ -2225,7 +2319,7 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'badge_heading_general',
                 [
-                    'label'     => __( 'Badge General', 'portuna-addon' ),
+                    'label'     => esc_html__( 'Badge General', 'portuna-addon' ),
                     'type'      => Controls_Manager::HEADING,
                     'separator' => 'before',
                 ]
@@ -2234,7 +2328,7 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_group_control(
                 Group_Control_Typography::get_type(),
                 [
-                    'label'           => __( 'Badge Typography', 'portuna-addon' ),
+                    'label'           => esc_html__( 'Badge Typography', 'portuna-addon' ),
                     'name'            => 'badge_typo',
                     //'selector'        => '{{WRAPPER}}' . self::$css_map[ '' ],
                     'fields_options'  => [
@@ -2248,12 +2342,13 @@ class MegaMenu extends Portuna_Widget_Base {
         $this->end_controls_section();
     }
 
-    // Hamburger
-    public function style_section7() {
+    // Hamburger Options
+    public function style_HamburgerOptions() {
+
         $this->start_controls_section(
             'section_hamburger_style',
             [
-                'label' => __( 'Hamburger Options', 'portuna-addon' ),
+                'label' => esc_html__( 'Hamburger Options', 'portuna-addon' ),
                 'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -2261,7 +2356,7 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'device_general',
                 [
-                    'label'     => __( 'Breakpoint Options', 'portuna-addon' ),
+                    'label'     => esc_html__( 'Breakpoint Options', 'portuna-addon' ),
                     'type'      => Controls_Manager::HEADING,
                     'separator' => 'before'
                 ]
@@ -2270,9 +2365,8 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'device_breakpoint_hamburger',
                 [
-                    'label'        => __( 'Enable Breakpoint?', 'portuna-addon' ),
+                    'label'        => esc_html__( 'Enable Breakpoint?', 'portuna-addon' ),
                     'type'         => Controls_Manager::SWITCHER,
-                    'prefix_class' => 'portuna-addon-breakpoint--',
                     'default'      => 'yes',
                     'return_value' => 'yes',
                 ]
@@ -2281,14 +2375,14 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'device_breakpoint_responsive',
                 [
-                    'label'        => __( 'Breakpoint', 'portuna-addon' ),
+                    'label'        => esc_html__( 'Breakpoint', 'portuna-addon' ),
                     'type'         => Controls_Manager::SELECT,
                     'default'      => 'mobile',
-                    'prefix_class' => 'portuna-addon-breakpoint-menu--',
+                    'prefix_class' => 'portuna-addon-menu-breakpoint--',
                     'options'      => [
-                        'tablet'    => __( 'Tablet (< 1025px)', 'portuna-addon' ),
-                        'mobile'    => __( 'Mobile (< 768px)', 'portuna-addon' ),
-                        'custom'    => __( 'Custom (<)', 'portuna-addon' ),
+                        'tablet'    => esc_html__( 'Tablet (< 1025px)', 'portuna-addon' ),
+                        'mobile'    => esc_html__( 'Mobile (< 768px)', 'portuna-addon' ),
+                        'custom'    => esc_html__( 'Custom (<)', 'portuna-addon' ),
                     ],
                     'condition'    => [
                         'device_breakpoint_hamburger' => 'yes',
@@ -2299,7 +2393,7 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'device_breakpoint_customize_responsive',
                 [
-                    'label'              => __( 'Custom Number (< px)', 'portuna-addon' ),
+                    'label'              => esc_html__( 'Custom Number (< px)', 'portuna-addon' ),
                     'type'               => Controls_Manager::NUMBER,
                     'default'            => 1000,
                     'min'                => 1,
@@ -2307,7 +2401,7 @@ class MegaMenu extends Portuna_Widget_Base {
                     'selectors'          => [
                         '{{WRAPPER}}' => '--breakpoint: {{VALUE}}px;',
                     ],
-                    'description'        => __( 'Set your responsive number (px) on which the hamburger menu should appear.', 'portuna-addon' ),
+                    'description'        => esc_html__( 'Set your responsive number (px) on which the hamburger menu should appear.', 'portuna-addon' ),
                     'frontend_available' => true,
                     'condition'          => [
                         'device_breakpoint_hamburger'  => 'yes',
@@ -2319,9 +2413,9 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'device_full_width',
                 [
-                    'label'              => __( 'Full Width', 'portuna-addon' ),
+                    'label'              => esc_html__( 'Full Width', 'portuna-addon' ),
                     'type'               => Controls_Manager::SWITCHER,
-                    'description'        => __( 'Stretch the dropdown of the menu to full width.', 'portuna-addon' ),
+                    'description'        => esc_html__( 'Stretch the dropdown of the menu to full width.', 'portuna-addon' ),
                     'prefix_class'       => 'elementor-nav-menu--',
                     'return_value'       => 'stretch',
                     'frontend_available' => true,
@@ -2334,20 +2428,20 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'hamburger_toggle_align',
                 [
-                    'label'   => __( 'Toggle Align', 'portuna-addon' ),
+                    'label'   => esc_html__( 'Toggle Align', 'portuna-addon' ),
                     'type'    => Controls_Manager::CHOOSE,
                     'default' => 'center',
                     'options' => [
                         'left' => [
-                            'title' => __( 'Left', 'portuna-addon' ),
+                            'title' => esc_html__( 'Left', 'portuna-addon' ),
                             'icon'  => 'eicon-h-align-left',
                         ],
                         'center' => [
-                            'title' => __( 'Center', 'portuna-addon' ),
+                            'title' => esc_html__( 'Center', 'portuna-addon' ),
                             'icon'  => 'eicon-h-align-center',
                         ],
                         'right' => [
-                            'title' => __( 'Right', 'portuna-addon' ),
+                            'title' => esc_html__( 'Right', 'portuna-addon' ),
                             'icon'  => 'eicon-h-align-right',
                         ],
                     ],
@@ -2368,7 +2462,7 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_responsive_control(
                 'hamburger_padding',
                 [
-                    'label'      => __( 'Padding', 'portuna-addon' ),
+                    'label'      => esc_html__( 'Padding', 'portuna-addon' ),
                     'type'       => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px', '%' ],
                     'selectors'  => [
@@ -2384,7 +2478,7 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_responsive_control(
                 'hamburger_margin',
                 [
-                    'label'      => __( 'Margin', 'portuna-addon' ),
+                    'label'      => esc_html__( 'Margin', 'portuna-addon' ),
                     'type'       => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px', '%' ],
                     'selectors'  => [
@@ -2399,15 +2493,15 @@ class MegaMenu extends Portuna_Widget_Base {
             $this->add_control(
                 'hamburger_border_type',
                 [
-                    'label'     => __( 'Border Type', 'portuna-addon' ),
+                    'label'     => esc_html__( 'Border Type', 'portuna-addon' ),
                     'type'      => Controls_Manager::SELECT,
                     'options'   => [
-                        'none'   => __( 'None', 'portuna-addon' ),
-                        'solid'  => __( 'Solid', 'portuna-addon' ),
-                        'double' => __( 'Double', 'portuna-addon' ),
-                        'dotted' => __( 'Dotted', 'portuna-addon' ),
-                        'dashed' => __( 'Dashed', 'portuna-addon' ),
-                        'groove' => __( 'Groove', 'portuna-addon' ),
+                        'none'   => esc_html__( 'None', 'portuna-addon' ),
+                        'solid'  => esc_html__( 'Solid', 'portuna-addon' ),
+                        'double' => esc_html__( 'Double', 'portuna-addon' ),
+                        'dotted' => esc_html__( 'Dotted', 'portuna-addon' ),
+                        'dashed' => esc_html__( 'Dashed', 'portuna-addon' ),
+                        'groove' => esc_html__( 'Groove', 'portuna-addon' ),
                     ],
                     'default'   => 'none',
                     //'selectors' => [
@@ -2457,9 +2551,9 @@ class MegaMenu extends Portuna_Widget_Base {
             );
 
             $this->add_control(
-                'hamburger_toggle_heading',
+                'hamburger_toggle_states',
                 [
-                    'label'     => __( 'Hamburger (Toggle)', 'portuna-addon' ),
+                    'label'     => esc_html__( 'Hamburger (Toggle)', 'portuna-addon' ),
                     'type'      => Controls_Manager::HEADING,
                     'separator' => 'before',
                     'condition' => [
@@ -2468,56 +2562,72 @@ class MegaMenu extends Portuna_Widget_Base {
                 ]
             );
 
-            $this->add_control(
-                'hamburger_open_icons',
-                [
-                    'label'            => __( 'Open Icon', 'portuna-addon' ),
-                    'type'             => Controls_Manager::ICONS,
-                    'fa4compatibility' => 'hamburger_open_icon',
-                    'default'          => [
-                        'value'        => 'fas fa-bars',
-                        'library'      => 'fa-solid',
-                    ],
-                    'condition' => [
-                        'device_breakpoint_hamburger'  => 'yes',
-                    ],
-                ]
-            );
+            $this->start_controls_tabs( 'hamburger_toggle_tabs' );
 
-            $this->add_control(
-                'hamburger_close_heading',
-                [
-                    'label'     => __( 'Hamburger (Close)', 'portuna-addon' ),
-                    'type'      => Controls_Manager::HEADING,
-                    'separator' => 'before',
-                    'condition' => [
-                        'device_breakpoint_hamburger'  => 'yes',
-                    ],
-                ]
-            );
+                $this->start_controls_tab(
+                    'hamburger_open',
+                    [
+                        'label'     => esc_html__( 'Open', 'portuna-addon' ),
+                        'condition' => [
+                            'device_breakpoint_hamburger'  => 'yes',
+                        ],
+                    ]
+                );
 
-            $this->add_control(
-                'hamburger_close_icons',
-                [
-                    'label'            => __( 'Close Icon', 'portuna-addon' ),
-                    'type'             => Controls_Manager::ICONS,
-                    'fa4compatibility' => 'hamburger_close_icon',
-                    'default'          => [
-                        'value'        => 'fas fa-times',
-                        'library'      => 'fa-solid',
-                    ],
-                    'condition' => [
-                        'device_breakpoint_hamburger'  => 'yes',
-                    ],
-                ]
-            );
+                    $this->add_control(
+                        'hamburger_open_icons',
+                        [
+                            'label'            => esc_html__( 'Open Icon', 'portuna-addon' ),
+                            'type'             => Controls_Manager::ICONS,
+                            'fa4compatibility' => 'hamburger_open_icon',
+                            'default'          => [
+                                'value'        => 'fas fa-bars',
+                                'library'      => 'fa-solid',
+                            ],
+                            'condition' => [
+                                'device_breakpoint_hamburger'  => 'yes',
+                            ],
+                        ]
+                    );
+
+                $this->end_controls_tab();
+
+                $this->start_controls_tab(
+                    'hamburger_close',
+                    [
+                        'label'     => esc_html__( 'Close', 'portuna-addon' ),
+                        'condition' => [
+                            'device_breakpoint_hamburger'  => 'yes',
+                        ],
+                    ]
+                );
+
+                    $this->add_control(
+                        'hamburger_close_icons',
+                        [
+                            'label'            => esc_html__( 'Close Icon', 'portuna-addon' ),
+                            'type'             => Controls_Manager::ICONS,
+                            'fa4compatibility' => 'hamburger_close_icon',
+                            'default'          => [
+                                'value'        => 'fas fa-times',
+                                'library'      => 'fa-solid',
+                            ],
+                            'condition' => [
+                                'device_breakpoint_hamburger'  => 'yes',
+                            ],
+                        ]
+                    );
+
+                $this->end_controls_tab();
+
+            $this->end_controls_tabs();
 
             $this->start_controls_tabs( 'hamburger_group' );
 
                 $this->start_controls_tab(
                     'hamburger_normal',
                     [
-                        'label'     => __( 'Normal', 'portuna-addon' ),
+                        'label'     => esc_html__( 'Normal', 'portuna-addon' ),
                         'condition' => [
                             'device_breakpoint_hamburger'  => 'yes',
                         ],
@@ -2573,7 +2683,7 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'hamburger_hover',
                     [
-                        'label'     => __( 'Hover', 'portuna-addon' ),
+                        'label'     => esc_html__( 'Hover', 'portuna-addon' ),
                         'condition' => [
                             'device_breakpoint_hamburger'  => 'yes',
                         ],
@@ -2629,7 +2739,7 @@ class MegaMenu extends Portuna_Widget_Base {
                 $this->start_controls_tab(
                     'hamburger_active',
                     [
-                        'label'     => __( 'Active', 'portuna-addon' ),
+                        'label'     => esc_html__( 'Active', 'portuna-addon' ),
                         'condition' => [
                             'device_breakpoint_hamburger'  => 'yes',
                         ],
@@ -2693,6 +2803,7 @@ class MegaMenu extends Portuna_Widget_Base {
      * @return array
      */
     public function get_available_menus() {
+
         $raw_menus = wp_get_nav_menus();
         $menus     = wp_list_pluck( $raw_menus, 'name', 'term_id' );
         $parent    = isset( $_GET[ 'parent_menu' ] ) ? absint( $_GET[ 'parent_menu' ] ) : 0;
@@ -2709,6 +2820,7 @@ class MegaMenu extends Portuna_Widget_Base {
      * render the code and generate the final HTML on the frontend using PHP.
      */
     protected function render() {
+
         $this->server_side_render();
     }
 }

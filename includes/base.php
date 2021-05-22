@@ -82,6 +82,7 @@ class Base {
         $this->check_elementor_plugin();
         $this->minimum_elementor_version();
         $this->minimum_php_version();
+
         return true;
     }
 
